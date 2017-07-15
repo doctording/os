@@ -47,6 +47,9 @@ $make image
 
 http://book.51cto.com/art/201604/509566.htm
 
+![](../01_BIOS_to_MBR/imgs/mbr_1.jpg)
+![](../01_BIOS_to_MBR/imgs/mbr_2.jpg)
+
 * BIOS
 
 电脑加电，BIOS启动，自检，找到MBR
