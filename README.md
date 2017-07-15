@@ -15,3 +15,11 @@
 * 4 分页
 
 [点击跳转查看](./04_page/README.md)
+
+* 5 ELF文件格式
+
+[点击跳转查看](./05_efi/README.md)
+
+* 6 内核编写
+
+[点击跳转查看](./06_kernel_start/README.md)
