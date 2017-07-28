@@ -23,3 +23,15 @@
 * 6 内核编写
 
 [点击跳转查看](./06_kernel_start/README.md)
+
+* 7 中断基础
+
+[点击跳转查看](./07_interrupt/README.md)
+
+* 8 内核Assert函数
+
+[点击跳转查看](./08_assert/README.md)
+
+* 9 内存管理，内存池，地址映射
+
+[点击跳转查看](./09_memory_management/README.md)
