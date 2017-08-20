@@ -43,3 +43,20 @@
 * 11 多线程调度
 
 [点击跳转查看](./11_thread_schedule/README.md)
+
+* 12 锁,信号量
+
+[点击跳转查看](./12_lock/README.md)
+
+* 13 键盘输入
+
+[点击跳转查看](./13_input/README.md)
+
+* 14 缓冲区
+
+[点击跳转查看](./14_input_buffer/README.md)
+
+* 15 特权级，用户进程
+
+[点击跳转查看](./15_user_process/README.md)
+
