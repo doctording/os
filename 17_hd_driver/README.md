@@ -149,8 +149,10 @@ xxd -u -a -g 1 -s $2 -l $3 $1
 
 
 16字节信息规定
+
 ![](../17_hd_driver/imgs/MBR_16.jpg)
 
+第一个主分区
 ```
  00 
  00 
@@ -164,6 +166,7 @@ xxd -u -a -g 1 -s $2 -l $3 $1
  A1 86 01 00 ( 扇区总数 0x000186A1)
 ```
 
+扩展分区
 ```
  00
  03 
@@ -181,6 +184,225 @@ xxd -u -a -g 1 -s $2 -l $3 $1
 
 0x00018EA1*512 = 0x031D4200
 
+```
+sh xxd.sh hd80M.img 0x031D4200 512
+
+```
 ![](../17_hd_driver/imgs/fdisk_e.jpg)
 
+扩展分区的第一个逻辑分区
+```
+00 
+04
+16 
+67 
+66 
+00 
+31 
+77 
+00 08 00 00 （ 分区起始偏移扇区 0x00000800,这个是相对扩展分区的，真正对整个磁盘的偏移扇区是 0x00018EA1 + 0x00000800 = 0x000196A1）
+20 3E 00 00  ( 扇区总数 0x00003E20 )
+```
+
 #### 编写硬盘驱动程序
+
+硬件是个独立的个体，它提供一套方法作为操作接口给外界调用，但此接口往往是最原始、最简陋、最繁琐的，相对咱们习惯的高级语言来说，这些接口使用起来非常麻烦，很多指令要提前设置好各种参数，基本上都是要用汇编语言来操作寄存器。
+
+硬件是实实在在的东西，要想在软件中管理它们，只能从逻辑上抓住这些硬件的特性，将它们**抽象成一些数据结构**，然后这些数据结构便代表了硬件，用这些数据结构来组织硬件的信息及状态，在逻辑上硬件就是这数据结构。
+
+
+驱动程序：
+
+* 对硬件接口的封装，它把参数设置等重复、枯燥、复杂的过程封装成一个过程，避免每次执行命令时都重复做这些工作，根据需要也可以提供相关的策略，如缓存等，让硬件操作更加容易、省事、方便，无需再显式做一些底层设置。
+
+* 没有驱动程序的话，操作系统也是可以同硬件交流的，无非是直接操作 IO 端口
+
+
+硬盘基础回顾
+
+![](../17_hd_driver/imgs/hd.jpg)
+
+硬盘当成一个IO设备，其有硬盘控制器（I/O接口）,就像显示器一样，其有显卡（也称为显示适配器），显存。
+
+针对IDE硬盘，对其进行抽象
+```
+/* 硬盘结构 */
+struct disk {
+   char name[8];			   // 本硬盘的名称，如sda等
+   struct ide_channel* my_channel;	   // 此块硬盘归属于哪个ide通道
+   uint8_t dev_no;			   // 本硬盘是主0还是从1
+   struct partition prim_parts[4];	   // 主分区顶多是4个
+   struct partition logic_parts[8];	   // 逻辑分区数量无限,但总得有个支持的上限,那就支持8个
+};
+
+/* ata通道结构 */
+struct ide_channel {
+   char name[8];		 // 本ata通道名称, 如ata0,也被叫做ide0. 可以参考bochs配置文件中关于硬盘的配置。
+   uint16_t port_base;		 // 本通道的起始端口号
+   uint8_t irq_no;		 // 本通道所用的中断号
+   struct lock lock;
+   bool expecting_intr;		 // 向硬盘发完命令后等待来自硬盘的中断
+   struct semaphore disk_done;	 // 硬盘处理完成.线程用这个信号量来阻塞自己，由硬盘完成后产生的中断将线程唤醒
+   struct disk devices[2];	 // 一个通道上连接两个硬盘，一主一从
+};
+```
+
+硬盘分区结构也进行抽象
+```
+/* 分区结构 */
+struct partition {
+   uint32_t start_lba;		 // 起始扇区
+   uint32_t sec_cnt;		 // 扇区数
+   struct disk* my_disk;	 // 分区所属的硬盘
+   struct list_elem part_tag;	 // 用于队列中的标记
+   char name[8];		 // 分区名称
+   struct super_block* sb;	 // 本分区的超级块
+   struct bitmap block_bitmap;	 // 块位图
+   struct bitmap inode_bitmap;	 // i结点位图
+   struct list open_inodes;	 // 本分区打开的i结点队列
+};
+```
+
+```
+/* 构建一个16字节大小的结构体,用来存分区表项 */
+struct partition_table_entry {
+   uint8_t  bootable;		 // 是否可引导	
+   uint8_t  start_head;		 // 起始磁头号
+   uint8_t  start_sec;		 // 起始扇区号
+   uint8_t  start_chs;		 // 起始柱面号
+   uint8_t  fs_type;		 // 分区类型
+   uint8_t  end_head;		 // 结束磁头号
+   uint8_t  end_sec;		 // 结束扇区号
+   uint8_t  end_chs;		 // 结束柱面号
+/* 更需要关注的是下面这两项 */
+   uint32_t start_lba;		 // 本分区起始扇区的lba地址
+   uint32_t sec_cnt;		 // 本分区的扇区数目
+} __attribute__ ((packed));	 // 保证此结构是16字节大小
+
+/* 引导扇区,mbr或ebr所在的扇区 */
+struct boot_sector {
+   uint8_t  other[446];		 // 引导代码
+   struct   partition_table_entry partition_table[4];       // 分区表中有4项,共64字节
+   uint16_t signature;		 // 启动扇区的结束标志是0x55,0xaa,
+} __attribute__ ((packed));
+```
+
+---
+
+硬盘和 CPU 是相互独立的个体，它们各自并行执行，但由于硬盘是低速设备，其在处理请求时往往消耗很长的时间,为避免浪费 CPU 资源，在等待硬盘操作的过程中最好把 CPU 主动让出来，让 CPU 去执行其他任务
+
+
+```
+/* 将buf中sec_cnt扇区数据写入硬盘 */
+void ide_write(struct disk* hd, uint32_t lba, void* buf, uint32_t sec_cnt) {
+   ASSERT(lba <= max_lba);
+   ASSERT(sec_cnt > 0);
+   lock_acquire (&hd->my_channel->lock);
+
+/* 1 先选择操作的硬盘 */
+   select_disk(hd);
+
+   uint32_t secs_op;		 // 每次操作的扇区数
+   uint32_t secs_done = 0;	 // 已完成的扇区数
+   while(secs_done < sec_cnt) {
+      if ((secs_done + 256) <= sec_cnt) {
+	 secs_op = 256;
+      } else {
+	 secs_op = sec_cnt - secs_done;
+      }
+
+/* 2 写入待写入的扇区数和起始扇区号 */
+      select_sector(hd, lba + secs_done, secs_op);
+
+/* 3 执行的命令写入reg_cmd寄存器 */
+      cmd_out(hd->my_channel, CMD_WRITE_SECTOR);	      // 准备开始写数据
+
+/* 4 检测硬盘状态是否可读 */
+      if (!busy_wait(hd)) {			      // 若失败
+	 char error[64];
+	 sprintf(error, "%s write sector %d failed!!!!!!\n", hd->name, lba);
+	 PANIC(error);
+      }
+
+/* 5 将数据写入硬盘 */
+      write2sector(hd, (void*)((uint32_t)buf + secs_done * 512), secs_op);
+
+      /* 在硬盘响应期间阻塞自己 */
+      sema_down(&hd->my_channel->disk_done);
+      secs_done += secs_op;
+   }
+   /* 醒来后开始释放锁*/
+   lock_release(&hd->my_channel->lock);
+}
+```
+
+thread_yield 定义在也read.c 中，它的功能是主动把 CPU 使用权让出来，它与出thread_block 的区别是thread_yield 执行后任务的状态是 TASK_READY，即让出 CPU 后，它会被加入到就绪队列中，下次还能继续被调度器调度执行，而 thread_block 执行后任务的状态是 TASK_BLOCKED，需要被唤醒后才能加入到就绪队列 ， 所以下次执行还不知道是什么时候 。
+
+---
+
+```
+/* 硬盘数据结构初始化 */
+void ide_init() {
+   printk("ide_init start\n");
+   uint8_t hd_cnt = *((uint8_t*)(0x475));	      // 获取硬盘的数量
+   ASSERT(hd_cnt > 0);
+   list_init(&partition_list);
+   channel_cnt = DIV_ROUND_UP(hd_cnt, 2);	   // 一个ide通道上有两个硬盘,根据硬盘数量反推有几个ide通道
+   struct ide_channel* channel;
+   uint8_t channel_no = 0, dev_no = 0; 
+
+   /* 处理每个通道上的硬盘 */
+   while (channel_no < channel_cnt) {
+      channel = &channels[channel_no];
+      sprintf(channel->name, "ide%d", channel_no);
+
+      /* 为每个ide通道初始化端口基址及中断向量 */
+      switch (channel_no) {
+	 case 0:
+	    channel->port_base	 = 0x1f0;	   // ide0通道的起始端口号是0x1f0
+	    channel->irq_no	 = 0x20 + 14;	   // 从片8259a上倒数第二的中断引脚,温盘,也就是ide0通道的的中断向量号
+	    break;
+	 case 1:
+	    channel->port_base	 = 0x170;	   // ide1通道的起始端口号是0x170
+	    channel->irq_no	 = 0x20 + 15;	   // 从8259A上的最后一个中断引脚,我们用来响应ide1通道上的硬盘中断
+	    break;
+      }
+
+      channel->expecting_intr = false;		   // 未向硬盘写入指令时不期待硬盘的中断
+      lock_init(&channel->lock);		     
+
+   /* 初始化为0,目的是向硬盘控制器请求数据后,硬盘驱动sema_down此信号量会阻塞线程,
+   直到硬盘完成后通过发中断,由中断处理程序将此信号量sema_up,唤醒线程. */
+      sema_init(&channel->disk_done, 0);
+
+      register_handler(channel->irq_no, intr_hd_handler);
+
+      /* 分别获取两个硬盘的参数及分区信息 */
+      while (dev_no < 2) {
+	 struct disk* hd = &channel->devices[dev_no];
+	 hd->my_channel = channel;
+	 hd->dev_no = dev_no;
+	 sprintf(hd->name, "sd%c", 'a' + channel_no * 2 + dev_no);
+	 identify_disk(hd);	 // 获取硬盘参数
+	 if (dev_no != 0) {	 // 内核本身的裸硬盘(hd60M.img)不处理
+	    partition_scan(hd, 0);  // 扫描该硬盘上的分区  
+	 }
+	 p_no = 0, l_no = 0;
+	 dev_no++; 
+      }
+      dev_no = 0;			  	   // 将硬盘驱动器号置0,为下一个channel的两个硬盘初始化。
+      channel_no++;				   // 下一个channel
+   }
+
+   printk("\n   all partition info\n");
+   /* 打印所有分区信息 */
+   list_traversal(&partition_list, partition_info, (int)NULL);
+   printk("ide_init done\n");
+}
+```
+
+运行截图
+
+![](../17_hd_driver/imgs/rs.jpg)
+
+对比磁盘hd80M.img的信息，对比结果。
