@@ -1,62 +1,40 @@
 
 
-* 1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+* [1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程](./01_BIOS_to_MBR/README.md)
 
-[点击跳转查看](./01_BIOS_to_MBR/README.md)
+* [2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）](./02_mbr_hd/README.md)
 
-* 2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+* [3 实模式到保护模式（GDT，gdtr, 选择子)](./03_protected_mode/README.md)
 
-[点击跳转查看](./02_mbr_hd/README.md)
+* [4 分页](./04_page/README.md)
 
-* 3 实模式到保护模式（GDT，gdtr, 选择子)
+* [5 ELF文件格式](./05_efi/README.md)
 
-[点击跳转查看](./03_protected_mode/README.md)
+* [6 内核编写](./06_kernel_start/README.md)
 
-* 4 分页
+* [7 中断基础](./07_interrupt/README.md)
 
-[点击跳转查看](./04_page/README.md)
+* [8 内核Assert函数](./08_assert/README.md)
 
-* 5 ELF文件格式
+* [9 内存管理，内存池，地址映射](./09_memory_management/README.md)
 
-[点击跳转查看](./05_efi/README.md)
+* [10 内核实现线程](./10_process_thread/README.md)
 
-* 6 内核编写
+* [11 多线程调度](./11_thread_schedule/README.md)
 
-[点击跳转查看](./06_kernel_start/README.md)
+* [12 锁,信号量](./12_lock/README.md)
 
-* 7 中断基础
+* [13 键盘输入](./13_input/README.md)
 
-[点击跳转查看](./07_interrupt/README.md)
+* [14 缓冲区](./14_input_buffer/README.md)
 
-* 8 内核Assert函数
+* [15 特权级，用户进程](./15_user_process/README.md)
 
-[点击跳转查看](./08_assert/README.md)
+* [16 系统调用](./16_system_call/README.md)
 
-* 9 内存管理，内存池，地址映射
+* [17 硬件驱动](./17_hd_driver/README.md)
 
-[点击跳转查看](./09_memory_management/README.md)
+* [18 硬盘到文件系统](./18_filesystem/README.md)
 
-* 10 内核实现线程
-
-[点击跳转查看](./10_process_thread/README.md)
-
-* 11 多线程调度
-
-[点击跳转查看](./11_thread_schedule/README.md)
-
-* 12 锁,信号量
-
-[点击跳转查看](./12_lock/README.md)
-
-* 13 键盘输入
-
-[点击跳转查看](./13_input/README.md)
-
-* 14 缓冲区
-
-[点击跳转查看](./14_input_buffer/README.md)
-
-* 15 特权级，用户进程
-
-[点击跳转查看](./15_user_process/README.md)
+* [19 inode,文件目录操作](./19_fd_inode_dir_file/README.md)
 
