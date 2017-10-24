@@ -38,3 +38,5 @@
 
 * [19 inode,文件目录操作](./19_fd_inode_dir_file/README.md)
 
+* [20 shell简单实现](./20_shell/README.md)
+
