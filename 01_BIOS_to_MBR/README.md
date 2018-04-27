@@ -80,7 +80,7 @@ http://book.51cto.com/art/201604/509566.htm
 
 * MBR的加载
 
-    1. MBR大小512字节，最后又两字节0x55，0xaa称为魔数
+    1. MBR大小512字节，最后有两字节0x55，0xaa，这称为魔数
 
     2. MBR程序段入口地址为0x7c00，（由于IBM个人PC等历史原因设置的），所以可以看到SECTION MBR vstart=0x7c00 的设置
 
