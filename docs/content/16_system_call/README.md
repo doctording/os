@@ -1,26 +1,17 @@
-用户进程的实现
-
-### 系统调用
+# 系统调用
 
 * 系统调用由操作系统核心提供，运行于核心态，而普通的函数调用由函数库或用户自己提供，运行于用户态
 
-
 * 系统调用在用户空间进程和硬件设备之间添加了一个中间层
-
- 1. 它为用户空间提供了一种统一的硬件的抽象接口
- 
- 2. 系统调用保证了系统的稳定和安全。作为硬件设备和应用程序之间的中间人，内核可以基于权限和其他一些规则对需要进行的访问进行裁决。举例来说，这样可以避免应用程序不正确地使用硬件设备，窃取其他进程的资源，或做出其他什么危害系统的事情。
-
- 3. 在Linux中，系统调用是用户空间访问内核的惟一手段；除异常和中断外，它们是内核惟一的合法入口。
-
+   1. 它为用户空间提供了一种统一的硬件的抽象接口
+   2. 系统调用保证了系统的稳定和安全。作为硬件设备和应用程序之间的中间人，内核可以基于权限和其他一些规则对需要进行的访问进行裁决。举例来说，这样可以避免应用程序不正确地使用硬件设备，窃取其他进程的资源，或做出其他什么危害系统的事情。
+   3. 在Linux中，系统调用是用户空间访问内核的惟一手段；除异常和中断外，它们是内核惟一的合法入口。
 
 * 用户空间的程序无法直接执行内核代码。如果果进程可以直接在内核的地址空间上读写的话，系统安全就会失去控制。所以，应用程序应该以某种方式通知系统，告诉内核自己需要执行一个系统调用，希望系统切换到内核态，这样内核就可以代表应用程序来执行该系统调用了。通知内核的机制是靠软件**中断**实现的。
 
-参考
+参考博文：http://blog.csdn.net/zhuxiaoping54532/article/details/51700576
 
-http://blog.csdn.net/zhuxiaoping54532/article/details/51700576
-
-### 用户进程pid实现
+## 用户进程pid实现
 
 * 进程结构体重新增pid成员变量
 
@@ -30,10 +21,11 @@ http://blog.csdn.net/zhuxiaoping54532/article/details/51700576
 
 * 为进程添加系统调用getpid系统调用接口
 
-代码见 16_system\code\pro_getpid
+代码见`16_system\code\pro_getpid`
 
 主函数
-```
+
+```cpp
 int main(void) {
    put_str("I am kernel\n");
    init_all();
@@ -52,7 +44,7 @@ int main(void) {
 }
 
 /* 在线程中运行的函数 */
-void k_thread_a(void* arg) {     
+void k_thread_a(void* arg) {
    char* para = arg;
    console_put_str(" thread_a_pid:0x");
    console_put_int(sys_getpid());
@@ -64,7 +56,7 @@ void k_thread_a(void* arg) {
 }
 
 /* 在线程中运行的函数 */
-void k_thread_b(void* arg) {     
+void k_thread_b(void* arg) {
    char* para = arg;
    console_put_str(" thread_b_pid:0x");
    console_put_int(sys_getpid());
@@ -92,18 +84,12 @@ void u_prog_b(void) {
 
 ![](../16_system_call/imgs/pid.jpg)
 
+## 系统调用内存管理
 
----
-
-### 内存管理
-
-
-#### arena（将一大块内存划分成多个小内存块，每个小内存块之间互不干涉）
-
-arena数据结构
+### arena数据结构（将一大块内存划分成多个小内存块，每个小内存块之间互不干涉）
 
 * 元信息：
- 
+
 描述自己内存池中的空闲内存块数量，包括内存块描述符指针
 
 大小估计，约为12字节
@@ -116,8 +102,7 @@ arena数据结构
 
 同一类内存块可以用多个arena提供，每一个类内存块可以建立聂村块描述符（块大小，arena链表)
 
-
-```
+```cpp
 /* 内存块 */
 struct mem_block {
    struct list_elem free_elem;
@@ -139,18 +124,14 @@ struct arena {
    bool large;		   
 };
 ```
+
 ![](../16_system_call/imgs/arena.jpg)
 
-
-#### sys_malloc, sys_free, malloc, free
-
-
-
----
+### 实现：sys_malloc, sys_free, malloc, free
 
 代码见 16_system\code\pro_malloc_free
 
-```
+```cpp
 void k_thread_a(void*);
 void k_thread_b(void*);
 void u_prog_a(void);

@@ -1,15 +1,14 @@
-文件描述符
+# 文件描述符
 
 inode相关操作（目录，路径解析，文件检索）
 
-### 文件描述符
+## 文件描述符
 
 内核（kernel）利用文件描述符（file descriptor）来访问文件。文件描述符是非负整数。打开现存文件或新建文件时，内核会返回一个文件描述符。读写文件也需要使用文件描述符来指定待读写的文件。该扇区，从而实现了文件的读写。几乎所有的操作系统都允许一个进程同时、多次、打开同一个文件（并不关闭），同样该文件也可以被多个不同的进程同时打开。
 
 为实现文件任意位置的读写，执行读写操作时可以指定偏移量作为该文件内的起始地址，此偏移量相当于文件内的指针。
 
-
-#### 文件描述符与inode
+### 文件描述符与inode
 
 读写文件的本质是 先通过文件的 inode 找到文件数据块的扇区地址，随后读写。
 
@@ -25,13 +24,11 @@ Linux 通过文件描述符查找文件数据块
 2. 文件表中存储了所有文件的结构（文件结构中有inode先关信息） -- 在内存中创建好的全局结构
 3. 根据inode队列（inode缓存），找到最终的磁盘位置
 
-
-
-#### 文件 相关操作
+## 文件 相关操作
 
 创建普通文件 file_create 函数
 
-##### 创建普通文件需要考虑的工作
+### 创建普通文件需要考虑的工作
 
 * 1) 文件需要 inode 来描述大小、位置等属性 ，所以创建文件就要创建其 inode 。这就涉及到向inode_bitmap 申请位图来获得 inode 号，因此 inode_bitmap 会被更新， inode_table 数组中的某项也会由新的 inode 填充 。
 
@@ -44,7 +41,7 @@ Linux 通过文件描述符查找文件数据块
 
 * 5) inode_bitmap 、 block_bitmap、新文件的 inode 及文件所在目录的 inode，这些位于内存中已经被改变的数据要同步到硬盘。
 
-##### 创建目录
+### 创建目录
 
 创建目录所涉及的工作包括。
 * 1) 确认待创建的新目录在文件系统上不存在。
@@ -54,17 +51,15 @@ Linux 通过文件描述符查找文件数据块
 * 5) 在新目录的父目录中添加新目录的目录项。
 * 6) 将以上资源的变更同步到硬盘。
 
-
 **遍历目录**就是读取目录中所有的目录项，在遍历之前必须要先把目录打开，之后还需要把目录关闭。
 
 **pwd**命令和**cd**命令： 每个目录都存储着当前目录和上一级目录，所以可以理论上可以访问到分区中所有的目录
 
----
+### 文件和目录的创建，读写
 
-#### 文件和目录的创建，读写
+代码见`19_fd_inode_dir_file\code\code_01`
 
-代码见 19_fd_inode_dir_file\ code\ code_01
-```
+```cpp
  printf("/dir1/subdir1 create %s!\n", sys_mkdir("/dir1/subdir1") == 0 ? "done" : "fail");
    printf("/dir1 create %s!\n", sys_mkdir("/dir1") == 0 ? "done" : "fail");
    printf("now, /dir1/subdir1 create %s!\n", sys_mkdir("/dir1/subdir1") == 0 ? "done" : "fail");
@@ -82,13 +77,11 @@ Linux 通过文件描述符查找文件数据块
 
 ![](../19_fd_inode_dir_file/imgs/file_dir.jpg)
 
-
-#### 目录的打开关闭
+### 目录的打开关闭
 
 在文件，目录创建成功，并写入磁盘的基础上，测试目录的打开与关闭
 
-
-```
+```cpp
  struct dir* p_dir = sys_opendir("/dir1/subdir1");
    if (p_dir) {
       printf("/dir1/subdir1 open done!\n");
@@ -104,11 +97,9 @@ Linux 通过文件描述符查找文件数据块
 
 ![](../19_fd_inode_dir_file/imgs/dir_open.jpg)
 
+### 文件和目录的删除
 
-#### 文件和目录的删除
-
-
-```
+```cpp
 /********  测试代码  ********/
    printf("/dir1 content before delete /dir1/subdir1:\n");
    struct dir* dir = sys_opendir("/dir1/");
@@ -155,5 +146,3 @@ Linux 通过文件描述符查找文件数据块
 ```
 
 ![](../19_fd_inode_dir_file/imgs/dir_del.jpg)
-
----

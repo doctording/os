@@ -1,19 +1,19 @@
 
-断言函数assert
-===
+# 断言函数assert
 
 一种是为内核系统使用的 ASSERT，另一种是为用户进程使用的assert
 
 一方面，当内核运行中出现问题时，多属于严重的错误，着实没必要再运行下去了。另一方面，断言在输出报错信息时，屏幕输出不应该被其他进程干扰，这样咱们才能专注于报错信息。综上两点原因，ASSERT 排查出错误后，最好在关中断的情况下打印报错信息 。
 
 ASSERT 是用来辅助程序调试的，所以通常是用在开发阶段。如果程序中的某些地方会莫名其妙地出错，而我们又无法短时间内将其排查出来，这时我们可以在程序中安排个“哨兵”，这个哨兵就是 ASSERT。我们把程序该有的条件状态传给它，让它帮咱们监督此条件，一旦条件不符合就会报错井将程序挂起。
-```
+
+```cpp
 ASSERT （条件表达式｝ ；
 ```
-------
 
 * debug.h，定义ASSERT函数
-```
+
+```cpp
 #ifndef __KERNEL_DEBUG_H
 #define __KERNEL_DEBUG_H
 void panic_spin(char* filename, int line, const char* func, const char* condition);
@@ -36,11 +36,11 @@ void panic_spin(char* filename, int line, const char* func, const char* conditio
 #endif /*__NDEBUG */
 
 #endif /*__KERNEL_DEBUG_H*/
-
 ```
 
-debug.c
-```
+* debug.c
+
+```cpp
 #include "debug.h"
 #include "print.h"
 #include "interrupt.h"
@@ -61,9 +61,9 @@ void panic_spin(char* filename,	       \
 }
 ```
 
-main.c
+* main.c
 
-```
+```cpp
 #include "print.h"
 #include "init.h"
 #include "debug.h"

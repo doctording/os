@@ -1,9 +1,11 @@
 
+# 线程调度
+
 * 中断
 * 上下文保护
 * 轮询法实现线程调度
 
-### 线程和线程管理设计
+## 线程和线程管理设计
 
 数据结构主要是实现**双向链表**。
 
@@ -11,7 +13,7 @@
 
 ![](../11_thread_schedule/imgs/01.jpg)
 
-```
+```cpp
 /* 进程或线程的状态 */
 enum task_status {
    TASK_RUNNING,
@@ -29,7 +31,6 @@ enum task_status {
 
 * 调度器按照线程队列先进先出的顺序，把就绪队列中的第一个线程作为下一个要运行的线程。
 
-
 采用ticks（时间片）和priority（线程优先级）配合使用； 优先级越高，那么执行时间就越长，当一个线程的ticks减少为0时，就需要被换下了，然后被重新赋予priority,下次再被调用。
 
 ### 线程调度
@@ -37,7 +38,6 @@ enum task_status {
 调度器schedule就是根据线程运行状态将其从处理器上换上换下，所以主要任务是读写就绪对垒，增删里面的结点。
 
 线程在处理器上的执行时间有ticks决定，而在初始一个线程的时候会赋予一个线程优先级prioriy，ticks也赋值成了priority,这样优先级越高，线程执行时间就越长。系统会有时钟中断，每一次中断ticks减少1，当ticks减少至0是，时钟中断处理程序就调用调度器schedule,把该线程换下，选择另一个线程上CPU
-
 
 完成整个调度需要如下的3部分：
 
@@ -55,9 +55,9 @@ enum task_status {
 
 * 上下文保护第二部分：保存API固定的寄存器，主要是esi,edi,ebp,esp这4个寄存器，目的是让任务恢复执行在任务切换发生时剩下尚未执行的内核代码，保证顺利走到退出中断的出口，利用第一部分保护的寄存器环境彻底恢复任务。
 
+* switch.S
 
-switch.S
-```
+```cpp
 [bits 32]
 section .text
 global switch_to
@@ -87,11 +87,9 @@ switch_to:
 
 ![](../11_thread_schedule/imgs/03.jpg)
 
----
-
 ### 线程，PCB结构，函数
 
-```
+```cpp
 /* 进程或线程的pcb,程序控制块 */
 struct task_struct {
    uint32_t* self_kstack;	 // 各内核线程都用自己的内核栈
@@ -115,7 +113,9 @@ struct task_struct {
 };
 ```
 
-```
+* thread_stack
+
+```cpp
 /***********  线程栈thread_stack  ***********
  * 线程自己的栈,用于存储线程中待执行的函数
  * 此结构在线程自己的内核栈中位置不固定,
@@ -141,9 +141,9 @@ struct thread_stack {
 };
 ```
 
-有个主线程问题，就是 mbr->loader->main,这是一直运行的主程序线程，其他线程都只是在创建过程中执行的。
+有个主线程问题就是: `mbr->loader->main`，这是一直运行的主程序线程，其它线程都只是在创建过程中执行的。
 
-```
+```cpp
 /* 将kernel中的main函数完善为主线程 */
 static void make_main_thread(void) {
 /* 因为main线程早已运行,咱们在loader.S中进入内核时的mov esp,0xc009f000,
@@ -157,9 +157,10 @@ static void make_main_thread(void) {
    list_append(&thread_all_list, &main_thread->all_list_tag);
 }
 ```
+
 ![](../11_thread_schedule/imgs/mem.jpg)
 
-```
+```cpp
 /* 创建一优先级为prio的线程,线程名为name,线程所执行的函数是function(func_arg) */
 struct task_struct* thread_start(char* name, int prio, thread_func function, void* func_arg) {
 /* pcb都位于内核空间,包括用户进程的pcb也是在内核空间 */
@@ -182,7 +183,7 @@ struct task_struct* thread_start(char* name, int prio, thread_func function, voi
 }
 ```
 
-```
+```cpp
 /* 初始化线程环境 */
 void thread_init(void) {
    put_str("thread_init start\n");
@@ -194,9 +195,9 @@ void thread_init(void) {
 }
 ```
 
+### 测试程序运行&验证截图
 
-### 程序运行，验证
-```
+```cpp
 #include "print.h"
 #include "init.h"
 #include "thread.h"
@@ -211,7 +212,7 @@ int main(void) {
    thread_start("k_thread_a", 8, k_thread_a, "arguA ");
    thread_start("k_thread_b", 31, k_thread_b, "arguB ");
 
-   intr_enable();	// 打开中断,使时钟中断起作用
+   intr_enable();// 打开中断,使时钟中断起作用
    while(1) {
       put_str("Main ");
    };
@@ -219,7 +220,7 @@ int main(void) {
 }
 
 /* 在线程中运行的函数 */
-void k_thread_a(void* arg) {     
+void k_thread_a(void* arg) {
 /* 用void*来通用表示参数,被调用的函数知道自己需要什么类型的参数,自己转换再用 */
    char* para = arg;
    while(1) {
@@ -228,7 +229,7 @@ void k_thread_a(void* arg) {
 }
 
 /* 在线程中运行的函数 */
-void k_thread_b(void* arg) {     
+void k_thread_b(void* arg) {
 /* 用void*来通用表示参数,被调用的函数知道自己需要什么类型的参数,自己转换再用 */
    char* para = arg;
    while(1) {
@@ -241,6 +242,4 @@ void k_thread_b(void* arg) {
 
 ![](../11_thread_schedule/imgs/07.png)
 
----
-
-本例程序运行有GP异常，这是由于临界区代码的资源竞争（屏幕输出，几个线程竞争资源造成的，需要利用同步，互斥等去处理）
+注意到：本例程序运行有GP<font color='red'>异常</font>，这是由于临界区代码的资源竞争（屏幕输出，几个线程竞争资源造成的，需要利用同步，互斥等去处理）

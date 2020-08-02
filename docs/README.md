@@ -2,4 +2,8 @@
 
 * 通过实践对OS的进一步理解
 
-注：本文均是实战,使用的是Ubuntu-32bit的操作系统
+本项目repo地址：<a href="https://github.com/doctording/os" target="_blank">https://github.com/doctording/os</a>
+
+附：
+
+![](https://minnie.tuhs.org/CompArch/Lectures/Figs/basicsysarch.gif)
