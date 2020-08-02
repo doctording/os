@@ -139,7 +139,7 @@
                 <a href="../01_BIOS_to_MBR/">
             
                     
-                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+                    1 最简单的OS:实模式下BIOS到MBR
             
                 </a>
             
@@ -165,7 +165,7 @@
                 <a href="../03_protected_mode/">
             
                     
-                    3 实模式到保护模式（GDT，gdtr, 选择子)
+                    3 实模式到保护模式（GDT,gdtr,选择子)
             
                 </a>
             
@@ -178,7 +178,7 @@
                 <a href="../04_page/">
             
                     
-                    4 分页
+                    4 分段 & 分页
             
                 </a>
             
@@ -191,7 +191,7 @@
                 <a href="../05_efi/">
             
                     
-                    5 ELF文件格式
+                    5 ELF文件理解
             
                 </a>
             
@@ -204,7 +204,7 @@
                 <a href="../06_kernel_start/">
             
                     
-                    6 内核编写
+                    6 C语言写内核
             
                 </a>
             
@@ -282,7 +282,7 @@
                 <a href="../12_lock/">
             
                     
-                    12 锁,信号量
+                    12 锁&信号量
             
                 </a>
             
@@ -321,7 +321,7 @@
                 <a href="../15_user_process/">
             
                     
-                    15 特权级，用户进程
+                    15 指令特权级，用户进程引入
             
                 </a>
             
@@ -334,7 +334,7 @@
                 <a href="../16_system_call/">
             
                     
-                    16 系统调用
+                    16 系统调用实现用户进程
             
                 </a>
             
@@ -347,7 +347,7 @@
                 <a href="../17_hd_driver/">
             
                     
-                    17 硬件驱动
+                    17 硬件驱动认识
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="../19_fd_inode_dir_file/">
             
                     
-                    19 inode,文件目录操作
+                    19 文件描述符操作
             
                 </a>
             
@@ -439,11 +439,18 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p>&#x5728;&#x952E;&#x76D8;&#x4E0A;&#x64CD;&#x4F5C;&#x662F;&#x4E3A;&#x4E86;&#x4E0E;&#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#xFF0C;&#x4EA4;&#x4E92;&#x7684;&#x8FC7;&#x7A0B;&#x4E00;&#x822C;&#x662F;&#x952E;&#x5165;&#x5404;&#x79CD; shell &#x547D;&#x4EE4;&#xFF0C;&#x7136;&#x540E; shell &#x89E3;&#x6790;&#x5E76;&#x6267;&#x884C;&#x3002;shell &#x547D;&#x4EE4;&#x662F;&#x7531;&#x591A;&#x4E2A;&#x5B57;&#x7B26;&#x7EC4;&#x6210;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x8981;&#x4EE5;&#x56DE;&#x8F66;&#x952E;&#x7ED3;&#x675F;&#xFF0C;&#x56E0;&#x6B64;&#x54B1;&#x4EEC;&#x5728;&#x952E;&#x5165;&#x547D;&#x4EE4;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5FC5;&#x987B;&#x8981;&#x627E;&#x4E2A;&#x7F13;&#x51B2;&#x533A;&#x628A;&#x5DF1;&#x952E;&#x5165;&#x7684;&#x4FE1;&#x606F;&#x5B58;&#x8D77;&#x6765;&#xFF0C;&#x5F53;&#x51D1;&#x6210;&#x5B8C;&#x6574;&#x7684;&#x547D;&#x4EE4;&#x540D;&#x65F6;&#x518D;&#x4E00;&#x4E95;&#x7531;&#x5176;&#x4ED6;&#x6A21;&#x5757;&#x5904;&#x7406;&#x3002;</p>
-<hr>
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#&#x7F13;&#x51B2;&#x533A;">&#x7F13;&#x51B2;&#x533A;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
-<li>&#x7EBF;&#x7A0B;&#x540C;&#x6B65;&#x4E4B;&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;</li>
+<li><div><a href="#&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;&#x5B9E;&#x8DF5;">&#x751F;&#x4EA7;&#x8005;/&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;&#x5B9E;&#x8DF5;</a><i></i></div></li>
+</ul></li>
 </ul>
+</div>
+
+
+<h1 id="&#x7F13;&#x51B2;&#x533A;">&#x7F13;&#x51B2;&#x533A;</h1>
+<p>&#x5728;&#x952E;&#x76D8;&#x4E0A;&#x64CD;&#x4F5C;&#x662F;&#x4E3A;&#x4E86;&#x4E0E;&#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#xFF0C;&#x4EA4;&#x4E92;&#x7684;&#x8FC7;&#x7A0B;&#x4E00;&#x822C;&#x662F;&#x952E;&#x5165;&#x5404;&#x79CD; shell &#x547D;&#x4EE4;&#xFF0C;&#x7136;&#x540E; shell &#x89E3;&#x6790;&#x5E76;&#x6267;&#x884C;&#x3002;shell &#x547D;&#x4EE4;&#x662F;&#x7531;&#x591A;&#x4E2A;&#x5B57;&#x7B26;&#x7EC4;&#x6210;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x8981;&#x4EE5;&#x56DE;&#x8F66;&#x952E;&#x7ED3;&#x675F;&#xFF0C;&#x56E0;&#x6B64;&#x54B1;&#x4EEC;&#x5728;&#x952E;&#x5165;&#x547D;&#x4EE4;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5FC5;&#x987B;&#x8981;&#x627E;&#x4E2A;&#x7F13;&#x51B2;&#x533A;&#x628A;&#x5DF1;&#x952E;&#x5165;&#x7684;&#x4FE1;&#x606F;&#x5B58;&#x8D77;&#x6765;&#xFF0C;&#x5F53;&#x51D1;&#x6210;&#x5B8C;&#x6574;&#x7684;&#x547D;&#x4EE4;&#x540D;&#x65F6;&#x518D;&#x4E00;&#x4E95;&#x7531;&#x5176;&#x5B83;&#x6A21;&#x5757;&#x5904;&#x7406;&#x3002;</p>
+<h2 id="&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;&#x5B9E;&#x8DF5;">&#x751F;&#x4EA7;&#x8005;/&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;&#x5B9E;&#x8DF5;</h2>
 <p><img src="imgs/01.jpg" alt=""></p>
 <p>&#x7F13;&#x51B2;&#x533A;&#x4E2D;&#x6709;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x6D88;&#x8D39;&#x8005;&#x53EF;&#x4EE5;&#x6D88;&#x8D39;&#xFF1B;&#x7F13;&#x51B2;&#x533A;&#x6709;&#x7A7A;&#x4F4D;&#x65F6;&#xFF0C;&#x751F;&#x4EA7;&#x8005;&#x53EF;&#x4EE5;&#x751F;&#x6210;&#xFF08;&#x4FE1;&#x53F7;&#x91CF;&#x53EF;&#x4EE5;&#x89E3;&#x51B3;&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;&#xFF09;</p>
 <ul>
@@ -451,85 +458,93 @@
 </ul>
 <p><img src="imgs/02.jpg" alt=""></p>
 <ul>
-<li>&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x65B9;&#x6CD5;
-```<h1 id="define-bufsize-64">define bufsize 64</h1>
-</li>
+<li>&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x65B9;&#x6CD5;</li>
 </ul>
-<p>/<em> &#x73AF;&#x5F62;&#x961F;&#x5217; </em>/
-struct ioqueue {
-// &#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;
-    struct lock lock;
- /* &#x751F;&#x4EA7;&#x8005;,&#x7F13;&#x51B2;&#x533A;&#x4E0D;&#x6EE1;&#x65F6;&#x5C31;&#x7EE7;&#x7EED;&#x5F80;&#x91CC;&#x9762;&#x653E;&#x6570;&#x636E;,</p>
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> bufsize 64</span>
+
+<span class="token comment">/* &#x73AF;&#x5F62;&#x961F;&#x5217; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">ioqueue</span> <span class="token punctuation">{</span>
+<span class="token comment">// &#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">lock</span> lock<span class="token punctuation">;</span>
+ <span class="token comment">/* &#x751F;&#x4EA7;&#x8005;,&#x7F13;&#x51B2;&#x533A;&#x4E0D;&#x6EE1;&#x65F6;&#x5C31;&#x7EE7;&#x7EED;&#x5F80;&#x91CC;&#x9762;&#x653E;&#x6570;&#x636E;,
+  * &#x5426;&#x5219;&#x5C31;&#x7761;&#x7720;,&#x6B64;&#x9879;&#x8BB0;&#x5F55;&#x54EA;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x5728;&#x6B64;&#x7F13;&#x51B2;&#x533A;&#x4E0A;&#x7761;&#x7720;&#x3002;*/</span>
+    <span class="token keyword">struct</span> <span class="token class-name">task_struct</span><span class="token operator">*</span> producer<span class="token punctuation">;</span>
+
+ <span class="token comment">/* &#x6D88;&#x8D39;&#x8005;,&#x7F13;&#x51B2;&#x533A;&#x4E0D;&#x7A7A;&#x65F6;&#x5C31;&#x7EE7;&#x7EED;&#x4ECE;&#x5F80;&#x91CC;&#x9762;&#x62FF;&#x6570;&#x636E;,
+  * &#x5426;&#x5219;&#x5C31;&#x7761;&#x7720;,&#x6B64;&#x9879;&#x8BB0;&#x5F55;&#x54EA;&#x4E2A;&#x6D88;&#x8D39;&#x8005;&#x5728;&#x6B64;&#x7F13;&#x51B2;&#x533A;&#x4E0A;&#x7761;&#x7720;&#x3002;*/</span>
+    <span class="token keyword">struct</span> <span class="token class-name">task_struct</span><span class="token operator">*</span> consumer<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span>bufsize<span class="token punctuation">]</span><span class="token punctuation">;</span>                <span class="token comment">// &#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;</span>
+    <span class="token keyword">int32_t</span> head<span class="token punctuation">;</span>                <span class="token comment">// &#x961F;&#x9996;,&#x6570;&#x636E;&#x5F80;&#x961F;&#x9996;&#x5904;&#x5199;&#x5165;</span>
+    <span class="token keyword">int32_t</span> tail<span class="token punctuation">;</span>                <span class="token comment">// &#x961F;&#x5C3E;,&#x6570;&#x636E;&#x4ECE;&#x961F;&#x5C3E;&#x5904;&#x8BFB;&#x51FA;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">ioqueue_init</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">ioqueue</span><span class="token operator">*</span> ioq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">ioq_full</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">ioqueue</span><span class="token operator">*</span> ioq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">ioq_empty</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">ioqueue</span><span class="token operator">*</span> ioq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* &#x6D88;&#x8D39;&#x8005;&#x4ECE;ioq&#x961F;&#x5217;&#x4E2D;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x5B57;&#x7B26; */</span>
+<span class="token keyword">char</span> <span class="token function">ioq_getchar</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">ioqueue</span><span class="token operator">*</span> ioq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* &#x751F;&#x4EA7;&#x8005;&#x5F80;ioq&#x961F;&#x5217;&#x4E2D;&#x5199;&#x5165;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;byte */</span>
+<span class="token keyword">void</span> <span class="token function">ioq_putchar</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">ioqueue</span><span class="token operator">*</span> ioq<span class="token punctuation">,</span> <span class="token keyword">char</span> byte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x8BA9;&#x952E;&#x76D8;&#x7F13;&#x51B2;&#x533A;&#x79F0;&#x4E3A;&#x5168;&#x5C40;&#x7684;&#xFF0C;&#x751F;&#x4EA7;&#x6D88;&#x8D39;&#x90FD;&#x64CD;&#x4F5C;</p>
 <ul>
-<li><p>&#x5426;&#x5219;&#x5C31;&#x7761;&#x7720;,&#x6B64;&#x9879;&#x8BB0;&#x5F55;&#x54EA;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x5728;&#x6B64;&#x7F13;&#x51B2;&#x533A;&#x4E0A;&#x7761;&#x7720;&#x3002;<em>/
-struct task_struct</em> producer;</p>
-<p>/* &#x6D88;&#x8D39;&#x8005;,&#x7F13;&#x51B2;&#x533A;&#x4E0D;&#x7A7A;&#x65F6;&#x5C31;&#x7EE7;&#x7EED;&#x4ECE;&#x5F80;&#x91CC;&#x9762;&#x62FF;&#x6570;&#x636E;,</p>
-</li>
-<li>&#x5426;&#x5219;&#x5C31;&#x7761;&#x7720;,&#x6B64;&#x9879;&#x8BB0;&#x5F55;&#x54EA;&#x4E2A;&#x6D88;&#x8D39;&#x8005;&#x5728;&#x6B64;&#x7F13;&#x51B2;&#x533A;&#x4E0A;&#x7761;&#x7720;&#x3002;<em>/
-struct task_struct</em> consumer;
-char buf[bufsize];                // &#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;
-int32_t head;                // &#x961F;&#x9996;,&#x6570;&#x636E;&#x5F80;&#x961F;&#x9996;&#x5904;&#x5199;&#x5165;
-int32_t tail;                // &#x961F;&#x5C3E;,&#x6570;&#x636E;&#x4ECE;&#x961F;&#x5C3E;&#x5904;&#x8BFB;&#x51FA;
-};</li>
+<li>&#x4E3B;&#x7A0B;&#x5E8F;&#x9A8C;&#x8BC1;</li>
 </ul>
-<p>void ioqueue_init(struct ioqueue<em> ioq);
-bool ioq_full(struct ioqueue</em> ioq);
-bool ioq_empty(struct ioqueue* ioq);</p>
-<p>/<em> &#x6D88;&#x8D39;&#x8005;&#x4ECE;ioq&#x961F;&#x5217;&#x4E2D;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x5B57;&#x7B26; </em>/
-char ioq_getchar(struct ioqueue* ioq);</p>
-<p>/<em> &#x751F;&#x4EA7;&#x8005;&#x5F80;ioq&#x961F;&#x5217;&#x4E2D;&#x5199;&#x5165;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;byte </em>/
-void ioq_putchar(struct ioqueue* ioq, char byte);</p>
-<pre class="language-"><code>
-&#x8BA9;&#x952E;&#x76D8;&#x7F13;&#x51B2;&#x533A;&#x79F0;&#x4E3A;&#x5168;&#x5C40;&#x7684;&#xFF0C;&#x751F;&#x4EA7;&#x6D88;&#x8D39;&#x90FD;&#x64CD;&#x4F5C;
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;print.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;init.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;thread.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;interrupt.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;console.h&quot;</span></span>
 
+<span class="token comment">/* &#x4E34;&#x65F6;&#x4E3A;&#x6D4B;&#x8BD5;&#x6DFB;&#x52A0; */</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;ioqueue.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;keyboard.h&quot;</span></span>
 
-* &#x4E3B;&#x7A0B;&#x5E8F;&#x9A8C;&#x8BC1;
-</code></pre><h1 id="include-printh">include &quot;print.h&quot;</h1>
-<h1 id="include-inith">include &quot;init.h&quot;</h1>
-<h1 id="include-threadh">include &quot;thread.h&quot;</h1>
-<h1 id="include-interrupth">include &quot;interrupt.h&quot;</h1>
-<h1 id="include-consoleh">include &quot;console.h&quot;</h1>
-<p>/<em> &#x4E34;&#x65F6;&#x4E3A;&#x6D4B;&#x8BD5;&#x6DFB;&#x52A0; </em>/</p>
-<h1 id="include-ioqueueh">include &quot;ioqueue.h&quot;</h1>
-<h1 id="include-keyboardh">include &quot;keyboard.h&quot;</h1>
-<p>void k_thread_a(void<em>);
-void k_thread_b(void</em>);</p>
-<p>int main(void) {
-   put<em>str(&quot;I am kernel\n&quot;);
-   init_all();
-   thread_start(&quot;consumer_a&quot;, 31, k_thread_a, &quot; A</em>&quot;);
-   thread<em>start(&quot;consumer_b&quot;, 31, k_thread_b, &quot; B</em>&quot;);
-   intr_enable();
-   while(1); 
-   return 0;
-}</p>
-<p>/<em> &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; </em>/
-void k_thread_a(void* arg) {<br>   while(1) {
-      enum intr_status old_status = intr_disable();
-      if (!ioq_empty(&amp;kbd_buf)) {
-     console_put_str(arg);
-     char byte = ioq_getchar(&amp;kbd_buf);
-     console_put_char(byte);
-      }
-      intr_set_status(old_status);
-   }
-}</p>
-<p>/<em> &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; </em>/
-void k_thread_b(void* arg) {<br>   while(1) {
-      enum intr_status old_status = intr_disable();
-      if (!ioq_empty(&amp;kbd_buf)) {
-     console_put_str(arg);
-     char byte = ioq_getchar(&amp;kbd_buf);
-     console_put_char(byte);
-      }
-      intr_set_status(old_status);
-   }
-}</p>
-<p>```</p>
+<span class="token keyword">void</span> <span class="token function">k_thread_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">put_str</span><span class="token punctuation">(</span><span class="token string">&quot;I am kernel\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">init_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">thread_start</span><span class="token punctuation">(</span><span class="token string">&quot;consumer_a&quot;</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> k_thread_a<span class="token punctuation">,</span> <span class="token string">&quot; A_&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">thread_start</span><span class="token punctuation">(</span><span class="token string">&quot;consumer_b&quot;</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> k_thread_b<span class="token punctuation">,</span> <span class="token string">&quot; B_&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">intr_enable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">enum</span> <span class="token class-name">intr_status</span> old_status <span class="token operator">=</span> <span class="token function">intr_disable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">ioq_empty</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kbd_buf<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token function">console_put_str</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">char</span> byte <span class="token operator">=</span> <span class="token function">ioq_getchar</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kbd_buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token function">console_put_char</span><span class="token punctuation">(</span>byte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token function">intr_set_status</span><span class="token punctuation">(</span>old_status<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">enum</span> <span class="token class-name">intr_status</span> old_status <span class="token operator">=</span> <span class="token function">intr_disable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">ioq_empty</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kbd_buf<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token function">console_put_str</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">char</span> byte <span class="token operator">=</span> <span class="token function">ioq_getchar</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kbd_buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token function">console_put_char</span><span class="token punctuation">(</span>byte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token function">intr_set_status</span><span class="token punctuation">(</span>old_status<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 <p><img src="imgs/rs.jpg" alt=""></p>
-<p>&#x952E;&#x76D8;&#x4E0D;&#x65AD;&#x7684;&#x8F93;&#x5165;&#x5B57;&#x6BCD;p,&#xFF0C;&#x5C4F;&#x5E55;&#x4EA4;&#x66FF;&#x7684;&#x8F93;&#x51FA;&quot;A_q&quot;,&quot;B_q&quot;,ioqueue&#x5B8C;&#x6210;&#x4E86;&#x7F13;&#x51B2;&#x533A;&#x3002; </p>
+<p>&#x952E;&#x76D8;&#x4E0D;&#x65AD;&#x7684;&#x8F93;&#x5165;&#x5B57;&#x6BCD;p,&#xFF0C;&#x5C4F;&#x5E55;&#x4EA4;&#x66FF;&#x7684;&#x8F93;&#x51FA;<code>A_q B_q</code>,ioqueue&#x5B8C;&#x6210;&#x4E86;&#x7F13;&#x51B2;&#x533A;&#x3002;</p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 09:19:57
+2020-08-02 17:14:41
 </span></footer>
                                 
                                 </section>
@@ -562,7 +577,7 @@ void k_thread_b(void* arg) {<br>   while(1) {
                 </a>
                 
                 
-                <a href="../15_user_process/" class="navigation navigation-next " aria-label="Next page: 15 特权级，用户进程">
+                <a href="../15_user_process/" class="navigation navigation-next " aria-label="Next page: 15 指令特权级，用户进程引入">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -573,7 +588,7 @@ void k_thread_b(void* arg) {<br>   while(1) {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"14 缓冲区","level":"1.15","depth":1,"next":{"title":"15 特权级，用户进程","level":"1.16","depth":1,"path":"content/15_user_process/README.md","ref":"./content/15_user_process/README.md","articles":[]},"previous":{"title":"13 键盘输入","level":"1.14","depth":1,"path":"content/13_input/README.md","ref":"./content/13_input/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/14_input_buffer/README.md","mtime":"2020-08-02T01:19:57.522Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"14 缓冲区","level":"1.15","depth":1,"next":{"title":"15 指令特权级，用户进程引入","level":"1.16","depth":1,"path":"content/15_user_process/README.md","ref":"./content/15_user_process/README.md","articles":[]},"previous":{"title":"13 键盘输入","level":"1.14","depth":1,"path":"content/13_input/README.md","ref":"./content/13_input/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/14_input_buffer/README.md","mtime":"2020-08-02T09:14:41.276Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T14:34:24.125Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

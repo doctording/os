@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>4 分页 · spring-note</title>
+        <title>4 分段 & 分页 · spring-note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -139,7 +139,7 @@
                 <a href="../01_BIOS_to_MBR/">
             
                     
-                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+                    1 最简单的OS:实模式下BIOS到MBR
             
                 </a>
             
@@ -165,7 +165,7 @@
                 <a href="../03_protected_mode/">
             
                     
-                    3 实模式到保护模式（GDT，gdtr, 选择子)
+                    3 实模式到保护模式（GDT,gdtr,选择子)
             
                 </a>
             
@@ -178,7 +178,7 @@
                 <a href="./">
             
                     
-                    4 分页
+                    4 分段 & 分页
             
                 </a>
             
@@ -191,7 +191,7 @@
                 <a href="../05_efi/">
             
                     
-                    5 ELF文件格式
+                    5 ELF文件理解
             
                 </a>
             
@@ -204,7 +204,7 @@
                 <a href="../06_kernel_start/">
             
                     
-                    6 内核编写
+                    6 C语言写内核
             
                 </a>
             
@@ -282,7 +282,7 @@
                 <a href="../12_lock/">
             
                     
-                    12 锁,信号量
+                    12 锁&信号量
             
                 </a>
             
@@ -321,7 +321,7 @@
                 <a href="../15_user_process/">
             
                     
-                    15 特权级，用户进程
+                    15 指令特权级，用户进程引入
             
                 </a>
             
@@ -334,7 +334,7 @@
                 <a href="../16_system_call/">
             
                     
-                    16 系统调用
+                    16 系统调用实现用户进程
             
                 </a>
             
@@ -347,7 +347,7 @@
                 <a href="../17_hd_driver/">
             
                     
-                    17 硬件驱动
+                    17 硬件驱动认识
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="../19_fd_inode_dir_file/">
             
                     
-                    19 inode,文件目录操作
+                    19 文件描述符操作
             
                 </a>
             
@@ -424,7 +424,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >4 分页</a>
+        <a href="../.." >4 分段 & 分页</a>
     </h1>
 </div>
 
@@ -440,38 +440,42 @@
                                 <section class="normal markdown-section">
                                 
                                 <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
-<li><div><a href="#&#x5206;&#x6BB5;&#x5230;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;">&#x5206;&#x6BB5;&#x5230;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;</a><i></i></div></li>
+<li><div><a href="#&#x5206;&#x6BB5;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;">&#x5206;&#x6BB5;&amp;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x5206;&#x9875;&#xFF08;&#x5206;&#x9875;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x8BBF;&#x95EE;&#xFF09;">&#x5206;&#x9875;&#xFF08;&#x5206;&#x9875;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x8BBF;&#x95EE;&#xFF09;</a><i></i></div></li>
+</ul></li>
 <li><div><a href="#&#x5206;&#x9875;&#x95EE;&#x9898;&#x4E0E;&#x89E3;&#x51B3;&#xFF0C;&#x5730;&#x5740;&#x5982;&#x4F55;&#x6620;&#x5C04;">&#x5206;&#x9875;&#x95EE;&#x9898;&#x4E0E;&#x89E3;&#x51B3;&#xFF0C;&#x5730;&#x5740;&#x5982;&#x4F55;&#x6620;&#x5C04;</a><i></i></div></li>
-<li><div><a href="#&#x5206;&#x9875;&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;">&#x5206;&#x9875;&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;</a><i></i></div></li>
+<li><div><a href="#&#x5206;&#x9875;&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;">&#x5206;&#x9875;&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
 <li><div><a href="#&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;">&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;</a><i></i></div></li>
+</ul></li>
 </ul>
 </div>
 
 
-
-<h1 id="&#x5206;&#x6BB5;&#x5230;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;">&#x5206;&#x6BB5;&#x5230;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;</h1>
+<h1 id="&#x5206;&#x6BB5;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;">&#x5206;&#x6BB5;&amp;&#x5206;&#x9875;&#xFF08;&#x5206;&#x6BB5;&#x6709;&#x7F3A;&#x9677;&#xFF1F;&#xFF09;</h1>
 <ul>
 <li>&#x5185;&#x5B58;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x8BBF;&#x95EE;</li>
 </ul>
 <p><img src="imgs/1.jpg" alt=""></p>
-<p>&#x539F;&#x5148;&#x7684;&#x7A0B;&#x5E8F;&#x662F;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#xFF0C;&#x91C7;&#x7528;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4E0B;&#xFF1A;</p>
+<p>&#x539F;&#x5148;&#x7684;&#x7A0B;&#x5E8F;&#x662F;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#xFF0C;&#x91C7;&#x7528;&#x865A;&#x62DF;&#x5730;&#x5740;&#x548C;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4E0B;&#xFF1A;</p>
 <ul>
-<li>&#x89E3;&#x51B3;&#x4E86;1&#xFF1A; &#x8FDB;&#x7A0B;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x4E0D;&#x80FD;&#x9694;&#x79BB;</li>
+<li>&#x89E3;&#x51B3;&#x4E86;1&#xFF1A;&#x8FDB;&#x7A0B;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x4E0D;&#x80FD;&#x9694;&#x79BB;</li>
 </ul>
 <p>&#x6BCF;&#x4E2A;&#x7A0B;&#x5E8F;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x865A;&#x62DF;&#x5730;&#x5740;&#x662F;&#x53EF;&#x4EE5;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x4F1A;&#x6620;&#x5C04;&#x5230;&#x4E0D;&#x540C;&#x7269;&#x7406;&#x5730;&#x5740;&#x4E2D;&#x3002;&#x786E;&#x4FDD;&#x4E86;<strong>&#x6BCF;&#x4E2A;&#x7A0B;&#x5E8F;&#x6709;&#x72EC;&#x7ACB;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;</strong></p>
 <ul>
-<li>&#x89E3;&#x51B3;&#x4E86;2&#xFF1A; &#x7A0B;&#x5E8F;&#x5730;&#x5740;&#x91CD;&#x5B9A;&#x4F4D;&#x7684;&#x95EE;&#x9898;</li>
+<li>&#x89E3;&#x51B3;&#x4E86;2&#xFF1A;&#x7A0B;&#x5E8F;&#x5730;&#x5740;&#x91CD;&#x5B9A;&#x4F4D;&#x7684;&#x95EE;&#x9898;</li>
 </ul>
 <p>&#x539F;&#x6765;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7A0B;&#x5E8F;&#x6BCF;&#x6B21;&#x9700;&#x8981;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x5206;&#x914D;&#x4E00;&#x5757;&#x8DB3;&#x591F;&#x5927;&#x7684;&#x7A7A;&#x95F2;&#x533A;&#x57DF;&#xFF0C;&#x800C;&#x95EE;&#x9898;&#x662F;&#x8FD9;&#x4E2A;&#x7A7A;&#x95F2;&#x7684;&#x4F4D;&#x7F6E;&#x662F;&#x4E0D;&#x80FD;&#x786E;&#x5B9A;&#x7684;&#xFF08;&#x7A7A;&#x95F2;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5757;&#x4E0D;&#x662F;&#x786E;&#x5B9A;&#x7684;&#xFF09;&#xFF0C;&#x8FD9;&#x4F1A;&#x5E26;&#x6765;&#x4E00;&#x4E9B;&#x91CD;&#x5B9A;&#x4F4D;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x91CD;&#x5B9A;&#x4F4D;&#x7684;&#x95EE;&#x9898;&#x786E;&#x5B9A;&#x5C31;&#x662F;&#x7A0B;&#x5E8F;&#x4E2D;&#x5F15;&#x7528;&#x7684;&#x53D8;&#x91CF;&#x548C;&#x51FD;&#x6570;&#x7684;&#x5730;&#x5740;&#x3002;</p>
 <p>&#x5206;&#x6BB5;&#x540E;&#x6BCF;&#x4E2A;&#x7A0B;&#x5E8F;&#x7531;&#x81EA;&#x5DF1;&#x72EC;&#x7ACB;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;(&#x865A;&#x62DF;&#x5730;&#x5740;&#x4F1A;&#x6620;&#x5C04;&#x5230;&#x76F8;&#x5E94;&#x7684;&#x53EF;&#x5206;&#x914D;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;)&#xFF0C;&#x7A0B;&#x5E8F;&#x65E0;&#x9700;&#x5173;&#x5FC3;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x6839;&#x636E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x6765;&#x653E;&#x7F6E;&#x53D8;&#x91CF;&#xFF0C;&#x4EE3;&#x7801;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x5B9A;&#x4F4D;&#x3002;</p>
 <ul>
-<li>&#x5206;&#x9875;&#x673A;&#x5236;&#x4ECD;&#x6709;&#x4E0D;&#x8DB3;</li>
+<li>&#x4F46;&#x662F;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4ECD;&#x6709;&#x4E0D;&#x8DB3;</li>
 </ul>
 <p>&#x5185;&#x5B58;&#x6620;&#x5C04;&#x4ECD;&#x7136;&#x662F;&#x4EE5;&#x7A0B;&#x5E8F;&#x4E3A;&#x5355;&#x4F4D;&#xFF0C;&#x5F53;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x662F;&#x65F6;&#x4ECD;&#x7136;&#x9700;&#x8981;&#x5C06;&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x4EA4;&#x6362;&#x5230;&#x78C1;&#x76D8;&#xFF0C;&#x5185;&#x5B58;&#x7684;&#x4F7F;&#x7528;&#x6548;&#x7387;&#x4F9D;&#x7136;&#x5F88;&#x4F4E;&#x3002;</p>
 <p>&#x5373;&#x5F53;&#x67D0;&#x4E2A;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x4E00;&#x5757;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x662F;&#xFF0C;&#x82E5;&#x7269;&#x7406;&#x5730;&#x5740;&#x6CA1;&#x6709;&#x8FDE;&#x7EED;&#x7684;&#x8FD9;&#x4E48;&#x4E00;&#x5757;&#xFF08;&#x5373;&#x4FBF;&#x5176;&#x6709;&#x5F88;&#x591A;&#x5757;&#x8F83;&#x5C0F;&#x7684;&#xFF0C;&#x52A0;&#x8D77;&#x6765;&#x4E5F;&#x5F88;&#x5927;&#xFF09;&#xFF0C;&#x5728;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4E0B;&#xFF0C;&#x8BE5;&#x8FDB;&#x7A0B;&#x4ECD;&#x7136;&#x65E0;&#x6CD5;&#x8FD0;&#x884C;&#x3002;</p>
-<hr>
+<h2 id="&#x5206;&#x9875;&#xFF08;&#x5206;&#x9875;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x8BBF;&#x95EE;&#xFF09;">&#x5206;&#x9875;&#xFF08;&#x5206;&#x9875;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x8BBF;&#x95EE;&#xFF09;</h2>
 <ul>
-<li>&#x5206;&#x9875;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x8BBF;&#x95EE;</li>
+<li>&#x5206;&#x6BB5;</li>
 </ul>
 <p><img src="imgs/2.jpg" alt=""></p>
 <p>&#x7EBF;&#x6027;&#x5730;&#x5740;=&#x300B;&#x865A;&#x62DF;&#x5730;&#x5740;=&#x300B;&#x7269;&#x7406;&#x5730;&#x5740;</p>
@@ -479,20 +483,18 @@
 <li>&#x5206;&#x9875;&#x673A;&#x5236;&#x7684;&#x4F5C;&#x7528;</li>
 </ul>
 <p><img src="imgs/3.jpg" alt=""></p>
-<p>&#x5F53;&#x67D0;&#x4E2A;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x4E00;&#x5757;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x662F;&#xFF0C;&#x82E5;&#x7269;&#x7406;&#x5730;&#x5740;&#x6CA1;&#x6709;&#x8FDE;&#x7EED;&#x7684;&#x8FD9;&#x4E48;&#x4E00;&#x5757;&#xFF08;&#x5373;&#x4FBF;&#x5176;&#x6709;&#x5F88;&#x591A;&#x5757;&#x8F83;&#x5C0F;&#x7684;&#xFF0C;&#x52A0;&#x8D77;&#x6765;&#x4E5F;&#x5F88;&#x5927;&#xFF09;&#xFF0C;&#x5728;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4E0B;&#xFF0C;&#x8BE5;&#x8FDB;&#x7A0B;&#x4ECD;&#x7136;&#x65E0;&#x6CD5;&#x8FD0;&#x884C;&#x3002;
-&#x5206;&#x9875;&#x673A;&#x5236;&#xFF0C;&#x628A;&#x7269;&#x7406;&#x5185;&#x5B58;&#x9690;&#x5C04;&#x5230;&#x4E0D;&#x540C;&#x9875;&#x4E2D;&#xFF0C;&#x5206;&#x9875;&#x673A;&#x5236;&#x63D0;&#x4F9B;&#x865A;&#x62DF;&#x7684;&#x8FDE;&#x7EED;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x7ED9;&#x90A3;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x7269;&#x7406;&#x4E0A;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x4E0D;&#x8FDE;&#x7EED;&#x7684;&#x6548;&#x679C;&#x3002;</p>
-<p>&#x5206;&#x9875;&#x673A;&#x5236;&#x672C;&#x8D28;&#xFF1A;&#x5C06;&#x5927;&#x5C0F;&#x4E0D;&#x540C;&#x7684;&#x5927;&#x5185;&#x5B58;&#x6BB5;&#x62C6;&#x5206;&#x6210;&#x5927;&#x5C0F;&#x76F8;&#x7B49;&#x7684;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x53EF;&#x4EE5;&#x63D0;&#x4F9B;&#x865A;&#x62DF;&#x7684;&#x8FDE;&#x7EED;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x3002;</p>
+<p>&#x5F53;&#x67D0;&#x4E2A;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x4E00;&#x5757;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x662F;&#xFF0C;&#x82E5;&#x7269;&#x7406;&#x5730;&#x5740;&#x6CA1;&#x6709;&#x8FDE;&#x7EED;&#x7684;&#x8FD9;&#x4E48;&#x4E00;&#x5757;&#xFF08;&#x5373;&#x4FBF;&#x5176;&#x6709;&#x5F88;&#x591A;&#x5757;&#x8F83;&#x5C0F;&#x7684;&#xFF0C;&#x52A0;&#x8D77;&#x6765;&#x4E5F;&#x5F88;&#x5927;&#xFF09;&#xFF0C;&#x5728;&#x5206;&#x6BB5;&#x673A;&#x5236;&#x4E0B;&#xFF0C;&#x8BE5;&#x8FDB;&#x7A0B;&#x4ECD;&#x7136;&#x65E0;&#x6CD5;&#x8FD0;&#x884C;&#x3002;&#x800C;&#x5206;&#x9875;&#x673A;&#x5236;&#xFF0C;&#x628A;&#x7269;&#x7406;&#x5185;&#x5B58;&#x9690;&#x5C04;&#x5230;&#x4E0D;&#x540C;&#x9875;&#x4E2D;&#xFF0C;&#x5206;&#x9875;&#x673A;&#x5236;&#x63D0;&#x4F9B;&#x865A;&#x62DF;&#x7684;&#x8FDE;&#x7EED;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x7ED9;&#x90A3;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x7269;&#x7406;&#x4E0A;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x4E0D;&#x8FDE;&#x7EED;&#x7684;&#x6548;&#x679C;&#x3002;</p>
+<p>&#x5206;&#x9875;&#x673A;&#x5236;&#x672C;&#x8D28;&#xFF1A;<font color="red">&#x5C06;&#x5927;&#x5C0F;&#x4E0D;&#x540C;&#x7684;&#x5927;&#x5185;&#x5B58;&#x6BB5;&#x62C6;&#x5206;&#x6210;&#x5927;&#x5C0F;&#x76F8;&#x7B49;&#x7684;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x53EF;&#x4EE5;&#x63D0;&#x4F9B;&#x865A;&#x62DF;&#x7684;&#x8FDE;&#x7EED;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x3002;&lt;/a&gt;</font></p>
 <h1 id="&#x5206;&#x9875;&#x95EE;&#x9898;&#x4E0E;&#x89E3;&#x51B3;&#xFF0C;&#x5730;&#x5740;&#x5982;&#x4F55;&#x6620;&#x5C04;">&#x5206;&#x9875;&#x95EE;&#x9898;&#x4E0E;&#x89E3;&#x51B3;&#xFF0C;&#x5730;&#x5740;&#x5982;&#x4F55;&#x6620;&#x5C04;</h1>
 <p>&#x82E5;&#x4E00;&#x9875;1&#x5B57;&#x8282;&#xFF0C;&#x90A3;&#x4E48;4G&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8981;&#x6709;4G&#x4E2A;&#x9875;&#xFF0C;&#x4E00;&#x4E2A;&#x9875;&#x8981;&#x8868;&#x793A;32&#x4F4D;&#x5730;&#x5740;&#x9700;&#x8981;4B,&#x9875;&#x8868;&#x5B58;&#x653E;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x90A3;&#x4E48;&#x5B58;&#x653E;&#x9875;&#x8868;&#x9700;&#x8981;4G*4B =16GB&#x5927;&#x5C0F;&#xFF0C;&#x663E;&#x7136;&#x4E0D;&#x5408;&#x7406;&#x3002;</p>
 <p>4G&#x5185;&#x5B58;=&#x5185;&#x5B58;&#x5757;&#x6570;&#x91CF;<em>&#x5185;&#x5B58;&#x5757;&#x5927;&#x5C0F;&#xFF08;&#x9875;&#x6570;&#x91CF;</em>&#x9875;&#x7684;&#x5927;&#x5C0F;&#xFF09;</p>
-<p>&#x9875;&#x5927;&#x5C0F;&#x4E3A;&#xFF1A;4KB</p>
-<p>&#x9875;&#x6570;&#x91CF;: 4GB / 4KB = 1M&#xFF08;1,048,576&#x4E2A;&#x9875;&#xFF09;</p>
-<p>&#x9875;&#x8868;&#x4E2D;&#x9700;&#x8981;&#x6709;1,048,576&#x4E2A;&#x9875;&#x8868;&#x9879;</p>
+<p>&#x9875;&#x5927;&#x5C0F;&#x4E3A;&#xFF1A;<code>4KB</code></p>
+<p>&#x9875;&#x6570;&#x91CF;: 4GB / 4KB = 1M&#xFF08;&#x5373;<code>1,048,576</code>&#x4E2A;&#x9875;&#xFF09;&#xFF0C;&#x9875;&#x8868;&#x4E2D;&#x9700;&#x8981;&#x6709;1,048,576&#x4E2A;&#x9875;&#x8868;&#x9879;</p>
 <ul>
 <li>&#x4E00;&#x7EA7;&#x5206;&#x9875;&#xFF0C;&#x4E8C;&#x7EA7;&#x5206;&#x9875;(&#x9875;&#x76EE;&#x5F55;&#xFF0C;&#x9875;&#x8868;)</li>
 </ul>
 <p><img src="imgs/4.jpg" alt=""></p>
-<p>&#x4E00;&#x9875;4KB(&#x9700;&#x8981;12bit&#x6765;&#x8868;&#x793A;),&#x7528;&#x6765;&#x8868;&#x793A;&#x9875;&#x5185;&#x5927;&#x5C0F;; 1M&#x4E2A;&#x9875;&#x8868;(&#x9700;&#x8981;20bit&#x6765;&#x8868;&#x793A;)&#xFF0C;&#x7528;&#x6765;&#x8868;&#x793A;&#x67D0;&#x4E2A;&#x9875;&#x8868;&#x9879;&#xFF1B; </p>
+<p>&#x4E00;&#x9875;4KB(&#x9700;&#x8981;12bit&#x6765;&#x8868;&#x793A;),&#x7528;&#x6765;&#x8868;&#x793A;&#x9875;&#x5185;&#x5927;&#x5C0F;; 1M&#x4E2A;&#x9875;&#x8868;(&#x9700;&#x8981;20bit&#x6765;&#x8868;&#x793A;)&#xFF0C;&#x7528;&#x6765;&#x8868;&#x793A;&#x67D0;&#x4E2A;&#x9875;&#x8868;&#x9879;&#xFF1B;</p>
 <p>&#x7269;&#x7406;&#x5730;&#x5740;&#x5219;&#x6709;&#x7269;&#x7406;&#x9875;&#x4E0E;&#x4E4B;&#x5BF9;&#x5E94;&#xFF0C;&#x7269;&#x7406;&#x9875;&#x7684;&#x5927;&#x5C0F;&#x4E5F;&#x662F;4KB,&#x5B9A;&#x4F4D;&#x5230;&#x7269;&#x7406;&#x9875;&#x540E;&#xFF0C;&#x7ED9;&#x51FA;&#x76F8;&#x5E94;&#x504F;&#x79FB;&#xFF0C;&#x5C31;&#x80FD;&#x8BBF;&#x95EE;&#x5230;&#x8BE5;&#x9875;&#x4E2D;&#x7684;&#x4EFB;&#x610F;1&#x5B57;&#x8282;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E86;&#x3002;</p>
 <p>&#x5B58;&#x50A8;1M&#x7684;&#x9875;&#x8868;&#xFF0C;&#x9700;&#x8981;1M*4B(&#x9875;&#x8868;&#x9879;32bit)=4M&#x7269;&#x7406;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;</p>
 <p>&#x91C7;&#x7528;&#x4E8C;&#x7EA7;&#x5B58;&#x50A8;&#xFF1A;&#x4E00;&#x7EA7;&#x662F;&#x76EE;&#x5F55;&#x8868;&#xFF0C;&#x4E8C;&#x7EA7;&#x662F;&#x9875;&#x8868;</p>
@@ -527,28 +529,32 @@
 <h1 id="&#x5206;&#x9875;&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;">&#x5206;&#x9875;&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;</h1>
 <p><img src="imgs/7.jpg" alt=""></p>
 <p>&#x9875;&#x76EE;&#x5F55;&#x8868;</p>
-<pre class="language-"><code>31-12&#x4F4D; &#x5171;20&#x4F4D;&#xFF0C;&#x662F;&#x7269;&#x7406;&#x5730;&#x5740;&#xFF08;20&#x4F4D;&#xFF0C;&#x56E0;&#x4E3A;&#x7269;&#x7406;&#x9875;&#x4E5F;&#x662F;4KB&#xFF09;
-AVL:&#x53EF;&#x7528;
-G:&#x5168;&#x5C40;&#x4F4D;&#xFF0C;TLB&#x9AD8;&#x901F;&#x7F13;&#x5B58;&#x76F8;&#x5173;
-D:&#x810F;&#x9875;&#xFF0C;&#x5F53;cpu&#x5BF9;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x5199;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x5C06;&#x5176;&#x8BBE;&#x4E3A;1
-A:&#x8BBF;&#x95EE;&#x4F4D;&#xFF0C;&#x662F;&#x5426;&#x88AB;CPU&#x8BBF;&#x95EE;&#x8FC7;
-PCD: Page-level Cache Disable,&#x9AD8;&#x901F;&#x7F13;&#x5B58;&#x662F;&#x5426;&#x7981;&#x7528;
-PWT:Page-level Write-Through&#xFF0C;&#x9875;&#x7EA7;&#x5199;&#x901A;
-US:&#x666E;&#x901A;&#x7528;&#x6237;&#x548C;&#x8D85;&#x7EA7;&#x7528;&#x6237;&#x4F4D;
-RW:&#x8BFB;&#x5199;&#x4F4D;
-P:&#x662F;&#x5426;&#x5B58;&#x5728;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2D;
-</code></pre><p>&#x9875;&#x76EE;&#x5F55;&#x8868;&#x5F97;&#x57FA;&#x5740;&#x5B58;&#x4E8E; <strong>&#x9875;&#x76EE;&#x5F55;&#x57FA;&#x5740;&#x5BC4;&#x5B58;&#x5668;PDBR&#xFF08;&#x63A7;&#x5236;&#x5BC4;&#x5B58;&#x5668;cr3&#xFF09;</strong>, &#x5176;&#x6709;32bit</p>
+<pre class="language-"><code class="lang-java"><span class="token number">31</span><span class="token operator">-</span><span class="token number">12</span>&#x4F4D; &#x5171;<span class="token number">20</span>&#x4F4D;&#xFF0C;&#x662F;&#x7269;&#x7406;&#x5730;&#x5740;&#xFF08;<span class="token number">20</span>&#x4F4D;&#xFF0C;&#x56E0;&#x4E3A;&#x7269;&#x7406;&#x9875;&#x4E5F;&#x662F;<span class="token number">4</span>KB&#xFF09;
+AVL<span class="token operator">:</span>&#x53EF;&#x7528;
+<span class="token class-name">G</span><span class="token operator">:</span>&#x5168;&#x5C40;&#x4F4D;&#xFF0C;TLB&#x9AD8;&#x901F;&#x7F13;&#x5B58;&#x76F8;&#x5173;
+<span class="token class-name">D</span><span class="token operator">:</span>&#x810F;&#x9875;&#xFF0C;&#x5F53;cpu&#x5BF9;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x5199;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x5C06;&#x5176;&#x8BBE;&#x4E3A;<span class="token number">1</span>
+<span class="token class-name">A</span><span class="token operator">:</span>&#x8BBF;&#x95EE;&#x4F4D;&#xFF0C;&#x662F;&#x5426;&#x88AB;CPU&#x8BBF;&#x95EE;&#x8FC7;
+PCD<span class="token operator">:</span> <span class="token class-name">Page</span><span class="token operator">-</span>level <span class="token class-name">Cache</span> <span class="token class-name">Disable</span><span class="token punctuation">,</span>&#x9AD8;&#x901F;&#x7F13;&#x5B58;&#x662F;&#x5426;&#x7981;&#x7528;
+PWT<span class="token operator">:</span><span class="token class-name">Page</span><span class="token operator">-</span>level <span class="token class-name">Write</span><span class="token operator">-</span><span class="token class-name">Through</span>&#xFF0C;&#x9875;&#x7EA7;&#x5199;&#x901A;
+US<span class="token operator">:</span>&#x666E;&#x901A;&#x7528;&#x6237;&#x548C;&#x8D85;&#x7EA7;&#x7528;&#x6237;&#x4F4D;
+RW<span class="token operator">:</span>&#x8BFB;&#x5199;&#x4F4D;
+<span class="token class-name">P</span><span class="token operator">:</span>&#x662F;&#x5426;&#x5B58;&#x5728;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2D;
+</code></pre>
+<p>&#x9875;&#x76EE;&#x5F55;&#x8868;&#x5F97;&#x57FA;&#x5740;&#x5B58;&#x4E8E; <strong>&#x9875;&#x76EE;&#x5F55;&#x57FA;&#x5740;&#x5BC4;&#x5B58;&#x5668;PDBR&#xFF08;&#x63A7;&#x5236;&#x5BC4;&#x5B58;&#x5668;cr3&#xFF09;</strong>, &#x5176;&#x6709;32bit</p>
 <p><img src="imgs/9.jpg" alt=""></p>
 <p>&#x4E00;&#x4E2A;&#x9875;&#x76EE;&#x5F55;&#x7684;32&#x4F4D;&#x542B;&#x4E49;&#x6BD4;&#x8F83;&#x4E30;&#x5BCC;&#xFF0C;&#x8FD9;&#x90FD;&#x662F;&#x4E3A;&#x5206;&#x9875;&#x673A;&#x5236;&#xFF0C;&#x5206;&#x9875;&#x7B97;&#x6CD5;&#xFF0C;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x76F8;&#x5173;&#x800C;&#x8BBE;&#x5B9A;&#x7684;&#xFF0C;&#x90FD;&#x662F;&#x6709;&#x610F;&#x4E49;&#x7684;&#x3002;</p>
 <p>&#x540C;&#x7406;&#xFF0C;<strong>&#x9875;&#x76EE;&#x5F55;&#x9879;</strong></p>
 <p>&#x53EF;&#x4EE5;&#x67E5;&#x9605;&#x76F8;&#x5173;&#x8D44;&#x6599;&#xFF0C;&#x6DF1;&#x5165;&#x9605;&#x8BFB;&#x3002;</p>
 <ul>
-<li>&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x5206;&#x9875;&#x673A;&#x5236;&#xFF0C;&#x5F53;&#x7136;<strong>&#x5206;&#x6BB5;</strong>&#x662F;&#x524D;&#x63D0;</li>
+<li><p>&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x5206;&#x9875;&#x673A;&#x5236;&#xFF0C;&#x5F53;&#x7136;<strong>&#x5206;&#x6BB5;</strong>&#x662F;&#x524D;&#x63D0;</p>
+<ol>
 <li>&#x5B9E;&#x73B0;&#x597D;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x548C;&#x9875;&#x8868;</li>
 <li>&#x9875;&#x76EE;&#x5F55;&#x8868;&#x57FA;&#x5730;&#x5740;&#x5199;&#x5165;&#x63A7;&#x5236;&#x5BC4;&#x5B58;&#x5668;cr3</li>
 <li>&#x63A7;&#x5236;&#x5BC4;&#x5B58;&#x5668;cr0&#x7684;PG&#x4E3A;&#x8BBE;&#x4E3A;1&#xFF0C;&#x8868;&#x793A;&#x5206;&#x9875;</li>
+</ol>
+</li>
 </ul>
-<h1 id="&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;">&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;</h1>
+<h2 id="&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;">&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;</h2>
 <p>&#x9875;&#x76EE;&#x5F55;&#x8868;&#xFF08;1&#x4E2A;&#xFF09;&#x548C;&#x9875;&#x8868;&#xFF08;1024&#x4E2A;&#xFF09;&#x90FD;&#x5B58;&#x5728;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2D;&#xFF08;&#x9700;&#x8981;&#x81EA;&#x884C;&#x8BBE;&#x7F6E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x8BBE;&#x8BA1;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x548C;&#x9875;&#x8868;&#xFF09;</p>
 <p>&#x5176;&#x4E2D;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x5B58;&#x653E;&#x4E86;1024&#x4E2A;&#x9875;&#x76EE;&#x5F55;&#x9879;&#xFF08;&#x6BCF;&#x4E2A;&#x9875;&#x76EE;&#x5F55;&#x9879;32bit=4B&#xFF09;, &#x9875;&#x76EE;&#x5F55;&#x8868;&#x5B58;&#x50A8;&#x9700;&#x8981;4KB&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x6BCF;&#x4E2A;&#x9875;&#x8868;&#x6709;1024&#x4E2A;&#x9875;&#x8868;&#x9879;&#xFF08;&#x6BCF;&#x4E2A;&#x9875;&#x8868;&#x9879;32bit=4B&#xFF09;&#xFF0C;&#x4E00;&#x4E2A;&#x9875;&#x8868;&#x4E5F;&#x662F;4KB</p>
 <p><img src="imgs/10.jpg" alt=""></p>
@@ -559,41 +565,42 @@ P:&#x662F;&#x5426;&#x5B58;&#x5728;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2
 <li>0xc0 000 000 &#x5230; 0xff fff fff&#xFF08;1G&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF09;&#xFF08;256&#x4E2A;&#x9875;&#x8868;&#x5BF9;&#x5E94;&#xFF09;</li>
 </ul>
 <p>&#x7269;&#x7406;&#x5185;&#x5B58;&#x4F4E;1MB&#xFF0C;&#x521A;&#x521A;&#x53EF;&#x4EE5;&#x5206;&#x6210;256&#x9875;&#xFF08;&#x4E00;&#x9875;&#x662F;4KB&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x7528;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x4F4E;1MB &#x9690;&#x5C04;&#x5230;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;3-4G&#x8FD9;1GB&#x4E3A;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5185;&#x6838;&#x5360;&#x7528;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x4F4E;1MB&#x3002;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x5171;&#x4EAB;&#x5185;&#x6838;&#x3002;</p>
-<p>&#x5EFA;&#x7ACB;&#x9875;&#x76EE;&#x5F55;&#xFF0C;&#x9875;&#x8868;; &#x5F00;&#x542F;&#x5206;&#x9875;; </p>
-<pre class="language-"><code>   ; &#x521B;&#x5EFA;&#x9875;&#x76EE;&#x5F55;&#x53CA;&#x9875;&#x8868;&#x5E76;&#x521D;&#x59CB;&#x5316;&#x9875;&#x5185;&#x5B58;&#x4F4D;&#x56FE;
+<p>&#x5EFA;&#x7ACB;&#x9875;&#x76EE;&#x5F55;&#xFF0C;&#x9875;&#x8868;; &#x5F00;&#x542F;&#x5206;&#x9875;;</p>
+<pre class="language-"><code class="lang-java">   <span class="token punctuation">;</span> &#x521B;&#x5EFA;&#x9875;&#x76EE;&#x5F55;&#x53CA;&#x9875;&#x8868;&#x5E76;&#x521D;&#x59CB;&#x5316;&#x9875;&#x5185;&#x5B58;&#x4F4D;&#x56FE;
    call setup_page
 
-   ;&#x8981;&#x5C06;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5730;&#x5740;&#x53CA;&#x504F;&#x79FB;&#x91CF;&#x5199;&#x5165;&#x5185;&#x5B58;gdt_ptr,&#x4E00;&#x4F1A;&#x7528;&#x65B0;&#x5730;&#x5740;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;
-   sgdt [gdt_ptr]          ; &#x5B58;&#x50A8;&#x5230;&#x539F;&#x6765;gdt&#x6240;&#x6709;&#x7684;&#x4F4D;&#x7F6E;
+   <span class="token punctuation">;</span>&#x8981;&#x5C06;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5730;&#x5740;&#x53CA;&#x504F;&#x79FB;&#x91CF;&#x5199;&#x5165;&#x5185;&#x5B58;gdt_ptr<span class="token punctuation">,</span>&#x4E00;&#x4F1A;&#x7528;&#x65B0;&#x5730;&#x5740;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;
+   sgdt <span class="token punctuation">[</span>gdt_ptr<span class="token punctuation">]</span>          <span class="token punctuation">;</span> &#x5B58;&#x50A8;&#x5230;&#x539F;&#x6765;gdt&#x6240;&#x6709;&#x7684;&#x4F4D;&#x7F6E;
 
-   ;&#x5C06;gdt&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;&#x89C6;&#x9891;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;&#x7684;&#x6BB5;&#x57FA;&#x5740;+0xc0000000
-   mov ebx, [gdt_ptr + 2]  
-   or dword [ebx + 0x18 + 4], 0xc0000000      ;&#x89C6;&#x9891;&#x6BB5;&#x662F;&#x7B2C;3&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;,&#x6BCF;&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#x662F;8&#x5B57;&#x8282;,&#x6545;0x18&#x3002;
-                          ;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x9AD8;4&#x5B57;&#x8282;&#x7684;&#x6700;&#x9AD8;&#x4F4D;&#x662F;&#x6BB5;&#x57FA;&#x5740;&#x7684;31~24&#x4F4D;
+   <span class="token punctuation">;</span>&#x5C06;gdt&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;&#x89C6;&#x9891;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;&#x7684;&#x6BB5;&#x57FA;&#x5740;<span class="token operator">+</span><span class="token number">0xc0000000</span>
+   mov ebx<span class="token punctuation">,</span> <span class="token punctuation">[</span>gdt_ptr <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">]</span>  
+   or dword <span class="token punctuation">[</span>ebx <span class="token operator">+</span> <span class="token number">0x18</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0xc0000000</span>      <span class="token punctuation">;</span>&#x89C6;&#x9891;&#x6BB5;&#x662F;&#x7B2C;<span class="token number">3</span>&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;<span class="token punctuation">,</span>&#x6BCF;&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#x662F;<span class="token number">8</span>&#x5B57;&#x8282;<span class="token punctuation">,</span>&#x6545;<span class="token number">0x18</span>&#x3002;
+                          <span class="token punctuation">;</span>&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x9AD8;<span class="token number">4</span>&#x5B57;&#x8282;&#x7684;&#x6700;&#x9AD8;&#x4F4D;&#x662F;&#x6BB5;&#x57FA;&#x5740;&#x7684;<span class="token number">31</span><span class="token operator">~</span><span class="token number">24</span>&#x4F4D;
 
-   ;&#x5C06;gdt&#x7684;&#x57FA;&#x5740;&#x52A0;&#x4E0A;0xc0000000&#x4F7F;&#x5176;&#x6210;&#x4E3A;&#x5185;&#x6838;&#x6240;&#x5728;&#x7684;&#x9AD8;&#x5730;&#x5740;
-   add dword [gdt_ptr + 2], 0xc0000000
+   <span class="token punctuation">;</span>&#x5C06;gdt&#x7684;&#x57FA;&#x5740;&#x52A0;&#x4E0A;<span class="token number">0xc0000000</span>&#x4F7F;&#x5176;&#x6210;&#x4E3A;&#x5185;&#x6838;&#x6240;&#x5728;&#x7684;&#x9AD8;&#x5730;&#x5740;
+   add dword <span class="token punctuation">[</span>gdt_ptr <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0xc0000000</span>
 
-   add esp, 0xc0000000        ; &#x5C06;&#x6808;&#x6307;&#x9488;&#x540C;&#x6837;&#x6620;&#x5C04;&#x5230;&#x5185;&#x6838;&#x5730;&#x5740;
+   add esp<span class="token punctuation">,</span> <span class="token number">0xc0000000</span>        <span class="token punctuation">;</span> &#x5C06;&#x6808;&#x6307;&#x9488;&#x540C;&#x6837;&#x6620;&#x5C04;&#x5230;&#x5185;&#x6838;&#x5730;&#x5740;
 
-   ; &#x628A;&#x9875;&#x76EE;&#x5F55;&#x5730;&#x5740;&#x8D4B;&#x7ED9;cr3
-   mov eax, PAGE_DIR_TABLE_POS
-   mov cr3, eax
+   <span class="token punctuation">;</span> &#x628A;&#x9875;&#x76EE;&#x5F55;&#x5730;&#x5740;&#x8D4B;&#x7ED9;cr3
+   mov eax<span class="token punctuation">,</span> PAGE_DIR_TABLE_POS
+   mov cr3<span class="token punctuation">,</span> eax
 
-   ; &#x6253;&#x5F00;cr0&#x7684;pg&#x4F4D;(&#x7B2C;31&#x4F4D;)
-   mov eax, cr0
-   or eax, 0x80000000
-   mov cr0, eax
+   <span class="token punctuation">;</span> &#x6253;&#x5F00;cr0&#x7684;pg&#x4F4D;<span class="token punctuation">(</span>&#x7B2C;<span class="token number">31</span>&#x4F4D;<span class="token punctuation">)</span>
+   mov eax<span class="token punctuation">,</span> cr0
+   or eax<span class="token punctuation">,</span> <span class="token number">0x80000000</span>
+   mov cr0<span class="token punctuation">,</span> eax
 
-   ;&#x5728;&#x5F00;&#x542F;&#x5206;&#x9875;&#x540E;,&#x7528;gdt&#x65B0;&#x7684;&#x5730;&#x5740;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;
-   lgdt [gdt_ptr]             ; &#x91CD;&#x65B0;&#x52A0;&#x8F7D;
+   <span class="token punctuation">;</span>&#x5728;&#x5F00;&#x542F;&#x5206;&#x9875;&#x540E;<span class="token punctuation">,</span>&#x7528;gdt&#x65B0;&#x7684;&#x5730;&#x5740;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;
+   lgdt <span class="token punctuation">[</span>gdt_ptr<span class="token punctuation">]</span>             <span class="token punctuation">;</span> &#x91CD;&#x65B0;&#x52A0;&#x8F7D;
 
-   mov byte [gs:160], &apos;V&apos;     ;&#x89C6;&#x9891;&#x6BB5;&#x6BB5;&#x57FA;&#x5740;&#x5DF2;&#x7ECF;&#x88AB;&#x66F4;&#x65B0;,&#x7528;&#x5B57;&#x7B26;v&#x8868;&#x793A;virtual addr
+   mov <span class="token keyword">byte</span> <span class="token punctuation">[</span>gs<span class="token operator">:</span><span class="token number">160</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">&apos;V&apos;</span>     <span class="token punctuation">;</span>&#x89C6;&#x9891;&#x6BB5;&#x6BB5;&#x57FA;&#x5740;&#x5DF2;&#x7ECF;&#x88AB;&#x66F4;&#x65B0;<span class="token punctuation">,</span>&#x7528;&#x5B57;&#x7B26;v&#x8868;&#x793A;virtual addr
 
    jmp $
-</code></pre><p><img src="imgs/12.jpg" alt=""></p>
+</code></pre>
+<p><img src="imgs/12.jpg" alt=""></p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 09:19:57
+2020-08-02 13:53:12
 </span></footer>
                                 
                                 </section>
@@ -621,12 +628,12 @@ P:&#x662F;&#x5426;&#x5B58;&#x5728;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2
 
             
                 
-                <a href="../03_protected_mode/" class="navigation navigation-prev " aria-label="Previous page: 3 实模式到保护模式（GDT，gdtr, 选择子)">
+                <a href="../03_protected_mode/" class="navigation navigation-prev " aria-label="Previous page: 3 实模式到保护模式（GDT,gdtr,选择子)">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../05_efi/" class="navigation navigation-next " aria-label="Next page: 5 ELF文件格式">
+                <a href="../05_efi/" class="navigation navigation-next " aria-label="Next page: 5 ELF文件理解">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -637,7 +644,7 @@ P:&#x662F;&#x5426;&#x5B58;&#x5728;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"4 分页","level":"1.5","depth":1,"next":{"title":"5 ELF文件格式","level":"1.6","depth":1,"path":"content/05_efi/README.md","ref":"./content/05_efi/README.md","articles":[]},"previous":{"title":"3 实模式到保护模式（GDT，gdtr, 选择子)","level":"1.4","depth":1,"path":"content/03_protected_mode/README.md","ref":"./content/03_protected_mode/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/04_page/README.md","mtime":"2020-08-02T01:19:57.430Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"4 分段 & 分页","level":"1.5","depth":1,"next":{"title":"5 ELF文件理解","level":"1.6","depth":1,"path":"content/05_efi/README.md","ref":"./content/05_efi/README.md","articles":[]},"previous":{"title":"3 实模式到保护模式（GDT,gdtr,选择子)","level":"1.4","depth":1,"path":"content/03_protected_mode/README.md","ref":"./content/03_protected_mode/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/04_page/README.md","mtime":"2020-08-02T05:53:12.103Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T14:34:24.125Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

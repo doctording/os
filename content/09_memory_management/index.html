@@ -139,7 +139,7 @@
                 <a href="../01_BIOS_to_MBR/">
             
                     
-                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+                    1 最简单的OS:实模式下BIOS到MBR
             
                 </a>
             
@@ -165,7 +165,7 @@
                 <a href="../03_protected_mode/">
             
                     
-                    3 实模式到保护模式（GDT，gdtr, 选择子)
+                    3 实模式到保护模式（GDT,gdtr,选择子)
             
                 </a>
             
@@ -178,7 +178,7 @@
                 <a href="../04_page/">
             
                     
-                    4 分页
+                    4 分段 & 分页
             
                 </a>
             
@@ -191,7 +191,7 @@
                 <a href="../05_efi/">
             
                     
-                    5 ELF文件格式
+                    5 ELF文件理解
             
                 </a>
             
@@ -204,7 +204,7 @@
                 <a href="../06_kernel_start/">
             
                     
-                    6 内核编写
+                    6 C语言写内核
             
                 </a>
             
@@ -282,7 +282,7 @@
                 <a href="../12_lock/">
             
                     
-                    12 锁,信号量
+                    12 锁&信号量
             
                 </a>
             
@@ -321,7 +321,7 @@
                 <a href="../15_user_process/">
             
                     
-                    15 特权级，用户进程
+                    15 指令特权级，用户进程引入
             
                 </a>
             
@@ -334,7 +334,7 @@
                 <a href="../16_system_call/">
             
                     
-                    16 系统调用
+                    16 系统调用实现用户进程
             
                 </a>
             
@@ -347,7 +347,7 @@
                 <a href="../17_hd_driver/">
             
                     
-                    17 硬件驱动
+                    17 硬件驱动认识
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="../19_fd_inode_dir_file/">
             
                     
-                    19 inode,文件目录操作
+                    19 文件描述符操作
             
                 </a>
             
@@ -440,53 +440,59 @@
                                 <section class="normal markdown-section">
                                 
                                 <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
-<li><div><a href="#&#x4F4D;&#x56FE;">&#x4F4D;&#x56FE;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<li><div><a href="#&#x5185;&#x5B58;&#x7BA1;&#x7406;">&#x5185;&#x5B58;&#x7BA1;&#x7406;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
-<li> 
+<li><div><a href="#&#x4F7F;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;">&#x4F7F;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
 <li><div><a href="#&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;">&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;</a><i></i></div></li>
-<li><div><a href="#&#x5185;&#x5B58;&#x6C60;">&#x5185;&#x5B58;&#x6C60;</a><i></i></div></li>
-<li><div><a href="#&#x5185;&#x5B58;&#x5206;&#x5E03;">&#x5185;&#x5B58;&#x5206;&#x5E03;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
-<ul>
-<li><div><a href="#&#x8FD0;&#x884C;">&#x8FD0;&#x884C;</a><i></i></div></li>
 </ul></li>
+<li><div><a href="#&#x5185;&#x5B58;&#x6C60;">&#x5185;&#x5B58;&#x6C60;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x5185;&#x5B58;&#x5206;&#x5E03;">&#x5185;&#x5B58;&#x5206;&#x5E03;</a><i></i></div></li>
+<li><div><a href="#&#x56DE;&#x987E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x8F6C;&#x6362;">&#x56DE;&#x987E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x8F6C;&#x6362;</a><i></i></div></li>
+<li><div><a href="#&#x8FD0;&#x884C;&#x622A;&#x56FE;">&#x8FD0;&#x884C;&#x622A;&#x56FE;</a><i></i></div></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 
 <h1 id="&#x5185;&#x5B58;&#x7BA1;&#x7406;">&#x5185;&#x5B58;&#x7BA1;&#x7406;</h1>
-<h3 id="&#x4F4D;&#x56FE;">&#x4F4D;&#x56FE;</h3>
+<h2 id="&#x4F7F;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;">&#x4F7F;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;</h2>
 <p><img src="imgs/01.jpg" alt=""></p>
 <ul>
 <li>1&#x4F4D; &#x5BF9;&#x5E94; &#x4E00;&#x4E2A;&#x5185;&#x5B58;&#x9875;</li>
 <li>1&#x4F4D; &#x6709;&#x4E24;&#x4E2A;&#x72B6;&#x6001;&#xFF0C;0 &#x6216; 1&#xFF0C;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x6709; &#x548C; &#x65E0;&#xFF0C;&#x5982;1&#x8868;&#x793A;&#x7684;&#x8D44;&#x6E90;&#x88AB;&#x5360;&#x7528;&#xFF0C;0&#x8868;&#x793A;&#x8D44;&#x6E90;&#x53EF;&#x7528;</li>
 </ul>
 <p>bimap.h</p>
-<pre class="language-"><code>#ifndef __LIB_KERNEL_BITMAP_H
-#define __LIB_KERNEL_BITMAP_H
-#include &quot;global.h&quot;
-#define BITMAP_MASK 1
-struct bitmap {
-   uint32_t btmp_bytes_len;
-/* &#x5728;&#x904D;&#x5386;&#x4F4D;&#x56FE;&#x65F6;,&#x6574;&#x4F53;&#x4E0A;&#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;,&#x7EC6;&#x8282;&#x4E0A;&#x662F;&#x4EE5;&#x4F4D;&#x4E3A;&#x5355;&#x4F4D;,&#x6240;&#x4EE5;&#x6B64;&#x5904;&#x4F4D;&#x56FE;&#x7684;&#x6307;&#x9488;&#x5FC5;&#x987B;&#x662F;&#x5355;&#x5B57;&#x8282; */
-   uint8_t* bits;
-};
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">ifndef</span> __LIB_KERNEL_BITMAP_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> __LIB_KERNEL_BITMAP_H</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;global.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> BITMAP_MASK 1</span>
+<span class="token keyword">struct</span> <span class="token class-name">bitmap</span> <span class="token punctuation">{</span>
+   <span class="token keyword">uint32_t</span> btmp_bytes_len<span class="token punctuation">;</span>
+<span class="token comment">/* &#x5728;&#x904D;&#x5386;&#x4F4D;&#x56FE;&#x65F6;,&#x6574;&#x4F53;&#x4E0A;&#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;,&#x7EC6;&#x8282;&#x4E0A;&#x662F;&#x4EE5;&#x4F4D;&#x4E3A;&#x5355;&#x4F4D;,&#x6240;&#x4EE5;&#x6B64;&#x5904;&#x4F4D;&#x56FE;&#x7684;&#x6307;&#x9488;&#x5FC5;&#x987B;&#x662F;&#x5355;&#x5B57;&#x8282; */</span>
+   <span class="token keyword">uint8_t</span><span class="token operator">*</span> bits<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-void bitmap_init(struct bitmap* btmp);
-bool bitmap_scan_test(struct bitmap* btmp, uint32_t bit_idx);
-int bitmap_scan(struct bitmap* btmp, uint32_t cnt);
-void bitmap_set(struct bitmap* btmp, uint32_t bit_idx, int8_t value);
-#endif
-</code></pre><pre class="language-"><code>struct bitmap {
-   uint32_t btmp_bytes_len;
-/* &#x5728;&#x904D;&#x5386;&#x4F4D;&#x56FE;&#x65F6;,&#x6574;&#x4F53;&#x4E0A;&#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;,&#x7EC6;&#x8282;&#x4E0A;&#x662F;&#x4EE5;&#x4F4D;&#x4E3A;&#x5355;&#x4F4D;,&#x6240;&#x4EE5;&#x6B64;&#x5904;&#x4F4D;&#x56FE;&#x7684;&#x6307;&#x9488;&#x5FC5;&#x987B;&#x662F;&#x5355;&#x5B57;&#x8282; */
-   uint8_t* bits;
-};
-</code></pre><p>&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x6709;8&#x4F4D;&#xFF0C;&#x6BCF;&#x4E00;&#x4F4D;&#x90FD;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x7269;&#x7406;&#x9875;&#xFF1B;bitmap&#x7ED3;&#x6784;&#x4F53;&#x7C7B;&#x4F3C;&#x4E00;&#x4E2A;&#x5355;&#x94FE;&#x8868;&#x8282;&#x70B9;&#xFF0C; &#x6BCF;&#x4E00;&#x4E2A;&#x4F4D;&#x6709;&#x4E00;&#x4E2A;&#x957F;&#x5EA6;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;bitmap&#x7684;&#x5730;&#x5740;&#x6709;&#x4E0A;&#x4E00;&#x4E2A;&#x94FE;&#x5730;&#x5740;&#x7ED9;&#x51FA;&#x3002;</p>
-<h5 id="&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;">&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;</h5>
+<span class="token keyword">void</span> <span class="token function">bitmap_init</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bitmap</span><span class="token operator">*</span> btmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">bitmap_scan_test</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bitmap</span><span class="token operator">*</span> btmp<span class="token punctuation">,</span> <span class="token keyword">uint32_t</span> bit_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">bitmap_scan</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bitmap</span><span class="token operator">*</span> btmp<span class="token punctuation">,</span> <span class="token keyword">uint32_t</span> cnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">bitmap_set</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bitmap</span><span class="token operator">*</span> btmp<span class="token punctuation">,</span> <span class="token keyword">uint32_t</span> bit_idx<span class="token punctuation">,</span> <span class="token keyword">int8_t</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+</code></pre>
+<ul>
+<li>bitmap&#x7ED3;&#x6784;&#x4F53;</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token keyword">struct</span> <span class="token class-name">bitmap</span> <span class="token punctuation">{</span>
+   <span class="token keyword">uint32_t</span> btmp_bytes_len<span class="token punctuation">;</span>
+<span class="token comment">/* &#x5728;&#x904D;&#x5386;&#x4F4D;&#x56FE;&#x65F6;,&#x6574;&#x4F53;&#x4E0A;&#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;,&#x7EC6;&#x8282;&#x4E0A;&#x662F;&#x4EE5;&#x4F4D;&#x4E3A;&#x5355;&#x4F4D;,&#x6240;&#x4EE5;&#x6B64;&#x5904;&#x4F4D;&#x56FE;&#x7684;&#x6307;&#x9488;&#x5FC5;&#x987B;&#x662F;&#x5355;&#x5B57;&#x8282; */</span>
+   <span class="token keyword">uint8_t</span><span class="token operator">*</span> bits<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x6709;8&#x4F4D;&#xFF0C;&#x6BCF;&#x4E00;&#x4F4D;&#x90FD;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x7269;&#x7406;&#x9875;&#xFF1B;bitmap&#x7ED3;&#x6784;&#x4F53;&#x7C7B;&#x4F3C;&#x4E00;&#x4E2A;&#x5355;&#x94FE;&#x8868;&#x8282;&#x70B9;&#xFF0C; &#x6BCF;&#x4E00;&#x4E2A;&#x4F4D;&#x6709;&#x4E00;&#x4E2A;&#x957F;&#x5EA6;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;bitmap&#x7684;&#x5730;&#x5740;&#x6709;&#x4E0A;&#x4E00;&#x4E2A;&#x94FE;&#x5730;&#x5740;&#x7ED9;&#x51FA;&#x3002;</p>
+<h3 id="&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;">&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;</h3>
 <p><img src="imgs/02.jpg" alt=""></p>
-<p>&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x7684;&#x5185;&#x5BB9;&#x4E0D;&#x662F;<code>0xff</code>&#x5C31;&#x8868;&#x793A;&#x8BE5;&#x5B57;&#x8282;&#x91CC;&#x9762;&#x8FD8;&#x6709;&#x7A7A;&#x4F4D;, &#x7A7A;&#x4F4D;&#x8FDE;&#x7EED;&#x4EE3;&#x8868;&#x5185;&#x5B58;&#x5730;&#x5740;&#x8FDE;&#x7EED;&#xFF0C;&#x5373;&#x80FD;&#x5206;&#x914D;&#x8FDE;&#x7EED;&#x5185;&#x5B58;&#x7A7A;&#x95F4;</p>
+<p>&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x7684;&#x5185;&#x5BB9;&#x53EA;&#x8981;&#x4E0D;&#x662F;<code>0xff</code>&#x5C31;&#x8868;&#x793A;&#x8BE5;&#x5B57;&#x8282;&#x91CC;&#x9762;&#x8FD8;&#x6709;&#x7A7A;&#x4F4D;, &#x7A7A;&#x4F4D;&#x8FDE;&#x7EED;&#x4EE3;&#x8868;&#x5185;&#x5B58;&#x5730;&#x5740;&#x8FDE;&#x7EED;&#xFF0C;&#x5373;&#x80FD;&#x5206;&#x914D;&#x8FDE;&#x7EED;&#x5185;&#x5B58;&#x7A7A;&#x95F4;</p>
 <ol>
 <li>&#x5148;&#x9010;&#x4E2A;&#x5B57;&#x8282;&#x5224;&#x65AD;</li>
 </ol>
@@ -501,136 +507,138 @@ void bitmap_set(struct bitmap* btmp, uint32_t bit_idx, int8_t value);
 <p>idx_byte * 8 &#x8868;&#x793A;&#x67D0;&#x4E2A;&#x5B57;&#x8282;
 &#x518D; + idx &#x5F97;&#x5230;&#x771F;&#x6B63;&#x7684;&#x4F4D;</p>
 <p>&#x5224;&#x65AD;&#x8FDE;&#x7EED;&#x7684;&#x7A7A;&#x4F4D;&#x662F;&#x5426;&#x6EE1;&#x8DB3; cnt &#x4E2A;</p>
-<pre class="language-"><code>/* &#x5728;&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x8FDE;&#x7EED;cnt&#x4E2A;&#x4F4D;,&#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x5176;&#x8D77;&#x59CB;&#x4F4D;&#x4E0B;&#x6807;&#xFF0C;&#x5931;&#x8D25;&#x8FD4;&#x56DE;-1 */
-int bitmap_scan(struct bitmap* btmp, uint32_t cnt) {
-   uint32_t idx_byte = 0;     // &#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x7A7A;&#x95F2;&#x4F4D;&#x6240;&#x5728;&#x7684;&#x5B57;&#x8282;
-/* &#x5148;&#x9010;&#x5B57;&#x8282;&#x6BD4;&#x8F83;,&#x86EE;&#x529B;&#x6CD5; */
-   while (( 0xff == btmp-&gt;bits[idx_byte]) &amp;&amp; (idx_byte &lt; btmp-&gt;btmp_bytes_len)) {
-/* 1&#x8868;&#x793A;&#x8BE5;&#x4F4D;&#x5DF2;&#x5206;&#x914D;,&#x6240;&#x4EE5;&#x82E5;&#x4E3A;0xff,&#x5219;&#x8868;&#x793A;&#x8BE5;&#x5B57;&#x8282;&#x5185;&#x5DF2;&#x65E0;&#x7A7A;&#x95F2;&#x4F4D;,&#x5411;&#x4E0B;&#x4E00;&#x5B57;&#x8282;&#x7EE7;&#x7EED;&#x627E; */
-      idx_byte++;
-   }
+<pre class="language-"><code class="lang-cpp"><span class="token comment">/* &#x5728;&#x4F4D;&#x56FE;&#x4E2D;&#x7533;&#x8BF7;&#x8FDE;&#x7EED;cnt&#x4E2A;&#x4F4D;,&#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x5176;&#x8D77;&#x59CB;&#x4F4D;&#x4E0B;&#x6807;&#xFF0C;&#x5931;&#x8D25;&#x8FD4;&#x56DE;-1 */</span>
+<span class="token keyword">int</span> <span class="token function">bitmap_scan</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bitmap</span><span class="token operator">*</span> btmp<span class="token punctuation">,</span> <span class="token keyword">uint32_t</span> cnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">uint32_t</span> idx_byte <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">// &#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x7A7A;&#x95F2;&#x4F4D;&#x6240;&#x5728;&#x7684;&#x5B57;&#x8282;</span>
+<span class="token comment">/* &#x5148;&#x9010;&#x5B57;&#x8282;&#x6BD4;&#x8F83;,&#x86EE;&#x529B;&#x6CD5; */</span>
+   <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span> <span class="token number">0xff</span> <span class="token operator">==</span> btmp<span class="token operator">-&gt;</span>bits<span class="token punctuation">[</span>idx_byte<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>idx_byte <span class="token operator">&lt;</span> btmp<span class="token operator">-&gt;</span>btmp_bytes_len<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token comment">/* 1&#x8868;&#x793A;&#x8BE5;&#x4F4D;&#x5DF2;&#x5206;&#x914D;,&#x6240;&#x4EE5;&#x82E5;&#x4E3A;0xff,&#x5219;&#x8868;&#x793A;&#x8BE5;&#x5B57;&#x8282;&#x5185;&#x5DF2;&#x65E0;&#x7A7A;&#x95F2;&#x4F4D;,&#x5411;&#x4E0B;&#x4E00;&#x5B57;&#x8282;&#x7EE7;&#x7EED;&#x627E; */</span>
+      idx_byte<span class="token operator">++</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
 
-   ASSERT(idx_byte &lt; btmp-&gt;btmp_bytes_len);
-   if (idx_byte == btmp-&gt;btmp_bytes_len) {  // &#x82E5;&#x8BE5;&#x5185;&#x5B58;&#x6C60;&#x627E;&#x4E0D;&#x5230;&#x53EF;&#x7528;&#x7A7A;&#x95F4;        
-      return -1;
-   }
+   <span class="token function">ASSERT</span><span class="token punctuation">(</span>idx_byte <span class="token operator">&lt;</span> btmp<span class="token operator">-&gt;</span>btmp_bytes_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">if</span> <span class="token punctuation">(</span>idx_byte <span class="token operator">==</span> btmp<span class="token operator">-&gt;</span>btmp_bytes_len<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// &#x82E5;&#x8BE5;&#x5185;&#x5B58;&#x6C60;&#x627E;&#x4E0D;&#x5230;&#x53EF;&#x7528;&#x7A7A;&#x95F4;</span>
+      <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
 
- /* &#x82E5;&#x5728;&#x4F4D;&#x56FE;&#x6570;&#x7EC4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x67D0;&#x5B57;&#x8282;&#x5185;&#x627E;&#x5230;&#x4E86;&#x7A7A;&#x95F2;&#x4F4D;&#xFF0C;
-  * &#x5728;&#x8BE5;&#x5B57;&#x8282;&#x5185;&#x9010;&#x4F4D;&#x6BD4;&#x5BF9;,&#x8FD4;&#x56DE;&#x7A7A;&#x95F2;&#x4F4D;&#x7684;&#x7D22;&#x5F15;&#x3002;*/
-   int idx_bit = 0;
- /* &#x548C;btmp-&gt;bits[idx_byte]&#x8FD9;&#x4E2A;&#x5B57;&#x8282;&#x9010;&#x4F4D;&#x5BF9;&#x6BD4; */
-   while ((uint8_t)(BITMAP_MASK &lt;&lt; idx_bit) &amp; btmp-&gt;bits[idx_byte]) { 
-     idx_bit++;
-   }
+ <span class="token comment">/* &#x82E5;&#x5728;&#x4F4D;&#x56FE;&#x6570;&#x7EC4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x67D0;&#x5B57;&#x8282;&#x5185;&#x627E;&#x5230;&#x4E86;&#x7A7A;&#x95F2;&#x4F4D;&#xFF0C;
+  * &#x5728;&#x8BE5;&#x5B57;&#x8282;&#x5185;&#x9010;&#x4F4D;&#x6BD4;&#x5BF9;,&#x8FD4;&#x56DE;&#x7A7A;&#x95F2;&#x4F4D;&#x7684;&#x7D22;&#x5F15;&#x3002;*/</span>
+   <span class="token keyword">int</span> idx_bit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+ <span class="token comment">/* &#x548C;btmp-&gt;bits[idx_byte]&#x8FD9;&#x4E2A;&#x5B57;&#x8282;&#x9010;&#x4F4D;&#x5BF9;&#x6BD4; */</span>
+   <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">uint8_t</span><span class="token punctuation">)</span><span class="token punctuation">(</span>BITMAP_MASK <span class="token operator">&lt;&lt;</span> idx_bit<span class="token punctuation">)</span> <span class="token operator">&amp;</span> btmp<span class="token operator">-&gt;</span>bits<span class="token punctuation">[</span>idx_byte<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     idx_bit<span class="token operator">++</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
 
-   int bit_idx_start = idx_byte * 8 + idx_bit;    // &#x7A7A;&#x95F2;&#x4F4D;&#x5728;&#x4F4D;&#x56FE;&#x5185;&#x7684;&#x4E0B;&#x6807;
-   if (cnt == 1) {
-      return bit_idx_start;
-   }
+   <span class="token keyword">int</span> bit_idx_start <span class="token operator">=</span> idx_byte <span class="token operator">*</span> <span class="token number">8</span> <span class="token operator">+</span> idx_bit<span class="token punctuation">;</span>    <span class="token comment">// &#x7A7A;&#x95F2;&#x4F4D;&#x5728;&#x4F4D;&#x56FE;&#x5185;&#x7684;&#x4E0B;&#x6807;</span>
+   <span class="token keyword">if</span> <span class="token punctuation">(</span>cnt <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> bit_idx_start<span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
 
-   uint32_t bit_left = (btmp-&gt;btmp_bytes_len * 8 - bit_idx_start);   // &#x8BB0;&#x5F55;&#x8FD8;&#x6709;&#x591A;&#x5C11;&#x4F4D;&#x53EF;&#x4EE5;&#x5224;&#x65AD;
-   uint32_t next_bit = bit_idx_start + 1;
-   uint32_t count = 1;          // &#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x627E;&#x5230;&#x7684;&#x7A7A;&#x95F2;&#x4F4D;&#x7684;&#x4E2A;&#x6570;
+   <span class="token keyword">uint32_t</span> bit_left <span class="token operator">=</span> <span class="token punctuation">(</span>btmp<span class="token operator">-&gt;</span>btmp_bytes_len <span class="token operator">*</span> <span class="token number">8</span> <span class="token operator">-</span> bit_idx_start<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// &#x8BB0;&#x5F55;&#x8FD8;&#x6709;&#x591A;&#x5C11;&#x4F4D;&#x53EF;&#x4EE5;&#x5224;&#x65AD;</span>
+   <span class="token keyword">uint32_t</span> next_bit <span class="token operator">=</span> bit_idx_start <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token keyword">uint32_t</span> count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>          <span class="token comment">// &#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x627E;&#x5230;&#x7684;&#x7A7A;&#x95F2;&#x4F4D;&#x7684;&#x4E2A;&#x6570;</span>
 
-   bit_idx_start = -1;          // &#x5148;&#x5C06;&#x5176;&#x7F6E;&#x4E3A;-1,&#x82E5;&#x627E;&#x4E0D;&#x5230;&#x8FDE;&#x7EED;&#x7684;&#x4F4D;&#x5C31;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;
-   while (bit_left-- &gt; 0) {
-      if (!(bitmap_scan_test(btmp, next_bit))) {     // &#x82E5;next_bit&#x4E3A;0
-     count++;
-      } else {
-     count = 0;
-      }
-      if (count == cnt) {        // &#x82E5;&#x627E;&#x5230;&#x8FDE;&#x7EED;&#x7684;cnt&#x4E2A;&#x7A7A;&#x4F4D;
-     bit_idx_start = next_bit - cnt + 1;
-     break;
-      }
-      next_bit++;          
-   }
-   return bit_idx_start;
-}
-</code></pre><hr>
-<h5 id="&#x5185;&#x5B58;&#x6C60;">&#x5185;&#x5B58;&#x6C60;</h5>
+   bit_idx_start <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>          <span class="token comment">// &#x5148;&#x5C06;&#x5176;&#x7F6E;&#x4E3A;-1,&#x82E5;&#x627E;&#x4E0D;&#x5230;&#x8FDE;&#x7EED;&#x7684;&#x4F4D;&#x5C31;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</span>
+   <span class="token keyword">while</span> <span class="token punctuation">(</span>bit_left<span class="token operator">--</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token function">bitmap_scan_test</span><span class="token punctuation">(</span>btmp<span class="token punctuation">,</span> next_bit<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment">// &#x82E5;next_bit&#x4E3A;0</span>
+     count<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+     count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">==</span> cnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>        <span class="token comment">// &#x82E5;&#x627E;&#x5230;&#x8FDE;&#x7EED;&#x7684;cnt&#x4E2A;&#x7A7A;&#x4F4D;</span>
+     bit_idx_start <span class="token operator">=</span> next_bit <span class="token operator">-</span> cnt <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      next_bit<span class="token operator">++</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> bit_idx_start<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="&#x5185;&#x5B58;&#x6C60;">&#x5185;&#x5B58;&#x6C60;</h2>
 <p><strong>&#x5185;&#x5B58;&#x6C60;&#xFF1A;</strong> &#x628A;&#x53EF;&#x7528;&#x5185;&#x5B58;&#x96C6;&#x4E2D;&#x5230;&#x4E00;&#x4E2A;<strong>&#x6C60;&#x5B50;</strong>&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x5C31;&#x4ECE;&#x4E2D;&#x53D6;/&#x4E0D;&#x9700;&#x8981;&#x5C31;&#x53EF;&#x4EE5;&#x653E;&#x56DE;&#x53BB;&#x3002;</p>
 <p>&#x5185;&#x6838;&#x548C;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x6700;&#x7EC8;&#x90FD;&#x662F;&#x8FD0;&#x884C;&#x5728;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x89C4;&#x5212;&#x597D;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x54EA;&#x4E9B;&#x662F;&#x8FD0;&#x884C;&#x5185;&#x6838;&#x7684;&#xFF0C;&#x54EA;&#x4E9B;&#x8FD0;&#x884C;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#xFF1F;</p>
 <p>&#x8FD9;&#x91CC;&#x628A;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x5185;&#x5B58;&#x6C60;&#xFF0C;&#x4E00;&#x4E2A;&#x7ED9;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#xFF0C;&#x4E00;&#x4E2A;&#x7ED9;&#x5185;&#x6838;&#x8FDB;&#x7A0B;&#xFF1B; &#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5FC5;&#x987B;&#x786E;&#x4FDD;&#x81EA;&#x5DF1;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x5185;&#x5B58;&#x8FD0;&#x884C;&#xFF0C;&#x5426;&#x5219;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#xFF0C;&#x673A;&#x5668;&#x8981;&#x6302;&#x3002;</p>
 <p>&#x5185;&#x5B58;&#x6C60;&#x6309;&#x5355;&#x4F4D;&#x5206;&#x914D;&#x5185;&#x5B58;&#xFF0C;&#x4E00;&#x5757;&#x5927;&#x5C0F;&#x4E3A;4KB&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6BCF;&#x6B21;&#x53D6; 4KB, 8KB&#xFF0C;12KB&#x8FD9;&#x79CD;&#x4EE5;4KB&#x4E3A;&#x5355;&#x4F4D;&#x7684;&#x4E00;&#x5757;&#x6216;&#x591A;&#x5757;&#xFF0C;&#x5F53;&#x7136;&#x5757;&#x5355;&#x4F4D;&#x7684;&#x7C92;&#x5EA6;&#x53EF;&#x4EE5;&#x8C03;&#x6574;&#x3002;</p>
-<hr>
 <p>&#x865A;&#x62DF;&#x5730;&#x5740;&#x5927;&#x5C0F;4G&#xFF0C;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x90FD;&#x62E5;&#x6709;4G&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x90FD;&#x7EF4;&#x6301;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x5730;&#x5740;&#x6C60;&#x3002;</p>
 <p>&#x6BCF;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x662F;&#x5728;&#x94FE;&#x63A5;&#x65F6;&#x5206;&#x914D;&#x597D;&#x4E86;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x627E;&#x7A7A;&#x95F2;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x6620;&#x5C04;&#x597D;&#xFF0C;&#x7136;&#x540E;&#x7A0B;&#x5E8F;&#x624D;&#x80FD;&#x6267;&#x884C;</p>
 <p><img src="imgs/03.jpg" alt=""></p>
 <p>memory.h</p>
-<pre class="language-"><code>#ifndef __KERNEL_MEMORY_H
-#define __KERNEL_MEMORY_H
-#include &quot;stdint.h&quot;
-#include &quot;bitmap.h&quot;
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">ifndef</span> __KERNEL_MEMORY_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> __KERNEL_MEMORY_H</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;stdint.h&quot;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;bitmap.h&quot;</span></span>
 
-/* &#x7528;&#x4E8E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7BA1;&#x7406; */
-struct virtual_addr {
-   struct bitmap vaddr_bitmap; // &#x865A;&#x62DF;&#x5730;&#x5740;&#x7528;&#x5230;&#x7684;&#x4F4D;&#x56FE;&#x7ED3;&#x6784; 
-   uint32_t vaddr_start;       // &#x865A;&#x62DF;&#x5730;&#x5740;&#x8D77;&#x59CB;&#x5730;&#x5740;
-};
+<span class="token comment">/* &#x7528;&#x4E8E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7BA1;&#x7406; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">virtual_addr</span> <span class="token punctuation">{</span>
+   <span class="token keyword">struct</span> <span class="token class-name">bitmap</span> vaddr_bitmap<span class="token punctuation">;</span> <span class="token comment">// &#x865A;&#x62DF;&#x5730;&#x5740;&#x7528;&#x5230;&#x7684;&#x4F4D;&#x56FE;&#x7ED3;&#x6784; </span>
+   <span class="token keyword">uint32_t</span> vaddr_start<span class="token punctuation">;</span>       <span class="token comment">// &#x865A;&#x62DF;&#x5730;&#x5740;&#x8D77;&#x59CB;&#x5730;&#x5740;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-extern struct pool kernel_pool, user_pool;
-void mem_init(void);
-#endif
-</code></pre><p>&#x4EE5;&#x9875;&#x4E3A;&#x5355;&#x4F4D;&#x7BA1;&#x7406;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5206;&#x914D;&#x60C5;&#x51B5;&#xFF1B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E5F;&#x8981;&#x5206;&#x914D;&#x3002;&#x867D;&#x7136;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x62E5;&#x6709;&#x76F8;&#x540C;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x4F46;&#x7A76;&#x5176;&#x539F;&#x56E0;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x5185;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5FC5;&#x7136;&#x662F;&#x552F;&#x4E00;&#x7684;&#xFF0C;&#x8FD9;&#x901A;&#x5E38;&#x662F;&#x7531;&#x94FE;&#x63A5;&#x5668;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7684;&#xFF1B;&#x8FDB;&#x7A0B;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x4ECE;&#x5806;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;&#xFF0C;&#x7CFB;&#x7EDF;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E5F;&#x5C5E;&#x4E8E;&#x6B64;&#x8FDB;&#x7A0B;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF0C;&#x4E5F;&#x5FC5;&#x987B;&#x8981;&#x4FDD;&#x8BC1;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x552F;&#x4E00;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x7528;&#x4F4D;&#x56FE;&#x6765;&#x8BB0;&#x5F55;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5206;&#x914D;&#x60C5;&#x51B5;&#x3002;</p>
-<hr>
-<p>&#x91C7;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;&#xFF0C;1&#x4F4D;&#x5BF9;&#x5E94;&#x4E00;&#x9875;&#x5927;&#x5C0F;4KB
-&#x5BF9;&#x4E8E;bochs&#x8BBE;&#x7F6E;&#x7684;32MB&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58; &#xFF0C;&#x9700;&#x8981;<code>1024 * 8 &#x4F4D; = 1024&#x5B57;&#x8282; = 1KB</code>&#xFF0C;&#x5373;&#x4F4D;&#x56FE;&#x5B58;&#x50A8;&#x9700;&#x8981;1/4&#x9875;&#x3002;&#x672C;&#x4F8B;&#x91C7;&#x7528;4&#x9875;&#x6765;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5373;&#x6700;&#x5927;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;512MB(<code>4 * 4 * 32MB</code>)&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</p>
-<h5 id="&#x5185;&#x5B58;&#x5206;&#x5E03;">&#x5185;&#x5B58;&#x5206;&#x5E03;</h5>
-<hr>
+<span class="token keyword">extern</span> <span class="token keyword">struct</span> <span class="token class-name">pool</span> kernel_pool<span class="token punctuation">,</span> user_pool<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">mem_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+</code></pre>
+<p>&#x4EE5;&#x9875;&#x4E3A;&#x5355;&#x4F4D;&#x7BA1;&#x7406;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5206;&#x914D;&#x60C5;&#x51B5;&#xFF1B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E5F;&#x8981;&#x5206;&#x914D;&#x3002;&#x867D;&#x7136;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x62E5;&#x6709;&#x76F8;&#x540C;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x4F46;&#x7A76;&#x5176;&#x539F;&#x56E0;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x5185;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5FC5;&#x7136;&#x662F;&#x552F;&#x4E00;&#x7684;&#xFF0C;&#x8FD9;&#x901A;&#x5E38;&#x662F;&#x7531;&#x94FE;&#x63A5;&#x5668;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7684;&#xFF1B;&#x8FDB;&#x7A0B;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x4ECE;&#x5806;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;&#xFF0C;&#x7CFB;&#x7EDF;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E5F;&#x5C5E;&#x4E8E;&#x6B64;&#x8FDB;&#x7A0B;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF0C;&#x4E5F;&#x5FC5;&#x987B;&#x8981;&#x4FDD;&#x8BC1;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x552F;&#x4E00;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x7528;&#x4F4D;&#x56FE;&#x6765;&#x8BB0;&#x5F55;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5206;&#x914D;&#x60C5;&#x51B5;&#x3002;</p>
+<p>&#x91C7;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;&#xFF0C;1&#x4F4D;&#x5BF9;&#x5E94;&#x4E00;&#x9875;&#x5927;&#x5C0F;4KB&#xFF1B;&#x5BF9;&#x4E8E;bochs&#x8BBE;&#x7F6E;&#x7684;32MB&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58; &#xFF0C;&#x9700;&#x8981;<code>1024 * 8 &#x4F4D; = 1024&#x5B57;&#x8282; = 1KB</code>&#xFF0C;&#x5373;&#x4F4D;&#x56FE;&#x5B58;&#x50A8;&#x9700;&#x8981;1/4&#x9875;&#x3002;&#x672C;&#x4F8B;&#x91C7;&#x7528;4&#x9875;&#x6765;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5373;&#x6700;&#x5927;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;512MB(<code>4 * 4 * 32MB</code>)&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</p>
+<h3 id="&#x5185;&#x5B58;&#x5206;&#x5E03;">&#x5185;&#x5B58;&#x5206;&#x5E03;</h3>
 <p>&#x6211;&#x4EEC;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5177;&#x4F53;&#x7684;&#x5185;&#x5B58;&#x60C5;&#x51B5;&#x5982;&#x4E0B;&#x56FE;</p>
 <p><img src="imgs/mem.jpg" alt=""></p>
 <p><img src="imgs/mem2.jpg" alt=""></p>
 <p>&#x4E3B;&#x8981;&#x6211;&#x4EEC;&#x7684;&#x5185;&#x5B58;&#x90FD;&#x662F;&#x6574;&#x9875;&#x7684;&#xFF0C;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x6D6A;&#x8D39;&#x4E00;&#x4E9B;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5185;&#x5B58;&#x6C60;&#x53D6;&#x5185;&#x5B58;&#x4E5F;&#x662F;&#x6574;&#x9875;&#x6574;&#x9875;&#x7684;&#x5206;&#x914D;&#x7684;&#x3002;</p>
-<h2 id="&#x770B;&#x770B;&#x6570;&#x636E;&#x7ED3;&#x6784;">&#x770B;&#x770B;&#x6570;&#x636E;&#x7ED3;&#x6784;</h2>
-<pre class="language-"><code>/* &#x5185;&#x5B58;&#x6C60;&#x6807;&#x8BB0;,&#x7528;&#x4E8E;&#x5224;&#x65AD;&#x7528;&#x54EA;&#x4E2A;&#x5185;&#x5B58;&#x6C60; */
-enum pool_flags {
-   PF_KERNEL = 1,    // &#x5185;&#x6838;&#x5185;&#x5B58;&#x6C60;
-   PF_USER = 2         // &#x7528;&#x6237;&#x5185;&#x5B58;&#x6C60;
-};
+<p>&#x770B;&#x770B;&#x6570;&#x636E;&#x7ED3;&#x6784;</p>
+<pre class="language-"><code class="lang-cpp"><span class="token comment">/* &#x5185;&#x5B58;&#x6C60;&#x6807;&#x8BB0;,&#x7528;&#x4E8E;&#x5224;&#x65AD;&#x7528;&#x54EA;&#x4E2A;&#x5185;&#x5B58;&#x6C60; */</span>
+<span class="token keyword">enum</span> <span class="token class-name">pool_flags</span> <span class="token punctuation">{</span>
+   PF_KERNEL <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>    <span class="token comment">// &#x5185;&#x6838;&#x5185;&#x5B58;&#x6C60;</span>
+   PF_USER <span class="token operator">=</span> <span class="token number">2</span>         <span class="token comment">// &#x7528;&#x6237;&#x5185;&#x5B58;&#x6C60;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-/* &#x7528;&#x4E8E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7BA1;&#x7406; */
-struct virtual_addr {
-/* &#x865A;&#x62DF;&#x5730;&#x5740;&#x7528;&#x5230;&#x7684;&#x4F4D;&#x56FE;&#x7ED3;&#x6784;&#xFF0C;&#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x54EA;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x88AB;&#x5360;&#x7528;&#x4E86;&#x3002;&#x4EE5;&#x9875;&#x4E3A;&#x5355;&#x4F4D;&#x3002;*/
-   struct bitmap vaddr_bitmap;
-/* &#x7BA1;&#x7406;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740; */
-   uint32_t vaddr_start;
-};
-</code></pre><pre class="language-"><code>/* &#x5185;&#x5B58;&#x6C60;&#x7ED3;&#x6784;,&#x751F;&#x6210;&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x5185;&#x6838;&#x5185;&#x5B58;&#x6C60;&#x548C;&#x7528;&#x6237;&#x5185;&#x5B58;&#x6C60; */
-struct pool {
-   struct bitmap pool_bitmap;     // &#x672C;&#x5185;&#x5B58;&#x6C60;&#x7528;&#x5230;&#x7684;&#x4F4D;&#x56FE;&#x7ED3;&#x6784;,&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;
-   uint32_t phy_addr_start;     // &#x672C;&#x5185;&#x5B58;&#x6C60;&#x6240;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;
-   uint32_t pool_size;         // &#x672C;&#x5185;&#x5B58;&#x6C60;&#x5B57;&#x8282;&#x5BB9;&#x91CF;
-};
+<span class="token comment">/* &#x7528;&#x4E8E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7BA1;&#x7406; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">virtual_addr</span> <span class="token punctuation">{</span>
+<span class="token comment">/* &#x865A;&#x62DF;&#x5730;&#x5740;&#x7528;&#x5230;&#x7684;&#x4F4D;&#x56FE;&#x7ED3;&#x6784;&#xFF0C;&#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x54EA;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x88AB;&#x5360;&#x7528;&#x4E86;&#x3002;&#x4EE5;&#x9875;&#x4E3A;&#x5355;&#x4F4D;&#x3002;*/</span>
+   <span class="token keyword">struct</span> <span class="token class-name">bitmap</span> vaddr_bitmap<span class="token punctuation">;</span>
+<span class="token comment">/* &#x7BA1;&#x7406;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740; */</span>
+   <span class="token keyword">uint32_t</span> vaddr_start<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class="language-"><code class="lang-cpp"><span class="token comment">/* &#x5185;&#x5B58;&#x6C60;&#x7ED3;&#x6784;,&#x751F;&#x6210;&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x5185;&#x6838;&#x5185;&#x5B58;&#x6C60;&#x548C;&#x7528;&#x6237;&#x5185;&#x5B58;&#x6C60; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">pool</span> <span class="token punctuation">{</span>
+   <span class="token keyword">struct</span> <span class="token class-name">bitmap</span> pool_bitmap<span class="token punctuation">;</span>     <span class="token comment">// &#x672C;&#x5185;&#x5B58;&#x6C60;&#x7528;&#x5230;&#x7684;&#x4F4D;&#x56FE;&#x7ED3;&#x6784;,&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;</span>
+   <span class="token keyword">uint32_t</span> phy_addr_start<span class="token punctuation">;</span>     <span class="token comment">// &#x672C;&#x5185;&#x5B58;&#x6C60;&#x6240;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;</span>
+   <span class="token keyword">uint32_t</span> pool_size<span class="token punctuation">;</span>         <span class="token comment">// &#x672C;&#x5185;&#x5B58;&#x6C60;&#x5B57;&#x8282;&#x5BB9;&#x91CF;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-struct pool kernel_pool, user_pool;      // &#x751F;&#x6210;&#x5185;&#x6838;&#x5185;&#x5B58;&#x6C60;&#x548C;&#x7528;&#x6237;&#x5185;&#x5B58;&#x6C60;
-struct virtual_addr kernel_vaddr;     // &#x6B64;&#x7ED3;&#x6784;&#x662F;&#x7528;&#x6765;&#x7ED9;&#x5185;&#x6838;&#x5206;&#x914D;&#x865A;&#x62DF;&#x5730;&#x5740;
-</code></pre><p>&#x529F;&#x80FD;&#x51FD;&#x6570;</p>
-<pre class="language-"><code>/* &#x5728;pf&#x8868;&#x793A;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x6C60;&#x4E2D;&#x7533;&#x8BF7;pg_cnt&#x4E2A;&#x865A;&#x62DF;&#x9875;,
- * &#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x865A;&#x62DF;&#x9875;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;, &#x5931;&#x8D25;&#x5219;&#x8FD4;&#x56DE;NULL */
-static void* vaddr_get(enum pool_flags pf, uint32_t pg_cnt)
-
-
-/* &#x5F97;&#x5230;&#x865A;&#x62DF;&#x5730;&#x5740;vaddr&#x5BF9;&#x5E94;&#x7684;pte&#x6307;&#x9488;*/
-uint32_t* pte_ptr(uint32_t vaddr) 
-
-
-/* &#x5728;m_pool&#x6307;&#x5411;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6C60;&#x4E2D;&#x5206;&#x914D;1&#x4E2A;&#x7269;&#x7406;&#x9875;,
- * &#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x9875;&#x6846;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;,&#x5931;&#x8D25;&#x5219;&#x8FD4;&#x56DE;NULL */
-static void* palloc(struct pool* m_pool)
+<span class="token keyword">struct</span> <span class="token class-name">pool</span> kernel_pool<span class="token punctuation">,</span> user_pool<span class="token punctuation">;</span>      <span class="token comment">// &#x751F;&#x6210;&#x5185;&#x6838;&#x5185;&#x5B58;&#x6C60;&#x548C;&#x7528;&#x6237;&#x5185;&#x5B58;&#x6C60;</span>
+<span class="token keyword">struct</span> <span class="token class-name">virtual_addr</span> kernel_vaddr<span class="token punctuation">;</span>     <span class="token comment">// &#x6B64;&#x7ED3;&#x6784;&#x662F;&#x7528;&#x6765;&#x7ED9;&#x5185;&#x6838;&#x5206;&#x914D;&#x865A;&#x62DF;&#x5730;&#x5740;</span>
+</code></pre>
+<ul>
+<li>&#x529F;&#x80FD;&#x51FD;&#x6570;</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token comment">/* &#x5728;pf&#x8868;&#x793A;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x6C60;&#x4E2D;&#x7533;&#x8BF7;pg_cnt&#x4E2A;&#x865A;&#x62DF;&#x9875;,
+ * &#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x865A;&#x62DF;&#x9875;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;, &#x5931;&#x8D25;&#x5219;&#x8FD4;&#x56DE;NULL */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">vaddr_get</span><span class="token punctuation">(</span><span class="token keyword">enum</span> <span class="token class-name">pool_flags</span> pf<span class="token punctuation">,</span> <span class="token keyword">uint32_t</span> pg_cnt<span class="token punctuation">)</span>
 
 
-/* &#x9875;&#x8868;&#x4E2D;&#x6DFB;&#x52A0;&#x865A;&#x62DF;&#x5730;&#x5740;_vaddr&#x4E0E;&#x7269;&#x7406;&#x5730;&#x5740;_page_phyaddr&#x7684;&#x6620;&#x5C04; */
-static void page_table_add(void* _vaddr, void* _page_phyaddr)
+<span class="token comment">/* &#x5F97;&#x5230;&#x865A;&#x62DF;&#x5730;&#x5740;vaddr&#x5BF9;&#x5E94;&#x7684;pte&#x6307;&#x9488;*/</span>
+<span class="token keyword">uint32_t</span><span class="token operator">*</span> <span class="token function">pte_ptr</span><span class="token punctuation">(</span><span class="token keyword">uint32_t</span> vaddr<span class="token punctuation">)</span> 
 
 
-/* &#x5206;&#x914D;pg_cnt&#x4E2A;&#x9875;&#x7A7A;&#x95F4;,&#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x8D77;&#x59CB;&#x865A;&#x62DF;&#x5730;&#x5740;,&#x5931;&#x8D25;&#x65F6;&#x8FD4;&#x56DE;NULL */
-void* malloc_page(enum pool_flags pf, uint32_t pg_cnt) 
+<span class="token comment">/* &#x5728;m_pool&#x6307;&#x5411;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6C60;&#x4E2D;&#x5206;&#x914D;1&#x4E2A;&#x7269;&#x7406;&#x9875;,
+ * &#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x9875;&#x6846;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;,&#x5931;&#x8D25;&#x5219;&#x8FD4;&#x56DE;NULL */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">palloc</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pool</span><span class="token operator">*</span> m_pool<span class="token punctuation">)</span>
 
 
-/* &#x4ECE;&#x5185;&#x6838;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6C60;&#x4E2D;&#x7533;&#x8BF7;pg_cnt&#x9875;&#x5185;&#x5B58;,&#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x5176;&#x865A;&#x62DF;&#x5730;&#x5740;,&#x5931;&#x8D25;&#x5219;&#x8FD4;&#x56DE;NULL */
-void* get_kernel_pages(uint32_t pg_cnt)
-</code></pre><p>&#x6211;&#x4EEC;&#x7684;&#x603B;&#x5171;&#x5185;&#x5B58;&#x662F;&#x91C7;&#x7528;BIOS&#x4E2D;&#x65AD;&#x83B7;&#x53D6;&#x7684;&#xFF0C;&#x5185;&#x5B58;&#x521D;&#x59CB;&#x51FD;&#x6570;&#x5982;&#x4E0B;</p>
+<span class="token comment">/* &#x9875;&#x8868;&#x4E2D;&#x6DFB;&#x52A0;&#x865A;&#x62DF;&#x5730;&#x5740;_vaddr&#x4E0E;&#x7269;&#x7406;&#x5730;&#x5740;_page_phyaddr&#x7684;&#x6620;&#x5C04; */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">page_table_add</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> _vaddr<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> _page_phyaddr<span class="token punctuation">)</span>
+
+
+<span class="token comment">/* &#x5206;&#x914D;pg_cnt&#x4E2A;&#x9875;&#x7A7A;&#x95F4;,&#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x8D77;&#x59CB;&#x865A;&#x62DF;&#x5730;&#x5740;,&#x5931;&#x8D25;&#x65F6;&#x8FD4;&#x56DE;NULL */</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">malloc_page</span><span class="token punctuation">(</span><span class="token keyword">enum</span> <span class="token class-name">pool_flags</span> pf<span class="token punctuation">,</span> <span class="token keyword">uint32_t</span> pg_cnt<span class="token punctuation">)</span> 
+
+
+<span class="token comment">/* &#x4ECE;&#x5185;&#x6838;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6C60;&#x4E2D;&#x7533;&#x8BF7;pg_cnt&#x9875;&#x5185;&#x5B58;,&#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x5176;&#x865A;&#x62DF;&#x5730;&#x5740;,&#x5931;&#x8D25;&#x5219;&#x8FD4;&#x56DE;NULL */</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">get_kernel_pages</span><span class="token punctuation">(</span><span class="token keyword">uint32_t</span> pg_cnt<span class="token punctuation">)</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x7684;&#x603B;&#x5171;&#x5185;&#x5B58;&#x662F;&#x91C7;&#x7528;BIOS&#x4E2D;&#x65AD;&#x83B7;&#x53D6;&#x7684;&#xFF0C;&#x5185;&#x5B58;&#x521D;&#x59CB;&#x51FD;&#x6570;&#x5982;&#x4E0B;</p>
 <pre class="language-"><code>/* &#x5185;&#x5B58;&#x7BA1;&#x7406;&#x90E8;&#x5206;&#x521D;&#x59CB;&#x5316;&#x5165;&#x53E3; */
 void mem_init() {
    put_str(&quot;mem_init start\n&quot;);
@@ -702,7 +710,7 @@ static void mem_pool_init(uint32_t all_mem) {
    bitmap_init(&amp;kernel_vaddr.vaddr_bitmap);
    put_str(&quot;   mem_pool_init done\n&quot;);
 }
-</code></pre><p>&#x56DE;&#x987E;&#x4E00;&#x4E0B;<strong>&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;</strong>&#x7684;&#x8F6C;&#x6362;</p>
+</code></pre><h3 id="&#x56DE;&#x987E;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x8F6C;&#x6362;">&#x56DE;&#x987E;<strong>&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;</strong>&#x7684;&#x8F6C;&#x6362;</h3>
 <ol>
 <li><p>&#x865A;&#x62DF;&#x5730;&#x5740;&#x9AD8;10&#x4F4D;*4&#xFF0C;&#x4F5C;&#x4E3A;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x5185;&#x7684;&#x504F;&#x79FB;&#x5730;&#x5740;&#xFF0C;&#x52A0;&#x4E0A;&#x76EE;&#x5F55;&#x8868;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#xFF0C;&#x5C31;&#x80FD;&#x5F97;&#x5230;&#x9875;&#x76EE;&#x5F55;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#x3002;&#x8BFB;&#x53D6;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x9875;&#x8868;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;</p>
 </li>
@@ -711,15 +719,14 @@ static void mem_pool_init(uint32_t all_mem) {
 <li><p>&#x865A;&#x62DF;&#x5730;&#x5740;&#x9AD8;10&#x4F4D;&#x548C;&#x4E2D;&#x95F4;10&#x4F4D;&#x5206;&#x522B;&#x662F;PED&#x548C;PTD&#x7684;&#x7D22;&#x5F15;&#x503C;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4E58;&#x4EE5;4&#x3002;&#x4F4E;12&#x4F4D;&#x4E0D;&#x662F;&#x7D22;&#x5F15;&#x503C;&#xFF0C;&#x5176;&#x8303;&#x56F4;&#x662F;0-0xfff,&#x4F5C;&#x4E3A;&#x9875;&#x5185;&#x504F;&#x79FB;&#x3002;&#x6B65;&#x9AA4;2&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#x52A0;&#x4E0A;&#x6B64;&#x504F;&#x79FB;&#xFF0C;&#x5F97;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#x3002;</p>
 </li>
 </ol>
-<hr>
-<p>&#x5B9E;&#x9645;&#x64CD;&#x4F5C;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF0C;&#x5F53;&#x5206;&#x914D;&#x7684;&#x5185;&#x5B58;&#x65F6;&#x4E00;&#x9875;&#x7684;&#x6574;&#x6570;&#x500D;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x8981;&#x65B0;&#x5EFA;&#x9875;&#x76EE;&#x5F55;&#x9879;&#xFF0C;&#x65B0;&#x5EFA;&#x9875;&#x8868;&#xFF0C;&#x5F53;&#x7136;&#x6BCF;&#x6B21;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;&#xFF0C;&#x91CA;&#x653E;&#xFF0C;&#x4F4D;&#x56FE;&#x7ED3;&#x6784;&#x662F;&#x8DDF;&#x7740;&#x6539;&#x53D8;&#x7740;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x662F;user_pool,kernel_pool&#x4E24;&#x4E2A;&#x6765;&#x8FDB;&#x884C;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6C60;&#x7684;&#x7BA1;&#x7406;</p>
-<h6 id="&#x8FD0;&#x884C;">&#x8FD0;&#x884C;</h6>
+<p>&#x5B9E;&#x9645;&#x64CD;&#x4F5C;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF0C;&#x5F53;&#x5206;&#x914D;&#x7684;&#x5185;&#x5B58;&#x65F6;&#x4E00;&#x9875;&#x7684;&#x6574;&#x6570;&#x500D;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x8981;&#x65B0;&#x5EFA;&#x9875;&#x76EE;&#x5F55;&#x9879;&#xFF0C;&#x65B0;&#x5EFA;&#x9875;&#x8868;&#xFF0C;&#x5F53;&#x7136;&#x6BCF;&#x6B21;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;&#xFF0C;&#x91CA;&#x653E;&#xFF0C;&#x4F4D;&#x56FE;&#x7ED3;&#x6784;&#x662F;&#x8DDF;&#x7740;&#x6539;&#x53D8;&#x7740;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x662F;<code>user\_pool,kernel\_pool</code>&#x4E24;&#x4E2A;&#x6765;&#x8FDB;&#x884C;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6C60;&#x7684;&#x7BA1;&#x7406;</p>
+<h3 id="&#x8FD0;&#x884C;&#x622A;&#x56FE;">&#x8FD0;&#x884C;&#x622A;&#x56FE;</h3>
 <ul>
 <li>&#x8FD0;&#x884C;</li>
 </ul>
 <p><img src="imgs/rs.jpg" alt=""></p>
 <ul>
-<li>&#x8C03;&#x8BD5; &#x67E5;&#x770B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x6620;&#x5C04; </li>
+<li>&#x8C03;&#x8BD5; &#x67E5;&#x770B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x6620;&#x5C04;</li>
 </ul>
 <p><img src="imgs/map.jpg" alt=""></p>
 <ul>
@@ -727,9 +734,8 @@ static void mem_pool_init(uint32_t all_mem) {
 </ul>
 <p><img src="imgs/rs2.jpg" alt=""></p>
 <p>&#x4F4E;&#x4E09;&#x4F4D;&#x662F;1&#xFF0C;&#x8BF4;&#x660E;&#x7533;&#x8BF7;&#x4E86;3&#x4E2A;&#x9875;&#xFF0C;&#x7B26;&#x5408;&#x9884;&#x671F;</p>
-<hr>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 09:19:57
+2020-08-02 15:39:05
 </span></footer>
                                 
                                 </section>
@@ -773,7 +779,7 @@ static void mem_pool_init(uint32_t all_mem) {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"9 内存管理，内存池，地址映射","level":"1.10","depth":1,"next":{"title":"10 内核实现线程","level":"1.11","depth":1,"path":"content/10_process_thread/README.md","ref":"./content/10_process_thread/README.md","articles":[]},"previous":{"title":"8 内核Assert函数","level":"1.9","depth":1,"path":"content/08_assert/README.md","ref":"./content/08_assert/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/09_memory_management/README.md","mtime":"2020-08-02T01:19:57.468Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"9 内存管理，内存池，地址映射","level":"1.10","depth":1,"next":{"title":"10 内核实现线程","level":"1.11","depth":1,"path":"content/10_process_thread/README.md","ref":"./content/10_process_thread/README.md","articles":[]},"previous":{"title":"8 内核Assert函数","level":"1.9","depth":1,"path":"content/08_assert/README.md","ref":"./content/08_assert/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/09_memory_management/README.md","mtime":"2020-08-02T07:39:05.630Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T14:34:24.125Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

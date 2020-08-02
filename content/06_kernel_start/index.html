@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>6 内核编写 · spring-note</title>
+        <title>6 C语言写内核 · spring-note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -139,7 +139,7 @@
                 <a href="../01_BIOS_to_MBR/">
             
                     
-                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+                    1 最简单的OS:实模式下BIOS到MBR
             
                 </a>
             
@@ -165,7 +165,7 @@
                 <a href="../03_protected_mode/">
             
                     
-                    3 实模式到保护模式（GDT，gdtr, 选择子)
+                    3 实模式到保护模式（GDT,gdtr,选择子)
             
                 </a>
             
@@ -178,7 +178,7 @@
                 <a href="../04_page/">
             
                     
-                    4 分页
+                    4 分段 & 分页
             
                 </a>
             
@@ -191,7 +191,7 @@
                 <a href="../05_efi/">
             
                     
-                    5 ELF文件格式
+                    5 ELF文件理解
             
                 </a>
             
@@ -204,7 +204,7 @@
                 <a href="./">
             
                     
-                    6 内核编写
+                    6 C语言写内核
             
                 </a>
             
@@ -282,7 +282,7 @@
                 <a href="../12_lock/">
             
                     
-                    12 锁,信号量
+                    12 锁&信号量
             
                 </a>
             
@@ -321,7 +321,7 @@
                 <a href="../15_user_process/">
             
                     
-                    15 特权级，用户进程
+                    15 指令特权级，用户进程引入
             
                 </a>
             
@@ -334,7 +334,7 @@
                 <a href="../16_system_call/">
             
                     
-                    16 系统调用
+                    16 系统调用实现用户进程
             
                 </a>
             
@@ -347,7 +347,7 @@
                 <a href="../17_hd_driver/">
             
                     
-                    17 硬件驱动
+                    17 硬件驱动认识
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="../19_fd_inode_dir_file/">
             
                     
-                    19 inode,文件目录操作
+                    19 文件描述符操作
             
                 </a>
             
@@ -424,7 +424,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >6 内核编写</a>
+        <a href="../.." >6 C语言写内核</a>
     </h1>
 </div>
 
@@ -440,24 +440,29 @@
                                 <section class="normal markdown-section">
                                 
                                 <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
-<li><div><a href="#&#x7A0B;&#x5E8F;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;">&#x7A0B;&#x5E8F;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;</a><i></i></div></li>
+<li><div><a href="#&#x5F00;&#x59CB;&#x81EA;&#x5DF1;&#x5199;&#x5185;&#x6838;">&#x5F00;&#x59CB;&#x81EA;&#x5DF1;&#x5199;&#x5185;&#x6838;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x7A0B;&#x5E8F;&#x7F16;&#x7801;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;">&#x7A0B;&#x5E8F;&#x7F16;&#x7801;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;</a><i></i></div></li>
 <li><div><a href="#&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x8BF4;&#x660E;">&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x8BF4;&#x660E;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
-<li> 
-<ul>
 <li><div><a href="#&#x78C1;&#x76D8;&#x7ED3;&#x6784;&#xFF0C;&#x865A;&#x62DF;&#x5730;&#x5740;">&#x78C1;&#x76D8;&#x7ED3;&#x6784;&#xFF0C;&#x865A;&#x62DF;&#x5730;&#x5740;</a><i></i></div></li>
+<li><div><a href="#mbr">mbr</a><i></i></div></li>
+<li><div><a href="#loader">loader</a><i></i></div></li>
+<li><div><a href="#&#x5185;&#x6838;&#x4EE3;&#x7801;">&#x5185;&#x6838;&#x4EE3;&#x7801;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
 <li><div><a href="#&#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x5185;&#x6838;&#x8FD0;&#x884C;">&#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x5185;&#x6838;&#x8FD0;&#x884C;</a><i></i></div></li>
 <li><div><a href="#&#x6253;&#x5370;&#x51FD;&#x6570;">&#x6253;&#x5370;&#x51FD;&#x6570;</a><i></i></div></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 
-<p>&#x6839;&#x636E;&#x524D;&#x9762;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5199;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5185;&#x6838;&#x53EF;&#x4EE5;&#x6253;&#x5370;&#x5B57;&#x7B26;&#x3002;</p>
+<h1 id="&#x5F00;&#x59CB;&#x81EA;&#x5DF1;&#x5199;&#x5185;&#x6838;">&#x5F00;&#x59CB;&#x81EA;&#x5DF1;&#x5199;&#x5185;&#x6838;</h1>
+<p>&#x6839;&#x636E;&#x524D;&#x9762;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5199;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5185;&#x6838;&#xFF1A;&#x6253;&#x5370;&#x5B57;&#x7B26;&#x7136;&#x540E;&#x9A7B;&#x7559;&#x3002;</p>
 <p>&#x300A;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x771F;&#x76F8;&#x8FD8;&#x539F;&#x300B;&#x7ED9;&#x51FA;&#x4E86;&#x6E90;&#x4EE3;&#x7801;&#xFF0C;&#x6211;&#x529B;&#x56FE;&#x81EA;&#x5DF1;&#x5B9E;&#x8DF5;&#x7406;&#x89E3;&#xFF0C;&#x786E;&#x4FDD;&#x6709;&#x4EE3;&#x7801;&#xFF0C;&#x4E5F;&#x6709;&#x8FD0;&#x884C;&#x622A;&#x56FE;&#xFF08;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#xFF09;&#x3002;</p>
-<p>&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7406;&#x89E3;&#x78C1;&#x76D8;&#x4E0A;&#x6587;&#x4EF6;&#x662F;&#x5982;&#x4F55;&#x5B89;&#x6392;&#x7684;&#xFF0C;1M&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x7684;&#xFF0C;4G&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x7684;&#x3002;</p>
-<hr>
-<h2 id="&#x7A0B;&#x5E8F;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;">&#x7A0B;&#x5E8F;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;</h2>
+<p>&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7406;&#x89E3;&#x78C1;&#x76D8;&#x4E0A;&#x6587;&#x4EF6;&#x662F;&#x5982;&#x4F55;&#x5B89;&#x6392;&#x7684;&#xFF0C;1M&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x7684;&#xFF0C;4G&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x7684;&#xFF1F;</p>
+<h2 id="&#x7A0B;&#x5E8F;&#x7F16;&#x7801;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;">&#x7A0B;&#x5E8F;&#x7F16;&#x7801;&#xFF0C;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;</h2>
 <ul>
 <li>&#x4EE3;&#x7801;&#x76EE;&#x5F55;&#x7ED3;&#x6784;</li>
 </ul>
@@ -465,161 +470,147 @@
 <ul>
 <li><p>&#x6CE8;&#x610F;&#x4E0A;&#x8FF0;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x8BD1;&#x8FD0;&#x884C;&#x5728;32bit&#x7684;linux&#x73AF;&#x5883;&#x4E0B;,&#x56E0;&#x4E3A;&#x8981;&#x89E3;&#x6790;ELF&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF08;32&#x4F4D;&#x548C;64&#x4F4D;&#x7684;ELF&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#xFF0C;&#x6709;&#x4E9B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5927;&#x5C0F;&#xFF0C;&#x5B57;&#x6BB5;&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#xFF0C;&#x6240;&#x4EE5;&#x89E3;&#x6790;&#x4F1A;&#x4E0D;&#x540C;&#xFF09;</p>
 </li>
-<li><p>Makefile
-```
-.PHONY:build image clean</p>
+<li><p>Makefile</p>
 </li>
 </ul>
-<p>img=/home/john/os/hd30M.img</p>
-<p>mbr_src=mbr.S
-loader_src=loader.S</p>
-<p>mbr=mbr.bin
-loader=loader.bin</p>
-<p>mbr_loader:
-    nasm -I boot/include/ -o boot/${mbr} boot/${mbr_src}
-    nasm -I boot/include/ -o boot/${loader} boot/${loader_src}</p>
-<p>build:
-    nasm -f elf -o lib/kernel/print.o lib/kernel/print.S
-    gcc -I lib/kernel -c -o kernel/main.o  kernel/main.c
-    ld -Ttext 0xc0001500 -e main -o kernel/kernel.bin kernel/main.o lib/kernel/print.o</p>
-<p>image:
-    @-rm -rf $(img)
-    bximage -hd -mode=&quot;flat&quot; -size=30 -q $(img)
-    dd if=./boot/mbr.bin of=$(img) bs=512 count=1 conv=notrunc
-    dd if=./boot/loader.bin of=$(img) bs=512 seek=2 count=3 conv=notrunc
-    dd if=./kernel/kernel.bin of=$(img) bs=512 seek=9 count=200 conv=notrunc</p>
-<p>clean:
-    @-rm -rf boot/<em>.img boot/</em>.bin boot/<em>.o /boot/</em>~
-    @-rm -rf lib/<em>.img lib/</em>.bin lib/<em>.o lib/</em>~
-    @-rm -rf lib/kernel/<em>.img lib/kernel/</em>.bin lib/kernel/<em>.o lib/kernel/</em>~
-    @-rm -rf kernel/<em>.img kernel/</em>.bin kernel/<em>.o kernel/</em>~
-    @-rm -rf <em>.o </em>.bin <em>.img </em>~</p>
-<pre class="language-"><code>
-main.c&#xFF08;kernel&#xFF09;
-</code></pre><h1 id="include-printh">include &quot;print.h&quot;</h1>
-<p>void main(void) {
-   put_char(&apos;k&apos;);
-   put_char(&apos;e&apos;);
-   put_char(&apos;r&apos;);
-   put_char(&apos;n&apos;);
-   put_char(&apos;e&apos;);
-   put_char(&apos;l&apos;);
-   put_char(&apos;\n&apos;);
-   put_char(&apos;1&apos;);
-   put_char(&apos;2&apos;);
-   put_char(&apos;\b&apos;);
-   put_char(&apos;3&apos;);
-   while(1);
-}</p>
-<pre class="language-"><code>
-\n &#x6362;&#x884C;
-\b &#x5220;&#x9664;&#x524D;&#x4E00;&#x5B57;&#x7B26;
+<pre class="language-"><code class="lang-cpp"><span class="token punctuation">.</span>PHONY<span class="token operator">:</span>build image clean
 
-&#x6700;&#x540E;bochs&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x56FE;
+img<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>john<span class="token operator">/</span>os<span class="token operator">/</span>hd30M<span class="token punctuation">.</span>img
 
-![](../06_kernel_start/imgs/rs.jpg)
+mbr_src<span class="token operator">=</span>mbr<span class="token punctuation">.</span>S
+loader_src<span class="token operator">=</span>loader<span class="token punctuation">.</span>S
 
-bochs&#x8FD0;&#x884C;&#x53C2;&#x8003;&#x672C;&#x5DE5;&#x7A0B;02_mbr_hd&#x4E0B;&#x7684;bochs&#x914D;&#x7F6E;&#x6587;&#x4EF6;
----
+mbr<span class="token operator">=</span>mbr<span class="token punctuation">.</span>bin
+loader<span class="token operator">=</span>loader<span class="token punctuation">.</span>bin
 
-## &#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x8BF4;&#x660E;
+mbr_loader<span class="token operator">:</span>
+    nasm <span class="token operator">-</span>I boot<span class="token operator">/</span>include<span class="token operator">/</span> <span class="token operator">-</span>o boot<span class="token operator">/</span>$<span class="token punctuation">{</span>mbr<span class="token punctuation">}</span> boot<span class="token operator">/</span>$<span class="token punctuation">{</span>mbr_src<span class="token punctuation">}</span>
+    nasm <span class="token operator">-</span>I boot<span class="token operator">/</span>include<span class="token operator">/</span> <span class="token operator">-</span>o boot<span class="token operator">/</span>$<span class="token punctuation">{</span>loader<span class="token punctuation">}</span> boot<span class="token operator">/</span>$<span class="token punctuation">{</span>loader_src<span class="token punctuation">}</span>
 
-#### &#x78C1;&#x76D8;&#x7ED3;&#x6784;&#xFF0C;&#x865A;&#x62DF;&#x5730;&#x5740;
-![](../06_kernel_start/imgs/disk.jpg)
+build<span class="token operator">:</span>
+    nasm <span class="token operator">-</span>f elf <span class="token operator">-</span>o lib<span class="token operator">/</span>kernel<span class="token operator">/</span>print<span class="token punctuation">.</span>o lib<span class="token operator">/</span>kernel<span class="token operator">/</span>print<span class="token punctuation">.</span>S
+    gcc <span class="token operator">-</span>I lib<span class="token operator">/</span>kernel <span class="token operator">-</span>c <span class="token operator">-</span>o kernel<span class="token operator">/</span>main<span class="token punctuation">.</span>o  kernel<span class="token operator">/</span>main<span class="token punctuation">.</span>c
+    ld <span class="token operator">-</span>Ttext <span class="token number">0xc0001500</span> <span class="token operator">-</span>e main <span class="token operator">-</span>o kernel<span class="token operator">/</span>kernel<span class="token punctuation">.</span>bin kernel<span class="token operator">/</span>main<span class="token punctuation">.</span>o lib<span class="token operator">/</span>kernel<span class="token operator">/</span>print<span class="token punctuation">.</span>o
 
-* mbr
+image<span class="token operator">:</span>
+    @<span class="token operator">-</span>rm <span class="token operator">-</span>rf $<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+    bximage <span class="token operator">-</span>hd <span class="token operator">-</span>mode<span class="token operator">=</span><span class="token string">&quot;flat&quot;</span> <span class="token operator">-</span>size<span class="token operator">=</span><span class="token number">30</span> <span class="token operator">-</span>q $<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+    dd <span class="token keyword">if</span><span class="token operator">=</span><span class="token punctuation">.</span><span class="token operator">/</span>boot<span class="token operator">/</span>mbr<span class="token punctuation">.</span>bin of<span class="token operator">=</span>$<span class="token punctuation">(</span>img<span class="token punctuation">)</span> bs<span class="token operator">=</span><span class="token number">512</span> count<span class="token operator">=</span><span class="token number">1</span> conv<span class="token operator">=</span>notrunc
+    dd <span class="token keyword">if</span><span class="token operator">=</span><span class="token punctuation">.</span><span class="token operator">/</span>boot<span class="token operator">/</span>loader<span class="token punctuation">.</span>bin of<span class="token operator">=</span>$<span class="token punctuation">(</span>img<span class="token punctuation">)</span> bs<span class="token operator">=</span><span class="token number">512</span> seek<span class="token operator">=</span><span class="token number">2</span> count<span class="token operator">=</span><span class="token number">3</span> conv<span class="token operator">=</span>notrunc
+    dd <span class="token keyword">if</span><span class="token operator">=</span><span class="token punctuation">.</span><span class="token operator">/</span>kernel<span class="token operator">/</span>kernel<span class="token punctuation">.</span>bin of<span class="token operator">=</span>$<span class="token punctuation">(</span>img<span class="token punctuation">)</span> bs<span class="token operator">=</span><span class="token number">512</span> seek<span class="token operator">=</span><span class="token number">9</span> count<span class="token operator">=</span><span class="token number">200</span> conv<span class="token operator">=</span>notrunc
 
-&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;0x7c00&#xFF0C;&#x6709;BIOS&#x8BFB;&#x53D6;&#x78C1;&#x76D8;&#x7684;mbr&#x5206;&#x533A;&#xFF08;&#x5373;&#x78C1;&#x76D8;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x6247;&#x533A;-512&#x5B57;&#x8282;&#xFF09;
+clean<span class="token operator">:</span>
+    @<span class="token operator">-</span>rm <span class="token operator">-</span>rf boot<span class="token comment">/*.img boot/*.bin boot/*.o /boot/*~
+    @-rm -rf lib/*.img lib/*.bin lib/*.o lib/*~
+    @-rm -rf lib/kernel/*.img lib/kernel/*.bin lib/kernel/*.o lib/kernel/*~
+    @-rm -rf kernel/*.img kernel/*.bin kernel/*.o kernel/*~
+    @-rm -rf *.o *.bin *.img *~
+</span></code></pre>
+<ul>
+<li>main.c&#xFF08;kernel&#xFF09;</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;print.h&quot;</span></span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;k&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;e&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;r&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;e&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;l&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;1&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;2&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\b&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;3&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>\n &#x6362;&#x884C;
+\b &#x5220;&#x9664;&#x524D;&#x4E00;&#x5B57;&#x7B26;</p>
+<p>&#x6700;&#x540E;bochs&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x56FE;</p>
+<p><img src="imgs/rs.jpg" alt=""></p>
+<p>bochs&#x8FD0;&#x884C;&#x53C2;&#x8003;&#x672C;&#x5DE5;&#x7A0B;02_mbr_hd&#x4E0B;&#x7684;bochs&#x914D;&#x7F6E;&#x6587;&#x4EF6;</p>
+<h2 id="&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x8BF4;&#x660E;">&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x8BF4;&#x660E;</h2>
+<h3 id="&#x78C1;&#x76D8;&#x7ED3;&#x6784;&#xFF0C;&#x865A;&#x62DF;&#x5730;&#x5740;">&#x78C1;&#x76D8;&#x7ED3;&#x6784;&#xFF0C;&#x865A;&#x62DF;&#x5730;&#x5740;</h3>
+<p><img src="imgs/disk.jpg" alt=""></p>
+<h3 id="mbr">mbr</h3>
+<p>&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x7269;&#x7406;&#x5730;&#x5740;0x7c00&#xFF0C;&#x6709;BIOS&#x8BFB;&#x53D6;&#x78C1;&#x76D8;&#x7684;mbr&#x5206;&#x533A;&#xFF08;&#x5373;&#x78C1;&#x76D8;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x6247;&#x533A;-512&#x5B57;&#x8282;&#xFF09;</p>
+<p>mbr&#x8D1F;&#x8D23;&#x8BFB;&#x53D6;&#x78C1;&#x76D8;2-4&#x6247;&#x533A;&#x7684;loader&#x5185;&#x5BB9;&#xFF0C;&#x52A0;&#x8F7D;&#x5728;&#x7269;&#x7406;&#x5185;&#x5B58;
+&#x53EF;&#x7528;&#x533A;&#x57DF;&#xFF0C;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x4E86;0x9000&#xFF0C;mbr&#x7ED3;&#x675F;&#x81EA;&#x5DF1;&#xFF0C;&#x8DF3;&#x8F6C;&#x5230;loader&#x5165;&#x53E3;&#x5730;&#x5740;</p>
+<h3 id="loader">loader</h3>
+<p>loader&#x5EFA;&#x7ACB;&#x5206;&#x6BB5;&#xFF0C;&#x5206;&#x9875;&#x673A;&#x5236;&#x7B49;&#xFF0C;&#x5E76;&#x8BFB;&#x53D6;&#x5185;&#x6838;&#x6240;&#x5728;&#x7684;&#x78C1;&#x76D8;&#x533A;&#x57DF;&#xFF0C;&#x628A;&#x5185;&#x6838;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#xFF0C;&#x7136;&#x540E;&#x8DF3;&#x8F6C;&#x5230;&#x5185;&#x6838;&#x5165;&#x53E3;&#x5904;&#xFF0C;&#x7ED3;&#x675F;&#x81EA;&#x5DF1;</p>
+<h3 id="&#x5185;&#x6838;&#x4EE3;&#x7801;">&#x5185;&#x6838;&#x4EE3;&#x7801;</h3>
+<p>&#x5185;&#x6838;&#x7684;<code>kernel.bin</code>&#x6709;&#x4E24;&#x4E2A;&#x5730;&#x5740;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;ELF&#x6587;&#x4EF6;&#x5730;&#x5740;&#xFF0C;&#x8FD9;&#x4E2A;&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x7269;&#x7406;&#x5185;&#x5B58;&#x53EF;&#x7528;&#x533A;&#x57DF;&#x7684;0x70000;&#x53E6;&#x4E00;&#x4E2A;&#x662F;&#x89E3;&#x6790;ELF&#x540E;&#x7684;&#x5185;&#x6838;&#x6620;&#x50CF;&#xFF0C;&#x8FD9;&#x4E2A;&#x52A0;&#x8F7D;&#x5230;&#x4E86;0x1500(loader&#x8BBE;&#x8BA1;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#x4E0D;&#x8D85;&#x8FC7;2000&#x5B57;&#x8282;&#xFF0C;0x9000+2000&#x5B57;&#x8282; = 0x1d10&#xFF0C;&#x7136;&#x540E;&#x7A7A;&#x4E86;&#x4E9B;&#xFF0C;&#x5185;&#x6838;&#x9009;&#x62E9;&#x4E86;0x1500&#x5F00;&#x59CB;&#x540E;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF09;</p>
+<p><img src="imgs/map.jpg" alt=""></p>
+<p>&#x9875;&#x8868;&#x4E2D;&#x8BBE;&#x7F6E;&#x4E86;&#x5185;&#x6838;&#x4F4E;&#x7AEF;1MB&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E0E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;</p>
+<p>&#x6240;&#x4EE5;&#xFF0C;&#x7269;&#x7406;&#x5730;&#x5740;0x1500&#x5BF9;&#x5E94;&#x5230;&#x5185;&#x6838;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5C31;&#x662F;0xc0001500&#xFF0C;&#x8FD9;&#x4E5F;&#x5C31;&#x662F;&#x5185;&#x6838;&#x5165;&#x53E3;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF08;Makefile&#x4E2D;&#x7F16;&#x8BD1;&#x51FA;kernel.bin&#x5C31;&#x8BBE;&#x7F6E;&#x7684;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#xFF09;</p>
+<h4 id="&#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x5185;&#x6838;&#x8FD0;&#x884C;">&#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x5185;&#x6838;&#x8FD0;&#x884C;</h4>
+<p>&#x5185;&#x6838;&#x6587;&#x4EF6;&#x76EE;&#x524D;&#x5C31;&#x662F;main.o&#x548C;print.o&#x94FE;&#x63A5;&#x7684;&#xFF0C;print&#x4F7F;&#x7528;&#x6C47;&#x7F16;&#x5199;&#x7684;&#x64CD;&#x4F5C;&#x4E86;&#x663E;&#x5B58;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x5C06;&#x6587;&#x672C;&#x8F93;&#x51FA;&#x5230;&#x5C4F;&#x5E55;&#x4E0A;&#xFF0C;main&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x5C31;&#x884C;&#x4E86;&#x3002;</p>
+<p>print&#x6D89;&#x53CA;&#x5230;&#x5149;&#x6807;&#x548C;&#x5355;&#x5B57;&#x7B26;&#x7684;&#x663E;&#x793A;&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;&#x57FA;&#x7840;&#x7684;&#x663E;&#x5B58;&#x64CD;&#x4F5C;&#xFF0C;&#x540E;&#x9762;&#x6253;&#x5370;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x6253;&#x5370;&#x6574;&#x6570;&#x53EF;&#x4EE5;&#x5728;&#x6B64;&#x51FD;&#x6570;&#x4E0A;&#x57FA;&#x7840;&#x4E0A;&#x5C01;&#x88C5;&#x3002;</p>
+<p>&#x91C7;&#x7528;&#x4E86;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x65B9;&#x5F0F;&#xFF08;&#x53C2;&#x6570;&#x4F20;&#x9012;&#xFF0C;&#x6808;&#x53D8;&#x5316;&#xFF0C;&#x51FD;&#x6570;&#x6267;&#x884C;&#x8FD4;&#x56DE;&#x7B49;&#x8FD9;&#x4E9B;&#x9700;&#x8981;&#x7406;&#x89E3;&#xFF09;</p>
+<p>call &#x548C; ret&#x6307;&#x4EE4;&#x53C2;&#x8003;&#x5982;&#x4E0B;&#xFF1A;
+<a href="http://blog.csdn.net/qq_26437925/article/details/70947174" target="_blank">http://blog.csdn.net/qq_26437925/article/details/70947174</a></p>
+<h4 id="&#x6253;&#x5370;&#x51FD;&#x6570;">&#x6253;&#x5370;&#x51FD;&#x6570;</h4>
+<ul>
+<li>put_str</li>
+</ul>
+<p>&#x4E0D;&#x65AD;&#x7684;&#x8C03;&#x7528;put_char&#x51FD;&#x6570;&#xFF0C;&#x5B9E;&#x73B0;&#x6253;&#x5370;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x529F;&#x80FD;</p>
+<pre class="language-"><code class="lang-cpp"><span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token punctuation">;</span>put_str &#x901A;&#x8FC7;put_char&#x6765;&#x6253;&#x5370;&#x4EE5;<span class="token number">0</span>&#x5B57;&#x7B26;&#x7ED3;&#x5C3E;&#x7684;&#x5B57;&#x7B26;&#x4E32;
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token punctuation">;</span>&#x8F93;&#x5165;&#xFF1A;&#x6808;&#x4E2D;&#x53C2;&#x6570;&#x4E3A;&#x6253;&#x5370;&#x7684;&#x5B57;&#x7B26;&#x4E32;
+<span class="token punctuation">;</span>&#x8F93;&#x51FA;&#xFF1A;&#x65E0;
 
-mbr&#x8D1F;&#x8D23;&#x8BFB;&#x53D6;&#x78C1;&#x76D8;2-4&#x6247;&#x533A;&#x7684;loader&#x5185;&#x5BB9;&#xFF0C;&#x52A0;&#x8F7D;&#x5728;&#x7269;&#x7406;&#x5185;&#x5B58;
-&#x53EF;&#x7528;&#x533A;&#x57DF;&#xFF0C;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x4E86;0x9000&#xFF0C;mbr&#x7ED3;&#x675F;&#x81EA;&#x5DF1;&#xFF0C;&#x8DF3;&#x8F6C;&#x5230;loader&#x5165;&#x53E3;&#x5730;&#x5740;
-
-
-* loader
-
-loader&#x5EFA;&#x7ACB;&#x5206;&#x6BB5;&#xFF0C;&#x5206;&#x9875;&#x673A;&#x5236;&#x7B49;&#xFF0C;&#x5E76;&#x8BFB;&#x53D6;&#x5185;&#x6838;&#x6240;&#x5728;&#x7684;&#x78C1;&#x76D8;&#x533A;&#x57DF;&#xFF0C;&#x628A;&#x5185;&#x6838;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#xFF0C;&#x7136;&#x540E;&#x8DF3;&#x8F6C;&#x5230;&#x5185;&#x6838;&#x5165;&#x53E3;&#x5904;&#xFF0C;&#x7ED3;&#x675F;&#x81EA;&#x5DF1;
-
-* &#x5185;&#x6838;
-
-&#x5185;&#x6838;&#x7684;kernel.bin&#x6709;&#x4E24;&#x4E2A;&#x5730;&#x5740;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;ELF&#x6587;&#x4EF6;&#x5730;&#x5740;&#xFF0C;&#x8FD9;&#x4E2A;&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x7269;&#x7406;&#x5185;&#x5B58;&#x53EF;&#x7528;&#x533A;&#x57DF;&#x7684;0x70000;&#x53E6;&#x4E00;&#x4E2A;&#x662F;&#x89E3;&#x6790;ELF&#x540E;&#x7684;&#x5185;&#x6838;&#x6620;&#x50CF;&#xFF0C;&#x8FD9;&#x4E2A;&#x52A0;&#x8F7D;&#x5230;&#x4E86;0x1500(loader&#x8BBE;&#x8BA1;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#x4E0D;&#x8D85;&#x8FC7;2000&#x5B57;&#x8282;&#xFF0C;0x9000+2000&#x5B57;&#x8282; = 0x1d10&#xFF0C;&#x7136;&#x540E;&#x7A7A;&#x4E86;&#x4E9B;&#xFF0C;&#x5185;&#x6838;&#x9009;&#x62E9;&#x4E86;0x1500&#x5F00;&#x59CB;&#x540E;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF09;
-
-![](../06_kernel_start/imgs/map.jpg)
-
-&#x9875;&#x8868;&#x4E2D;&#x8BBE;&#x7F6E;&#x4E86;&#x5185;&#x6838;&#x4F4E;&#x7AEF;1MB&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E0E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;
-
-&#x6240;&#x4EE5;&#xFF0C;&#x7269;&#x7406;&#x5730;&#x5740;0x1500&#x5BF9;&#x5E94;&#x5230;&#x5185;&#x6838;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5C31;&#x662F;0xc0001500&#xFF0C;&#x8FD9;&#x4E5F;&#x5C31;&#x662F;&#x5185;&#x6838;&#x5165;&#x53E3;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF08;Makefile&#x4E2D;&#x7F16;&#x8BD1;&#x51FA;kernel.bin&#x5C31;&#x8BBE;&#x7F6E;&#x7684;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#xFF09;
-
-#### &#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x5185;&#x6838;&#x8FD0;&#x884C;
-
-&#x5185;&#x6838;&#x6587;&#x4EF6;&#x76EE;&#x524D;&#x5C31;&#x662F;main.o&#x548C;print.o&#x94FE;&#x63A5;&#x7684;&#xFF0C;print&#x4F7F;&#x7528;&#x6C47;&#x7F16;&#x5199;&#x7684;&#x64CD;&#x4F5C;&#x4E86;&#x663E;&#x5B58;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x5C06;&#x6587;&#x672C;&#x8F93;&#x51FA;&#x5230;&#x5C4F;&#x5E55;&#x4E0A;&#xFF0C;main&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x5C31;&#x884C;&#x4E86;&#x3002;
-
-print&#x6D89;&#x53CA;&#x5230;&#x5149;&#x6807;&#x548C;&#x5355;&#x5B57;&#x7B26;&#x7684;&#x663E;&#x793A;&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;&#x57FA;&#x7840;&#x7684;&#x663E;&#x5B58;&#x64CD;&#x4F5C;&#xFF0C;&#x540E;&#x9762;&#x6253;&#x5370;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x6253;&#x5370;&#x6574;&#x6570;&#x53EF;&#x4EE5;&#x5728;&#x6B64;&#x51FD;&#x6570;&#x4E0A;&#x57FA;&#x7840;&#x4E0A;&#x5C01;&#x88C5;&#x3002;
-
-&#x91C7;&#x7528;&#x4E86;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x65B9;&#x5F0F;&#xFF08;&#x53C2;&#x6570;&#x4F20;&#x9012;&#xFF0C;&#x6808;&#x53D8;&#x5316;&#xFF0C;&#x51FD;&#x6570;&#x6267;&#x884C;&#x8FD4;&#x56DE;&#x7B49;&#x8FD9;&#x4E9B;&#x9700;&#x8981;&#x7406;&#x89E3;&#xFF09;
-
-call &#x548C; ret&#x6307;&#x4EE4;&#x53C2;&#x8003;&#x5982;&#x4E0B;&#xFF1A;
-http://blog.csdn.net/qq_26437925/article/details/70947174
-
----
-
-#### &#x6253;&#x5370;&#x51FD;&#x6570;
-
-* put_str
-&#x4E0D;&#x65AD;&#x7684;&#x8C03;&#x7528;put_char&#x51FD;&#x6570;&#xFF0C;&#x5B9E;&#x73B0;&#x6253;&#x5370;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x529F;&#x80FD;
-</code></pre><p>;--------------------------------------------
-;put_str &#x901A;&#x8FC7;put_char&#x6765;&#x6253;&#x5370;&#x4EE5;0&#x5B57;&#x7B26;&#x7ED3;&#x5C3E;&#x7684;&#x5B57;&#x7B26;&#x4E32;
-;--------------------------------------------
-;&#x8F93;&#x5165;&#xFF1A;&#x6808;&#x4E2D;&#x53C2;&#x6570;&#x4E3A;&#x6253;&#x5370;&#x7684;&#x5B57;&#x7B26;&#x4E32;
-;&#x8F93;&#x51FA;&#xFF1A;&#x65E0;</p>
-<p>global put_str
-put_str:
-;&#x7531;&#x4E8E;&#x672C;&#x51FD;&#x6570;&#x4E2D;&#x53EA;&#x7528;&#x5230;&#x4E86;ebx&#x548C;ecx,&#x53EA;&#x5907;&#x4EFD;&#x8FD9;&#x4E24;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;
+global put_str
+put_str<span class="token operator">:</span>
+<span class="token punctuation">;</span>&#x7531;&#x4E8E;&#x672C;&#x51FD;&#x6570;&#x4E2D;&#x53EA;&#x7528;&#x5230;&#x4E86;ebx&#x548C;ecx<span class="token punctuation">,</span>&#x53EA;&#x5907;&#x4EFD;&#x8FD9;&#x4E24;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;
    push ebx
    push ecx
-   xor ecx, ecx              ; &#x51C6;&#x5907;&#x7528;ecx&#x5B58;&#x50A8;&#x53C2;&#x6570;,&#x6E05;&#x7A7A;
-   mov ebx, [esp + 12]          ; &#x4ECE;&#x6808;&#x4E2D;&#x5F97;&#x5230;&#x5F85;&#x6253;&#x5370;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5730;&#x5740; 
-.goon:
-   mov cl, [ebx]
-   cmp cl, 0              ; &#x5982;&#x679C;&#x5904;&#x7406;&#x5230;&#x4E86;&#x5B57;&#x7B26;&#x4E32;&#x5C3E;,&#x8DF3;&#x5230;&#x7ED3;&#x675F;&#x5904;&#x8FD4;&#x56DE;
-   jz .str_over
-   push ecx              ; &#x4E3A;put_char&#x51FD;&#x6570;&#x4F20;&#x9012;&#x53C2;&#x6570;
+   <span class="token operator">xor</span> ecx<span class="token punctuation">,</span> ecx              <span class="token punctuation">;</span> &#x51C6;&#x5907;&#x7528;ecx&#x5B58;&#x50A8;&#x53C2;&#x6570;<span class="token punctuation">,</span>&#x6E05;&#x7A7A;
+   mov ebx<span class="token punctuation">,</span> <span class="token punctuation">[</span>esp <span class="token operator">+</span> <span class="token number">12</span><span class="token punctuation">]</span>          <span class="token punctuation">;</span> &#x4ECE;&#x6808;&#x4E2D;&#x5F97;&#x5230;&#x5F85;&#x6253;&#x5370;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5730;&#x5740; 
+<span class="token punctuation">.</span>goon<span class="token operator">:</span>
+   mov cl<span class="token punctuation">,</span> <span class="token punctuation">[</span>ebx<span class="token punctuation">]</span>
+   cmp cl<span class="token punctuation">,</span> <span class="token number">0</span>              <span class="token punctuation">;</span> &#x5982;&#x679C;&#x5904;&#x7406;&#x5230;&#x4E86;&#x5B57;&#x7B26;&#x4E32;&#x5C3E;<span class="token punctuation">,</span>&#x8DF3;&#x5230;&#x7ED3;&#x675F;&#x5904;&#x8FD4;&#x56DE;
+   jz <span class="token punctuation">.</span>str_over
+   push ecx              <span class="token punctuation">;</span> &#x4E3A;put_char&#x51FD;&#x6570;&#x4F20;&#x9012;&#x53C2;&#x6570;
    call put_char
-   add esp, 4              ; &#x56DE;&#x6536;&#x53C2;&#x6570;&#x6240;&#x5360;&#x7684;&#x6808;&#x7A7A;&#x95F4;
-   inc ebx              ; &#x4F7F;ebx&#x6307;&#x5411;&#x4E0B;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;
-   jmp .goon
-.str_over:
+   add esp<span class="token punctuation">,</span> <span class="token number">4</span>              <span class="token punctuation">;</span> &#x56DE;&#x6536;&#x53C2;&#x6570;&#x6240;&#x5360;&#x7684;&#x6808;&#x7A7A;&#x95F4;
+   inc ebx              <span class="token punctuation">;</span> &#x4F7F;ebx&#x6307;&#x5411;&#x4E0B;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;
+   jmp <span class="token punctuation">.</span>goon
+<span class="token punctuation">.</span>str_over<span class="token operator">:</span>
    pop ecx
    pop ebx
-   ret</p>
-<pre class="language-"><code>
-* put_int
-put\_int &#x5C06;&#x6570;&#x5B57;&#x8F6C;&#x6210;&#x5B57;&#x7B26;&#xFF0C;&#x5B58;&#x5230;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;buffer&#x4E2D;&#xFF0C;&#x7136;&#x540E;put_char
-&#x5F53;&#x7136;&#x5E76;&#x672A;&#x8F93;&#x51FA;10&#x8FDB;&#x5236;&#x7684;&#x6570;&#xFF0C;&#x800C;&#x662F;&#x6253;&#x5370;&#x6BCF;&#x4E2A;&#x5B57;&#x8282;&#x5185;&#x5BB9;
-
-
-* mian.c&#x8C03;&#x7528;
-</code></pre><h1 id="include-printh">include &quot;print.h&quot;</h1>
-<p>void main(void) {
-   put_str(&quot;I am kernel\n&quot;);
-   put_int(0);
-   put_char(&apos;\n&apos;);
-   put_int(9);
-   put_char(&apos;\n&apos;);
-   put_int(0x00021a3f);
-   put_char(&apos;\n&apos;);
-   put_int(0x12345678);
-   put_char(&apos;\n&apos;);
-   put_int(0x00000000);
-   while(1);
-}
-```</p>
+   ret
+</code></pre>
+<ul>
+<li>put_int</li>
+</ul>
+<p>put_int &#x5C06;&#x6570;&#x5B57;&#x8F6C;&#x6210;&#x5B57;&#x7B26;&#xFF0C;&#x5B58;&#x5230;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;buffer&#x4E2D;&#xFF0C;&#x7136;&#x540E;put_char
+&#x5F53;&#x7136;&#x5E76;&#x672A;&#x8F93;&#x51FA;10&#x8FDB;&#x5236;&#x7684;&#x6570;&#xFF0C;&#x800C;&#x662F;&#x6253;&#x5370;&#x6BCF;&#x4E2A;&#x5B57;&#x8282;&#x5185;&#x5BB9;</p>
+<ul>
+<li>mian.c&#x8C03;&#x7528;</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&quot;print.h&quot;</span></span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">put_str</span><span class="token punctuation">(</span><span class="token string">&quot;I am kernel\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_int</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_int</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_int</span><span class="token punctuation">(</span><span class="token number">0x00021a3f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_int</span><span class="token punctuation">(</span><span class="token number">0x12345678</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">put_int</span><span class="token punctuation">(</span><span class="token number">0x00000000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
 <ul>
 <li>&#x7ED3;&#x679C;&#x56FE;</li>
 </ul>
 <p><img src="imgs/rs2.jpg" alt=""></p>
-<hr>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 09:19:57
+2020-08-02 13:59:10
 </span></footer>
                                 
                                 </section>
@@ -647,7 +638,7 @@ put\_int &#x5C06;&#x6570;&#x5B57;&#x8F6C;&#x6210;&#x5B57;&#x7B26;&#xFF0C;&#x5B58
 
             
                 
-                <a href="../05_efi/" class="navigation navigation-prev " aria-label="Previous page: 5 ELF文件格式">
+                <a href="../05_efi/" class="navigation navigation-prev " aria-label="Previous page: 5 ELF文件理解">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -663,7 +654,7 @@ put\_int &#x5C06;&#x6570;&#x5B57;&#x8F6C;&#x6210;&#x5B57;&#x7B26;&#xFF0C;&#x5B58
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6 内核编写","level":"1.7","depth":1,"next":{"title":"7 中断基础","level":"1.8","depth":1,"path":"content/07_interrupt/README.md","ref":"./content/07_interrupt/README.md","articles":[]},"previous":{"title":"5 ELF文件格式","level":"1.6","depth":1,"path":"content/05_efi/README.md","ref":"./content/05_efi/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/06_kernel_start/README.md","mtime":"2020-08-02T01:19:57.449Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6 C语言写内核","level":"1.7","depth":1,"next":{"title":"7 中断基础","level":"1.8","depth":1,"path":"content/07_interrupt/README.md","ref":"./content/07_interrupt/README.md","articles":[]},"previous":{"title":"5 ELF文件理解","level":"1.6","depth":1,"path":"content/05_efi/README.md","ref":"./content/05_efi/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/06_kernel_start/README.md","mtime":"2020-08-02T05:59:10.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T14:34:24.125Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

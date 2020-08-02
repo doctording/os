@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>16 系统调用 · spring-note</title>
+        <title>16 系统调用实现用户进程 · spring-note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -139,7 +139,7 @@
                 <a href="../01_BIOS_to_MBR/">
             
                     
-                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+                    1 最简单的OS:实模式下BIOS到MBR
             
                 </a>
             
@@ -165,7 +165,7 @@
                 <a href="../03_protected_mode/">
             
                     
-                    3 实模式到保护模式（GDT，gdtr, 选择子)
+                    3 实模式到保护模式（GDT,gdtr,选择子)
             
                 </a>
             
@@ -178,7 +178,7 @@
                 <a href="../04_page/">
             
                     
-                    4 分页
+                    4 分段 & 分页
             
                 </a>
             
@@ -191,7 +191,7 @@
                 <a href="../05_efi/">
             
                     
-                    5 ELF文件格式
+                    5 ELF文件理解
             
                 </a>
             
@@ -204,7 +204,7 @@
                 <a href="../06_kernel_start/">
             
                     
-                    6 内核编写
+                    6 C语言写内核
             
                 </a>
             
@@ -282,7 +282,7 @@
                 <a href="../12_lock/">
             
                     
-                    12 锁,信号量
+                    12 锁&信号量
             
                 </a>
             
@@ -321,7 +321,7 @@
                 <a href="../15_user_process/">
             
                     
-                    15 特权级，用户进程
+                    15 指令特权级，用户进程引入
             
                 </a>
             
@@ -334,7 +334,7 @@
                 <a href="./">
             
                     
-                    16 系统调用
+                    16 系统调用实现用户进程
             
                 </a>
             
@@ -347,7 +347,7 @@
                 <a href="../17_hd_driver/">
             
                     
-                    17 硬件驱动
+                    17 硬件驱动认识
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="../19_fd_inode_dir_file/">
             
                     
-                    19 inode,文件目录操作
+                    19 文件描述符操作
             
                 </a>
             
@@ -424,7 +424,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >16 系统调用</a>
+        <a href="../.." >16 系统调用实现用户进程</a>
     </h1>
 </div>
 
@@ -440,39 +440,34 @@
                                 <section class="normal markdown-section">
                                 
                                 <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
-<li><div><a href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;">&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</a><i></i></div></li>
-<li><div><a href="#&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;">&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;</a><i></i></div></li>
-<li><div><a href="#&#x5185;&#x5B58;&#x7BA1;&#x7406;">&#x5185;&#x5B58;&#x7BA1;&#x7406;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<li><div><a href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;">&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
-<li><div><a href="#arena&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;">arena&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;</a><i></i></div></li>
-<li><div><a href="#sysmalloc-sysfree-malloc-free">sysmalloc, sysfree, malloc, free</a><i></i></div></li>
+<li><div><a href="#&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;">&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;</a><i></i></div></li>
+<li><div><a href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5185;&#x5B58;&#x7BA1;&#x7406;">&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5185;&#x5B58;&#x7BA1;&#x7406;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#arena&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;">arena&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;</a><i></i></div></li>
+<li><div><a href="#&#x5B9E;&#x73B0;&#xFF1A;sysmalloc-sysfree-malloc-free">&#x5B9E;&#x73B0;&#xFF1A;sysmalloc, sysfree, malloc, free</a><i></i></div></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
 
-<p>&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x5B9E;&#x73B0;</p>
-<h3 id="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;">&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</h3>
+<h1 id="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;">&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</h1>
 <ul>
-<li>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7531;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x6838;&#x5FC3;&#x63D0;&#x4F9B;&#xFF0C;&#x8FD0;&#x884C;&#x4E8E;&#x6838;&#x5FC3;&#x6001;&#xFF0C;&#x800C;&#x666E;&#x901A;&#x7684;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7531;&#x51FD;&#x6570;&#x5E93;&#x6216;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x63D0;&#x4F9B;&#xFF0C;&#x8FD0;&#x884C;&#x4E8E;&#x7528;&#x6237;&#x6001;</li>
-</ul>
-<ul>
+<li><p>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7531;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x6838;&#x5FC3;&#x63D0;&#x4F9B;&#xFF0C;&#x8FD0;&#x884C;&#x4E8E;&#x6838;&#x5FC3;&#x6001;&#xFF0C;&#x800C;&#x666E;&#x901A;&#x7684;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7531;&#x51FD;&#x6570;&#x5E93;&#x6216;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x63D0;&#x4F9B;&#xFF0C;&#x8FD0;&#x884C;&#x4E8E;&#x7528;&#x6237;&#x6001;</p>
+</li>
 <li><p>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5728;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x8FDB;&#x7A0B;&#x548C;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#x4E4B;&#x95F4;&#x6DFB;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x5C42;</p>
 <ol>
-<li><p>&#x5B83;&#x4E3A;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x7EDF;&#x4E00;&#x7684;&#x786C;&#x4EF6;&#x7684;&#x62BD;&#x8C61;&#x63A5;&#x53E3;</p>
-</li>
-<li><p>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x4FDD;&#x8BC1;&#x4E86;&#x7CFB;&#x7EDF;&#x7684;&#x7A33;&#x5B9A;&#x548C;&#x5B89;&#x5168;&#x3002;&#x4F5C;&#x4E3A;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#x548C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E4B;&#x95F4;&#x7684;&#x4E2D;&#x95F4;&#x4EBA;&#xFF0C;&#x5185;&#x6838;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x6743;&#x9650;&#x548C;&#x5176;&#x4ED6;&#x4E00;&#x4E9B;&#x89C4;&#x5219;&#x5BF9;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7684;&#x8BBF;&#x95EE;&#x8FDB;&#x884C;&#x88C1;&#x51B3;&#x3002;&#x4E3E;&#x4F8B;&#x6765;&#x8BF4;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E0D;&#x6B63;&#x786E;&#x5730;&#x4F7F;&#x7528;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#xFF0C;&#x7A83;&#x53D6;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6216;&#x505A;&#x51FA;&#x5176;&#x4ED6;&#x4EC0;&#x4E48;&#x5371;&#x5BB3;&#x7CFB;&#x7EDF;&#x7684;&#x4E8B;&#x60C5;&#x3002;</p>
-</li>
-<li><p>&#x5728;Linux&#x4E2D;&#xFF0C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x662F;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x8BBF;&#x95EE;&#x5185;&#x6838;&#x7684;&#x60DF;&#x4E00;&#x624B;&#x6BB5;&#xFF1B;&#x9664;&#x5F02;&#x5E38;&#x548C;&#x4E2D;&#x65AD;&#x5916;&#xFF0C;&#x5B83;&#x4EEC;&#x662F;&#x5185;&#x6838;&#x60DF;&#x4E00;&#x7684;&#x5408;&#x6CD5;&#x5165;&#x53E3;&#x3002;</p>
-</li>
+<li>&#x5B83;&#x4E3A;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x7EDF;&#x4E00;&#x7684;&#x786C;&#x4EF6;&#x7684;&#x62BD;&#x8C61;&#x63A5;&#x53E3;</li>
+<li>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x4FDD;&#x8BC1;&#x4E86;&#x7CFB;&#x7EDF;&#x7684;&#x7A33;&#x5B9A;&#x548C;&#x5B89;&#x5168;&#x3002;&#x4F5C;&#x4E3A;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#x548C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E4B;&#x95F4;&#x7684;&#x4E2D;&#x95F4;&#x4EBA;&#xFF0C;&#x5185;&#x6838;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x6743;&#x9650;&#x548C;&#x5176;&#x4ED6;&#x4E00;&#x4E9B;&#x89C4;&#x5219;&#x5BF9;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7684;&#x8BBF;&#x95EE;&#x8FDB;&#x884C;&#x88C1;&#x51B3;&#x3002;&#x4E3E;&#x4F8B;&#x6765;&#x8BF4;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E0D;&#x6B63;&#x786E;&#x5730;&#x4F7F;&#x7528;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#xFF0C;&#x7A83;&#x53D6;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6216;&#x505A;&#x51FA;&#x5176;&#x4ED6;&#x4EC0;&#x4E48;&#x5371;&#x5BB3;&#x7CFB;&#x7EDF;&#x7684;&#x4E8B;&#x60C5;&#x3002;</li>
+<li>&#x5728;Linux&#x4E2D;&#xFF0C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x662F;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x8BBF;&#x95EE;&#x5185;&#x6838;&#x7684;&#x60DF;&#x4E00;&#x624B;&#x6BB5;&#xFF1B;&#x9664;&#x5F02;&#x5E38;&#x548C;&#x4E2D;&#x65AD;&#x5916;&#xFF0C;&#x5B83;&#x4EEC;&#x662F;&#x5185;&#x6838;&#x60DF;&#x4E00;&#x7684;&#x5408;&#x6CD5;&#x5165;&#x53E3;&#x3002;</li>
 </ol>
 </li>
+<li><p>&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x7684;&#x7A0B;&#x5E8F;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x5185;&#x6838;&#x4EE3;&#x7801;&#x3002;&#x5982;&#x679C;&#x679C;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;&#x5185;&#x6838;&#x7684;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x4E0A;&#x8BFB;&#x5199;&#x7684;&#x8BDD;&#xFF0C;&#x7CFB;&#x7EDF;&#x5B89;&#x5168;&#x5C31;&#x4F1A;&#x5931;&#x53BB;&#x63A7;&#x5236;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5E94;&#x8BE5;&#x4EE5;&#x67D0;&#x79CD;&#x65B9;&#x5F0F;&#x901A;&#x77E5;&#x7CFB;&#x7EDF;&#xFF0C;&#x544A;&#x8BC9;&#x5185;&#x6838;&#x81EA;&#x5DF1;&#x9700;&#x8981;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x5E0C;&#x671B;&#x7CFB;&#x7EDF;&#x5207;&#x6362;&#x5230;&#x5185;&#x6838;&#x6001;&#xFF0C;&#x8FD9;&#x6837;&#x5185;&#x6838;&#x5C31;&#x53EF;&#x4EE5;&#x4EE3;&#x8868;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6765;&#x6267;&#x884C;&#x8BE5;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x4E86;&#x3002;&#x901A;&#x77E5;&#x5185;&#x6838;&#x7684;&#x673A;&#x5236;&#x662F;&#x9760;&#x8F6F;&#x4EF6;<strong>&#x4E2D;&#x65AD;</strong>&#x5B9E;&#x73B0;&#x7684;&#x3002;</p>
+</li>
 </ul>
-<ul>
-<li>&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x7684;&#x7A0B;&#x5E8F;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x5185;&#x6838;&#x4EE3;&#x7801;&#x3002;&#x5982;&#x679C;&#x679C;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;&#x5185;&#x6838;&#x7684;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x4E0A;&#x8BFB;&#x5199;&#x7684;&#x8BDD;&#xFF0C;&#x7CFB;&#x7EDF;&#x5B89;&#x5168;&#x5C31;&#x4F1A;&#x5931;&#x53BB;&#x63A7;&#x5236;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5E94;&#x8BE5;&#x4EE5;&#x67D0;&#x79CD;&#x65B9;&#x5F0F;&#x901A;&#x77E5;&#x7CFB;&#x7EDF;&#xFF0C;&#x544A;&#x8BC9;&#x5185;&#x6838;&#x81EA;&#x5DF1;&#x9700;&#x8981;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x5E0C;&#x671B;&#x7CFB;&#x7EDF;&#x5207;&#x6362;&#x5230;&#x5185;&#x6838;&#x6001;&#xFF0C;&#x8FD9;&#x6837;&#x5185;&#x6838;&#x5C31;&#x53EF;&#x4EE5;&#x4EE3;&#x8868;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6765;&#x6267;&#x884C;&#x8BE5;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x4E86;&#x3002;&#x901A;&#x77E5;&#x5185;&#x6838;&#x7684;&#x673A;&#x5236;&#x662F;&#x9760;&#x8F6F;&#x4EF6;<strong>&#x4E2D;&#x65AD;</strong>&#x5B9E;&#x73B0;&#x7684;&#x3002;</li>
-</ul>
-<p>&#x53C2;&#x8003;</p>
-<p><a href="http://blog.csdn.net/zhuxiaoping54532/article/details/51700576" target="_blank">http://blog.csdn.net/zhuxiaoping54532/article/details/51700576</a></p>
-<h3 id="&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;">&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;</h3>
+<p>&#x53C2;&#x8003;&#x535A;&#x6587;&#xFF1A;<a href="http://blog.csdn.net/zhuxiaoping54532/article/details/51700576" target="_blank">http://blog.csdn.net/zhuxiaoping54532/article/details/51700576</a></p>
+<h2 id="&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;">&#x7528;&#x6237;&#x8FDB;&#x7A0B;pid&#x5B9E;&#x73B0;</h2>
 <ul>
 <li><p>&#x8FDB;&#x7A0B;&#x7ED3;&#x6784;&#x4F53;&#x91CD;&#x65B0;&#x589E;pid&#x6210;&#x5458;&#x53D8;&#x91CF;</p>
 </li>
@@ -483,66 +478,65 @@
 <li><p>&#x4E3A;&#x8FDB;&#x7A0B;&#x6DFB;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;getpid&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x63A5;&#x53E3;</p>
 </li>
 </ul>
-<p>&#x4EE3;&#x7801;&#x89C1; 16_system\code\pro_getpid</p>
+<p>&#x4EE3;&#x7801;&#x89C1;<code>16_system\code\pro_getpid</code></p>
 <p>&#x4E3B;&#x51FD;&#x6570;</p>
-<pre class="language-"><code>int main(void) {
-   put_str(&quot;I am kernel\n&quot;);
-   init_all();
+<pre class="language-"><code class="lang-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">put_str</span><span class="token punctuation">(</span><span class="token string">&quot;I am kernel\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">init_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-   process_execute(u_prog_a, &quot;user_prog_a&quot;);
-   process_execute(u_prog_b, &quot;user_prog_b&quot;);
+   <span class="token function">process_execute</span><span class="token punctuation">(</span>u_prog_a<span class="token punctuation">,</span> <span class="token string">&quot;user_prog_a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">process_execute</span><span class="token punctuation">(</span>u_prog_b<span class="token punctuation">,</span> <span class="token string">&quot;user_prog_b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-   intr_enable();
-   console_put_str(&quot; main_pid:0x&quot;);
-   console_put_int(sys_getpid());
-   console_put_char(&apos;\n&apos;);
-   thread_start(&quot;k_thread_a&quot;, 31, k_thread_a, &quot;argA &quot;);
-   thread_start(&quot;k_thread_b&quot;, 31, k_thread_b, &quot;argB &quot;);
-   while(1);
-   return 0;
-}
+   <span class="token function">intr_enable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; main_pid:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token function">sys_getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">thread_start</span><span class="token punctuation">(</span><span class="token string">&quot;k_thread_a&quot;</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> k_thread_a<span class="token punctuation">,</span> <span class="token string">&quot;argA &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">thread_start</span><span class="token punctuation">(</span><span class="token string">&quot;k_thread_b&quot;</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> k_thread_b<span class="token punctuation">,</span> <span class="token string">&quot;argB &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */
-void k_thread_a(void* arg) {     
-   char* para = arg;
-   console_put_str(&quot; thread_a_pid:0x&quot;);
-   console_put_int(sys_getpid());
-   console_put_char(&apos;\n&apos;);
-   console_put_str(&quot; prog_a_pid:0x&quot;);
-   console_put_int(prog_a_pid);
-   console_put_char(&apos;\n&apos;);
-   while(1);
-}
+<span class="token comment">/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">char</span><span class="token operator">*</span> para <span class="token operator">=</span> arg<span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; thread_a_pid:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token function">sys_getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; prog_a_pid:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span>prog_a_pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */
-void k_thread_b(void* arg) {     
-   char* para = arg;
-   console_put_str(&quot; thread_b_pid:0x&quot;);
-   console_put_int(sys_getpid());
-   console_put_char(&apos;\n&apos;);
-   console_put_str(&quot; prog_b_pid:0x&quot;);
-   console_put_int(prog_b_pid);
-   console_put_char(&apos;\n&apos;);
-   while(1);
-}
+<span class="token comment">/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">char</span><span class="token operator">*</span> para <span class="token operator">=</span> arg<span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; thread_b_pid:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token function">sys_getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; prog_b_pid:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span>prog_b_pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */
-void u_prog_a(void) {
-   prog_a_pid = getpid();
-   while(1);
-}
+<span class="token comment">/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */</span>
+<span class="token keyword">void</span> <span class="token function">u_prog_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   prog_a_pid <span class="token operator">=</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */
-void u_prog_b(void) {
-   prog_b_pid = getpid();
-   while(1);
-}
-</code></pre><p>&#x8FD0;&#x884C;&#x622A;&#x56FE;</p>
+<span class="token comment">/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */</span>
+<span class="token keyword">void</span> <span class="token function">u_prog_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   prog_b_pid <span class="token operator">=</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x8FD0;&#x884C;&#x622A;&#x56FE;</p>
 <p><img src="imgs/pid.jpg" alt=""></p>
-<hr>
-<h3 id="&#x5185;&#x5B58;&#x7BA1;&#x7406;">&#x5185;&#x5B58;&#x7BA1;&#x7406;</h3>
-<h4 id="arena&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;">arena&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;</h4>
-<p>arena&#x6570;&#x636E;&#x7ED3;&#x6784;</p>
+<h2 id="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5185;&#x5B58;&#x7BA1;&#x7406;">&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5185;&#x5B58;&#x7BA1;&#x7406;</h2>
+<h3 id="arena&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;">arena&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF08;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x5212;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x5185;&#x5B58;&#x5757;&#x4E4B;&#x95F4;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF09;</h3>
 <ul>
 <li>&#x5143;&#x4FE1;&#x606F;&#xFF1A;</li>
 </ul>
@@ -554,121 +548,122 @@ void u_prog_b(void) {
 <p>&#x7528;&#x4E8E;&#x5185;&#x5B58;&#x5206;&#x914D;</p>
 <p>&#x4E00;&#x4E2A;arena&#x63D0;&#x4F9B;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x5927;&#x5C0F;&#x662F;&#x6709;&#x9650;&#x7684;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;arena&#x7528;&#x5B8C;&#x4E86;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x65B0;&#x7684;arena(arena&#x96C6;&#x7FA4;)</p>
 <p>&#x540C;&#x4E00;&#x7C7B;&#x5185;&#x5B58;&#x5757;&#x53EF;&#x4EE5;&#x7528;&#x591A;&#x4E2A;arena&#x63D0;&#x4F9B;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x7C7B;&#x5185;&#x5B58;&#x5757;&#x53EF;&#x4EE5;&#x5EFA;&#x7ACB;&#x8042;&#x6751;&#x5757;&#x63CF;&#x8FF0;&#x7B26;&#xFF08;&#x5757;&#x5927;&#x5C0F;&#xFF0C;arena&#x94FE;&#x8868;)</p>
-<pre class="language-"><code>/* &#x5185;&#x5B58;&#x5757; */
-struct mem_block {
-   struct list_elem free_elem;
-};
+<pre class="language-"><code class="lang-cpp"><span class="token comment">/* &#x5185;&#x5B58;&#x5757; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">mem_block</span> <span class="token punctuation">{</span>
+   <span class="token keyword">struct</span> <span class="token class-name">list_elem</span> free_elem<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-/* &#x5185;&#x5B58;&#x5757;&#x63CF;&#x8FF0;&#x7B26; */
-struct mem_block_desc {
-   uint32_t block_size;         // &#x5185;&#x5B58;&#x5757;&#x5927;&#x5C0F;
-   uint32_t blocks_per_arena;     // &#x672C;arena&#x4E2D;&#x53EF;&#x5BB9;&#x7EB3;&#x6B64;mem_block&#x7684;&#x6570;&#x91CF;.
-   struct list free_list;     // &#x76EE;&#x524D;&#x53EF;&#x7528;&#x7684;mem_block&#x94FE;&#x8868;
-};
+<span class="token comment">/* &#x5185;&#x5B58;&#x5757;&#x63CF;&#x8FF0;&#x7B26; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">mem_block_desc</span> <span class="token punctuation">{</span>
+   <span class="token keyword">uint32_t</span> block_size<span class="token punctuation">;</span>         <span class="token comment">// &#x5185;&#x5B58;&#x5757;&#x5927;&#x5C0F;</span>
+   <span class="token keyword">uint32_t</span> blocks_per_arena<span class="token punctuation">;</span>     <span class="token comment">// &#x672C;arena&#x4E2D;&#x53EF;&#x5BB9;&#x7EB3;&#x6B64;mem_block&#x7684;&#x6570;&#x91CF;.</span>
+   <span class="token keyword">struct</span> <span class="token class-name">list</span> free_list<span class="token punctuation">;</span>     <span class="token comment">// &#x76EE;&#x524D;&#x53EF;&#x7528;&#x7684;mem_block&#x94FE;&#x8868;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-/* &#x5185;&#x5B58;&#x4ED3;&#x5E93;arena&#x5143;&#x4FE1;&#x606F; */
-struct arena {
-   struct mem_block_desc* desc;     // &#x6B64;arena&#x5173;&#x8054;&#x7684;mem_block_desc
-/* large&#x4E3A;ture&#x65F6;,cnt&#x8868;&#x793A;&#x7684;&#x662F;&#x9875;&#x6846;&#x6570;&#x3002;
- * &#x5426;&#x5219;cnt&#x8868;&#x793A;&#x7A7A;&#x95F2;mem_block&#x6570;&#x91CF; */
-   uint32_t cnt;
-   bool large;           
-};
-</code></pre><p><img src="imgs/arena.jpg" alt=""></p>
-<h4 id="sysmalloc-sysfree-malloc-free">sys_malloc, sys_free, malloc, free</h4>
-<hr>
+<span class="token comment">/* &#x5185;&#x5B58;&#x4ED3;&#x5E93;arena&#x5143;&#x4FE1;&#x606F; */</span>
+<span class="token keyword">struct</span> <span class="token class-name">arena</span> <span class="token punctuation">{</span>
+   <span class="token keyword">struct</span> <span class="token class-name">mem_block_desc</span><span class="token operator">*</span> desc<span class="token punctuation">;</span>     <span class="token comment">// &#x6B64;arena&#x5173;&#x8054;&#x7684;mem_block_desc</span>
+<span class="token comment">/* large&#x4E3A;ture&#x65F6;,cnt&#x8868;&#x793A;&#x7684;&#x662F;&#x9875;&#x6846;&#x6570;&#x3002;
+ * &#x5426;&#x5219;cnt&#x8868;&#x793A;&#x7A7A;&#x95F2;mem_block&#x6570;&#x91CF; */</span>
+   <span class="token keyword">uint32_t</span> cnt<span class="token punctuation">;</span>
+   <span class="token keyword">bool</span> large<span class="token punctuation">;</span>           
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="imgs/arena.jpg" alt=""></p>
+<h3 id="&#x5B9E;&#x73B0;&#xFF1A;sysmalloc-sysfree-malloc-free">&#x5B9E;&#x73B0;&#xFF1A;sys_malloc, sys_free, malloc, free</h3>
 <p>&#x4EE3;&#x7801;&#x89C1; 16_system\code\pro_malloc_free</p>
-<pre class="language-"><code>void k_thread_a(void*);
-void k_thread_b(void*);
-void u_prog_a(void);
-void u_prog_b(void);
+<pre class="language-"><code class="lang-cpp"><span class="token keyword">void</span> <span class="token function">k_thread_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">u_prog_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">u_prog_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-int main(void) {
-   put_str(&quot;I am kernel\n&quot;);
-   init_all();
-   intr_enable();
-   process_execute(u_prog_a, &quot;u_prog_a&quot;);
-   process_execute(u_prog_b, &quot;u_prog_b&quot;);
-   thread_start(&quot;k_thread_a&quot;, 31, k_thread_a, &quot;I am thread_a&quot;);
-   thread_start(&quot;k_thread_b&quot;, 31, k_thread_b, &quot;I am thread_b&quot;);
-   while(1);
-   return 0;
-}
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">put_str</span><span class="token punctuation">(</span><span class="token string">&quot;I am kernel\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">init_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">intr_enable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">process_execute</span><span class="token punctuation">(</span>u_prog_a<span class="token punctuation">,</span> <span class="token string">&quot;u_prog_a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">process_execute</span><span class="token punctuation">(</span>u_prog_b<span class="token punctuation">,</span> <span class="token string">&quot;u_prog_b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">thread_start</span><span class="token punctuation">(</span><span class="token string">&quot;k_thread_a&quot;</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> k_thread_a<span class="token punctuation">,</span> <span class="token string">&quot;I am thread_a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">thread_start</span><span class="token punctuation">(</span><span class="token string">&quot;k_thread_b&quot;</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> k_thread_b<span class="token punctuation">,</span> <span class="token string">&quot;I am thread_b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */
-void k_thread_a(void* arg) {     
-   void* addr1 = sys_malloc(256);
-   void* addr2 = sys_malloc(255);
-   void* addr3 = sys_malloc(254);
-   console_put_str(&quot; thread_a malloc addr:0x&quot;);
-   console_put_int((int)addr1);
-   console_put_char(&apos;,&apos;);
-   console_put_int((int)addr2);
-   console_put_char(&apos;,&apos;);
-   console_put_int((int)addr3);
-   console_put_char(&apos;\n&apos;);
+<span class="token comment">/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>     
+   <span class="token keyword">void</span><span class="token operator">*</span> addr1 <span class="token operator">=</span> <span class="token function">sys_malloc</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr2 <span class="token operator">=</span> <span class="token function">sys_malloc</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr3 <span class="token operator">=</span> <span class="token function">sys_malloc</span><span class="token punctuation">(</span><span class="token number">254</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; thread_a malloc addr:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;,&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;,&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-   int cpu_delay = 100000;
-   while(cpu_delay-- &gt; 0);
-   sys_free(addr1);
-   sys_free(addr2);
-   sys_free(addr3);
-   while(1);
-}
+   <span class="token keyword">int</span> cpu_delay <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span>cpu_delay<span class="token operator">--</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">sys_free</span><span class="token punctuation">(</span>addr1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">sys_free</span><span class="token punctuation">(</span>addr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">sys_free</span><span class="token punctuation">(</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */
-void k_thread_b(void* arg) {     
-   void* addr1 = sys_malloc(256);
-   void* addr2 = sys_malloc(255);
-   void* addr3 = sys_malloc(254);
-   console_put_str(&quot; thread_b malloc addr:0x&quot;);
-   console_put_int((int)addr1);
-   console_put_char(&apos;,&apos;);
-   console_put_int((int)addr2);
-   console_put_char(&apos;,&apos;);
-   console_put_int((int)addr3);
-   console_put_char(&apos;\n&apos;);
+<span class="token comment">/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */</span>
+<span class="token keyword">void</span> <span class="token function">k_thread_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>     
+   <span class="token keyword">void</span><span class="token operator">*</span> addr1 <span class="token operator">=</span> <span class="token function">sys_malloc</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr2 <span class="token operator">=</span> <span class="token function">sys_malloc</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr3 <span class="token operator">=</span> <span class="token function">sys_malloc</span><span class="token punctuation">(</span><span class="token number">254</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_str</span><span class="token punctuation">(</span><span class="token string">&quot; thread_b malloc addr:0x&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;,&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;,&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_int</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">console_put_char</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-   int cpu_delay = 100000;
-   while(cpu_delay-- &gt; 0);
-   sys_free(addr1);
-   sys_free(addr2);
-   sys_free(addr3);
-   while(1);
-}
+   <span class="token keyword">int</span> cpu_delay <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span>cpu_delay<span class="token operator">--</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">sys_free</span><span class="token punctuation">(</span>addr1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">sys_free</span><span class="token punctuation">(</span>addr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">sys_free</span><span class="token punctuation">(</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */
-void u_prog_a(void) {
-   void* addr1 = malloc(256);
-   void* addr2 = malloc(255);
-   void* addr3 = malloc(254);
-   printf(&quot; prog_a malloc addr:0x%x,0x%x,0x%x\n&quot;, (int)addr1, (int)addr2, (int)addr3);
+<span class="token comment">/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */</span>
+<span class="token keyword">void</span> <span class="token function">u_prog_a</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">254</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot; prog_a malloc addr:0x%x,0x%x,0x%x\n&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr1<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr2<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-   int cpu_delay = 100000;
-   while(cpu_delay-- &gt; 0);
-   free(addr1);
-   free(addr2);
-   free(addr3);
-   while(1);
-}
+   <span class="token keyword">int</span> cpu_delay <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span>cpu_delay<span class="token operator">--</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>addr1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>addr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */
-void u_prog_b(void) {
-   void* addr1 = malloc(256);
-   void* addr2 = malloc(255);
-   void* addr3 = malloc(254);
-   printf(&quot; prog_b malloc addr:0x%x,0x%x,0x%x\n&quot;, (int)addr1, (int)addr2, (int)addr3);
+<span class="token comment">/* &#x6D4B;&#x8BD5;&#x7528;&#x6237;&#x8FDB;&#x7A0B; */</span>
+<span class="token keyword">void</span> <span class="token function">u_prog_b</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">void</span><span class="token operator">*</span> addr3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">254</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot; prog_b malloc addr:0x%x,0x%x,0x%x\n&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr1<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr2<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-   int cpu_delay = 100000;
-   while(cpu_delay-- &gt; 0);
-   free(addr1);
-   free(addr2);
-   free(addr3);
-   while(1);
-}
-</code></pre><p><img src="imgs/malloc_free.jpg" alt=""> </p>
+   <span class="token keyword">int</span> cpu_delay <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span>cpu_delay<span class="token operator">--</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>addr1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>addr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>addr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><img src="imgs/malloc_free.jpg" alt=""></p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 09:19:57
+2020-08-02 17:41:35
 </span></footer>
                                 
                                 </section>
@@ -696,12 +691,12 @@ void u_prog_b(void) {
 
             
                 
-                <a href="../15_user_process/" class="navigation navigation-prev " aria-label="Previous page: 15 特权级，用户进程">
+                <a href="../15_user_process/" class="navigation navigation-prev " aria-label="Previous page: 15 指令特权级，用户进程引入">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../17_hd_driver/" class="navigation navigation-next " aria-label="Next page: 17 硬件驱动">
+                <a href="../17_hd_driver/" class="navigation navigation-next " aria-label="Next page: 17 硬件驱动认识">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -712,7 +707,7 @@ void u_prog_b(void) {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"16 系统调用","level":"1.17","depth":1,"next":{"title":"17 硬件驱动","level":"1.18","depth":1,"path":"content/17_hd_driver/README.md","ref":"./content/17_hd_driver/README.md","articles":[]},"previous":{"title":"15 特权级，用户进程","level":"1.16","depth":1,"path":"content/15_user_process/README.md","ref":"./content/15_user_process/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/16_system_call/README.md","mtime":"2020-08-02T01:19:57.552Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"16 系统调用实现用户进程","level":"1.17","depth":1,"next":{"title":"17 硬件驱动认识","level":"1.18","depth":1,"path":"content/17_hd_driver/README.md","ref":"./content/17_hd_driver/README.md","articles":[]},"previous":{"title":"15 指令特权级，用户进程引入","level":"1.16","depth":1,"path":"content/15_user_process/README.md","ref":"./content/15_user_process/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/16_system_call/README.md","mtime":"2020-08-02T09:41:35.791Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T14:34:24.125Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
