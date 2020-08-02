@@ -1,0 +1,680 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>19 inode,文件目录操作 · spring-note</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="doctording">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-codeblock-filename/block.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../20_shell/" />
+    
+    
+    <link rel="prev" href="../18_filesystem/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../01_BIOS_to_MBR/">
+            
+                <a href="../01_BIOS_to_MBR/">
+            
+                    
+                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../02_mbr_hd/">
+            
+                <a href="../02_mbr_hd/">
+            
+                    
+                    2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../03_protected_mode/">
+            
+                <a href="../03_protected_mode/">
+            
+                    
+                    3 实模式到保护模式（GDT，gdtr, 选择子)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../04_page/">
+            
+                <a href="../04_page/">
+            
+                    
+                    4 分页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../05_efi/">
+            
+                <a href="../05_efi/">
+            
+                    
+                    5 ELF文件格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../06_kernel_start/">
+            
+                <a href="../06_kernel_start/">
+            
+                    
+                    6 内核编写
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../07_interrupt/">
+            
+                <a href="../07_interrupt/">
+            
+                    
+                    7 中断基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../08_assert/">
+            
+                <a href="../08_assert/">
+            
+                    
+                    8 内核Assert函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../09_memory_management/">
+            
+                <a href="../09_memory_management/">
+            
+                    
+                    9 内存管理，内存池，地址映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../10_process_thread/">
+            
+                <a href="../10_process_thread/">
+            
+                    
+                    10 内核实现线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../11_thread_schedule/">
+            
+                <a href="../11_thread_schedule/">
+            
+                    
+                    11 多线程调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../12_lock/">
+            
+                <a href="../12_lock/">
+            
+                    
+                    12 锁,信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../13_input/">
+            
+                <a href="../13_input/">
+            
+                    
+                    13 键盘输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../14_input_buffer/">
+            
+                <a href="../14_input_buffer/">
+            
+                    
+                    14 缓冲区
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../15_user_process/">
+            
+                <a href="../15_user_process/">
+            
+                    
+                    15 特权级，用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../16_system_call/">
+            
+                <a href="../16_system_call/">
+            
+                    
+                    16 系统调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../17_hd_driver/">
+            
+                <a href="../17_hd_driver/">
+            
+                    
+                    17 硬件驱动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="../18_filesystem/">
+            
+                <a href="../18_filesystem/">
+            
+                    
+                    18 硬盘到文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.20" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    19 inode,文件目录操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="../20_shell/">
+            
+                <a href="../20_shell/">
+            
+                    
+                    20 shell简单实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >19 inode,文件目录操作</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;">&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x4E0E;inode">&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x4E0E;inode</a><i></i></div></li>
+<li><div><a href="#&#x6587;&#x4EF6;-&#x76F8;&#x5173;&#x64CD;&#x4F5C;">&#x6587;&#x4EF6; &#x76F8;&#x5173;&#x64CD;&#x4F5C;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x521B;&#x5EFA;&#x666E;&#x901A;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x5DE5;&#x4F5C;">&#x521B;&#x5EFA;&#x666E;&#x901A;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x5DE5;&#x4F5C;</a><i></i></div></li>
+<li><div><a href="#&#x521B;&#x5EFA;&#x76EE;&#x5F55;">&#x521B;&#x5EFA;&#x76EE;&#x5F55;</a><i></i></div></li>
+</ul></li>
+<li><div><a href="#&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x8BFB;&#x5199;">&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x8BFB;&#x5199;</a><i></i></div></li>
+<li><div><a href="#&#x76EE;&#x5F55;&#x7684;&#x6253;&#x5F00;&#x5173;&#x95ED;">&#x76EE;&#x5F55;&#x7684;&#x6253;&#x5F00;&#x5173;&#x95ED;</a><i></i></div></li>
+<li><div><a href="#&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x5220;&#x9664;">&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x5220;&#x9664;</a><i></i></div></li>
+</ul></li>
+</ul>
+</div>
+
+<p>&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</p>
+<p>inode&#x76F8;&#x5173;&#x64CD;&#x4F5C;&#xFF08;&#x76EE;&#x5F55;&#xFF0C;&#x8DEF;&#x5F84;&#x89E3;&#x6790;&#xFF0C;&#x6587;&#x4EF6;&#x68C0;&#x7D22;&#xFF09;</p>
+<h3 id="&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;">&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</h3>
+<p>&#x5185;&#x6838;&#xFF08;kernel&#xFF09;&#x5229;&#x7528;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#xFF08;file descriptor&#xFF09;&#x6765;&#x8BBF;&#x95EE;&#x6587;&#x4EF6;&#x3002;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x662F;&#x975E;&#x8D1F;&#x6574;&#x6570;&#x3002;&#x6253;&#x5F00;&#x73B0;&#x5B58;&#x6587;&#x4EF6;&#x6216;&#x65B0;&#x5EFA;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x5185;&#x6838;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3002;&#x8BFB;&#x5199;&#x6587;&#x4EF6;&#x4E5F;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x6765;&#x6307;&#x5B9A;&#x5F85;&#x8BFB;&#x5199;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x8BE5;&#x6247;&#x533A;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x4E86;&#x6587;&#x4EF6;&#x7684;&#x8BFB;&#x5199;&#x3002;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x90FD;&#x5141;&#x8BB8;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x540C;&#x65F6;&#x3001;&#x591A;&#x6B21;&#x3001;&#x6253;&#x5F00;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF08;&#x5E76;&#x4E0D;&#x5173;&#x95ED;&#xFF09;&#xFF0C;&#x540C;&#x6837;&#x8BE5;&#x6587;&#x4EF6;&#x4E5F;&#x53EF;&#x4EE5;&#x88AB;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#x540C;&#x65F6;&#x6253;&#x5F00;&#x3002;</p>
+<p>&#x4E3A;&#x5B9E;&#x73B0;&#x6587;&#x4EF6;&#x4EFB;&#x610F;&#x4F4D;&#x7F6E;&#x7684;&#x8BFB;&#x5199;&#xFF0C;&#x6267;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#x65F6;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x504F;&#x79FB;&#x91CF;&#x4F5C;&#x4E3A;&#x8BE5;&#x6587;&#x4EF6;&#x5185;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;&#xFF0C;&#x6B64;&#x504F;&#x79FB;&#x91CF;&#x76F8;&#x5F53;&#x4E8E;&#x6587;&#x4EF6;&#x5185;&#x7684;&#x6307;&#x9488;&#x3002;</p>
+<h4 id="&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x4E0E;inode">&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x4E0E;inode</h4>
+<p>&#x8BFB;&#x5199;&#x6587;&#x4EF6;&#x7684;&#x672C;&#x8D28;&#x662F; &#x5148;&#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x7684; inode &#x627E;&#x5230;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5757;&#x7684;&#x6247;&#x533A;&#x5730;&#x5740;&#xFF0C;&#x968F;&#x540E;&#x8BFB;&#x5199;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x7EC4;&#x7EC7;&#x4E00;&#x4E2A;&quot;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x7ED3;&#x6784;&quot;&#xFF08;&#x5305;&#x542B;&#x6587;&#x4EF6;&#x504F;&#x79FB;&#x91CF;&#xFF0C;&#x6587;&#x4EF6;&#x6253;&#x5F00;&#x6807;&#x5FD7;&#xFF0C;inode&#x6307;&#x9488;&#x7B49;&#x4FE1;&#x606F;&#xFF09;&#xFF0C;&#x65B9;&#x4FBF;&#x5BF9;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x5373;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3002;</p>
+<p>&#x5728;linux&#x4E2D;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x90FD;&#x6709;&#x5355;&#x72EC;&#x7684;&#xFF0C;&#x5B8C;&#x5168;&#x76F8;&#x540C;&#x7684;&#x4E00;&#x5957;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x4EEC;&#x4E0E;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x4E92;&#x4E0D;&#x5E72;&#x6D89;&#xFF0C;&#x8FD9;&#x4E9B;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x88AB;&#x7EC4;&#x7EC7;&#x6210;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x6570;&#x7EC4;&#x8FDB;&#x884C;&#x7EDF;&#x4E00;&#x7684;&#x7BA1;&#x7406;&#x3002;</p>
+<p>&#xFF08;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x5728;PCB&#xFF08;Process Control Block&#xFF09;&#x4E2D;&#x4FDD;&#x5B58;&#x7740;&#x4E00;&#x4EFD;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#xFF0C;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x8868;&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x6BCF;&#x4E2A;&#x8868;&#x9879;&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x6307;&#x5411;&#x5DF2;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x7684;&#x6307;&#x9488;&#x3002;&#xFF09;</p>
+<p>Linux &#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x67E5;&#x627E;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5757;</p>
+<ol>
+<li>&#x8FDB;&#x7A0B;PCB&#x4E2D;&#x6709;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x6570;&#x7EC4;</li>
+<li>&#x6587;&#x4EF6;&#x8868;&#x4E2D;&#x5B58;&#x50A8;&#x4E86;&#x6240;&#x6709;&#x6587;&#x4EF6;&#x7684;&#x7ED3;&#x6784;&#xFF08;&#x6587;&#x4EF6;&#x7ED3;&#x6784;&#x4E2D;&#x6709;inode&#x5148;&#x5173;&#x4FE1;&#x606F;&#xFF09; -- &#x5728;&#x5185;&#x5B58;&#x4E2D;&#x521B;&#x5EFA;&#x597D;&#x7684;&#x5168;&#x5C40;&#x7ED3;&#x6784;</li>
+<li>&#x6839;&#x636E;inode&#x961F;&#x5217;&#xFF08;inode&#x7F13;&#x5B58;&#xFF09;&#xFF0C;&#x627E;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x78C1;&#x76D8;&#x4F4D;&#x7F6E;</li>
+</ol>
+<h4 id="&#x6587;&#x4EF6;-&#x76F8;&#x5173;&#x64CD;&#x4F5C;">&#x6587;&#x4EF6; &#x76F8;&#x5173;&#x64CD;&#x4F5C;</h4>
+<p>&#x521B;&#x5EFA;&#x666E;&#x901A;&#x6587;&#x4EF6; file_create &#x51FD;&#x6570;</p>
+<h5 id="&#x521B;&#x5EFA;&#x666E;&#x901A;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x5DE5;&#x4F5C;">&#x521B;&#x5EFA;&#x666E;&#x901A;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x5DE5;&#x4F5C;</h5>
+<ul>
+<li><p>1) &#x6587;&#x4EF6;&#x9700;&#x8981; inode &#x6765;&#x63CF;&#x8FF0;&#x5927;&#x5C0F;&#x3001;&#x4F4D;&#x7F6E;&#x7B49;&#x5C5E;&#x6027; &#xFF0C;&#x6240;&#x4EE5;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x5C31;&#x8981;&#x521B;&#x5EFA;&#x5176; inode &#x3002;&#x8FD9;&#x5C31;&#x6D89;&#x53CA;&#x5230;&#x5411;inode_bitmap &#x7533;&#x8BF7;&#x4F4D;&#x56FE;&#x6765;&#x83B7;&#x5F97; inode &#x53F7;&#xFF0C;&#x56E0;&#x6B64; inode_bitmap &#x4F1A;&#x88AB;&#x66F4;&#x65B0;&#xFF0C; inode_table &#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x67D0;&#x9879;&#x4E5F;&#x4F1A;&#x7531;&#x65B0;&#x7684; inode &#x586B;&#x5145; &#x3002;</p>
+</li>
+<li><p>2) inode-&gt;i_sectors &#x662F;&#x6587;&#x4EF6;&#x5177;&#x4F53;&#x5B58;&#x50A8;&#x7684;&#x6247;&#x533A;&#x5730;&#x5740;&#xFF0C;&#x8FD9;&#x9700;&#x8981;&#x5411; block_bitmap &#x7533;&#x8BF7;&#x53EF;&#x7528;&#x4F4D;&#x6765;&#x83B7;&#x5F97;&#x53EF;&#x7528;&#x7684;&#x5757;&#xFF08;&#x5728;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#xFF0C;&#x4E3A;&#x7B80;&#x5316;&#x5904;&#x7406;&#xFF0C; 1 &#x5757;&#x7B49;&#x4E8E; 1 &#x6247;&#x533A;&#xFF09;&#xFF0C;&#x56E0;&#x6B64; block_bitmap &#x4F1A;&#x88AB;&#x66F4;&#x65B0;&#xFF0C;&#x5206;&#x533A;&#x7684;&#x6570;&#x636E;&#x533A; data_start_lba
+&#x4EE5;&#x540E;&#x7684;&#x67D0;&#x4E2A;&#x6247;&#x533A;&#x4F1A;&#x88AB;&#x5206;&#x914D; &#x3002;</p>
+</li>
+<li><p>3) &#x65B0;&#x589E;&#x52A0;&#x7684;&#x6587;&#x4EF6;&#x5FC5;&#x7136;&#x5B58;&#x5728;&#x4E8E;&#x67D0;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x6240;&#x4EE5;&#x8BE5;&#x76EE;&#x5F55;&#x7684; inode-&gt;i_size &#x4F1A;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x9879;&#x7684;&#x5927;&#x5C0F;(&#x76EE;&#x5F55;&#x9879;&#x5B58;&#x50A8;&#x6587;&#x4EF6;&#x540D;&#x548C;i&#x8282;&#x70B9;) &#x3002; &#x6B64;&#x65B0;&#x589E;&#x52A0;&#x7684;&#x6587;&#x4EF6;&#x5BF9;&#x5E94;&#x7684;&#x76EE;&#x5F55;&#x9879;&#x9700;&#x8981;&#x5199;&#x5165;&#x8BE5;&#x76EE;&#x5F55;&#x7684; inode-&gt;i_sectors&#xFF3B;&#xFF3D;&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x6247;&#x533A;&#xFF0C;&#x539F;&#x6709;&#x6247;&#x533A;&#x53EF;&#x80FD;&#x5DF1;&#x6EE1;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x53EF;&#x80FD;&#x8981;&#x7533;&#x8BF7;&#x65B0;&#x6247;&#x533A;&#x6765;&#x5B58;&#x50A8;&#x76EE;&#x5F55;&#x9879; &#x3002;</p>
+</li>
+<li><p>4) &#x82E5;&#x5176;&#x4E2D;&#x67D0;&#x6B65;&#x64CD;&#x4F5C;&#x5931;&#x8D25;&#xFF0C;&#x9700;&#x8981;&#x56DE;&#x6EDA;&#x5230;&#x4E4B;&#x524D;&#x5DF1;&#x6210;&#x529F;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+</li>
+<li><p>5) inode_bitmap &#x3001; block_bitmap&#x3001;&#x65B0;&#x6587;&#x4EF6;&#x7684; inode &#x53CA;&#x6587;&#x4EF6;&#x6240;&#x5728;&#x76EE;&#x5F55;&#x7684; inode&#xFF0C;&#x8FD9;&#x4E9B;&#x4F4D;&#x4E8E;&#x5185;&#x5B58;&#x4E2D;&#x5DF2;&#x7ECF;&#x88AB;&#x6539;&#x53D8;&#x7684;&#x6570;&#x636E;&#x8981;&#x540C;&#x6B65;&#x5230;&#x786C;&#x76D8;&#x3002;</p>
+</li>
+</ul>
+<h5 id="&#x521B;&#x5EFA;&#x76EE;&#x5F55;">&#x521B;&#x5EFA;&#x76EE;&#x5F55;</h5>
+<p>&#x521B;&#x5EFA;&#x76EE;&#x5F55;&#x6240;&#x6D89;&#x53CA;&#x7684;&#x5DE5;&#x4F5C;&#x5305;&#x62EC;&#x3002;</p>
+<ul>
+<li>1) &#x786E;&#x8BA4;&#x5F85;&#x521B;&#x5EFA;&#x7684;&#x65B0;&#x76EE;&#x5F55;&#x5728;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E0A;&#x4E0D;&#x5B58;&#x5728;&#x3002;</li>
+<li>2) &#x4E3A;&#x65B0;&#x76EE;&#x5F55;&#x521B;&#x5EFA; inode &#x3002;</li>
+<li>3) &#x4E3A;&#x65B0;&#x76EE;&#x5F55;&#x5206;&#x914D; 1 &#x4E2A;&#x5757;&#x5B58;&#x50A8;&#x8BE5;&#x76EE;&#x5F55;&#x4E2D;&#x7684;&#x76EE;&#x5F55;&#x9879;&#x3002;</li>
+<li>4) &#x5728;&#x65B0;&#x76EE;&#x5F55;&#x4E2D;&#x521B;&#x5EFA;&#x4E24;&#x4E2A;&#x76EE;&#x5F55;&#x9879;&quot;.&quot;&#x548C;&quot;..&quot;,&#x8FD9;&#x662F;&#x6BCF;&#x4E2A;&#x76EE;&#x5F55;&#x90FD;&#x5FC5;&#x987B;&#x5B58;&#x5728;&#x7684;&#x4E24;&#x4E2A;&#x76EE;&#x5F55;&#x9879;&#x3002;</li>
+<li>5) &#x5728;&#x65B0;&#x76EE;&#x5F55;&#x7684;&#x7236;&#x76EE;&#x5F55;&#x4E2D;&#x6DFB;&#x52A0;&#x65B0;&#x76EE;&#x5F55;&#x7684;&#x76EE;&#x5F55;&#x9879;&#x3002;</li>
+<li>6) &#x5C06;&#x4EE5;&#x4E0A;&#x8D44;&#x6E90;&#x7684;&#x53D8;&#x66F4;&#x540C;&#x6B65;&#x5230;&#x786C;&#x76D8;&#x3002;</li>
+</ul>
+<p><strong>&#x904D;&#x5386;&#x76EE;&#x5F55;</strong>&#x5C31;&#x662F;&#x8BFB;&#x53D6;&#x76EE;&#x5F55;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x76EE;&#x5F55;&#x9879;&#xFF0C;&#x5728;&#x904D;&#x5386;&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x8981;&#x5148;&#x628A;&#x76EE;&#x5F55;&#x6253;&#x5F00;&#xFF0C;&#x4E4B;&#x540E;&#x8FD8;&#x9700;&#x8981;&#x628A;&#x76EE;&#x5F55;&#x5173;&#x95ED;&#x3002;</p>
+<p><strong>pwd</strong>&#x547D;&#x4EE4;&#x548C;<strong>cd</strong>&#x547D;&#x4EE4;&#xFF1A; &#x6BCF;&#x4E2A;&#x76EE;&#x5F55;&#x90FD;&#x5B58;&#x50A8;&#x7740;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x548C;&#x4E0A;&#x4E00;&#x7EA7;&#x76EE;&#x5F55;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x7406;&#x8BBA;&#x4E0A;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230;&#x5206;&#x533A;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x76EE;&#x5F55;</p>
+<hr>
+<h4 id="&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x8BFB;&#x5199;">&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x8BFB;&#x5199;</h4>
+<p>&#x4EE3;&#x7801;&#x89C1; 19_fd_inode_dir_file\ code\ code_01</p>
+<pre class="language-"><code> printf(&quot;/dir1/subdir1 create %s!\n&quot;, sys_mkdir(&quot;/dir1/subdir1&quot;) == 0 ? &quot;done&quot; : &quot;fail&quot;);
+   printf(&quot;/dir1 create %s!\n&quot;, sys_mkdir(&quot;/dir1&quot;) == 0 ? &quot;done&quot; : &quot;fail&quot;);
+   printf(&quot;now, /dir1/subdir1 create %s!\n&quot;, sys_mkdir(&quot;/dir1/subdir1&quot;) == 0 ? &quot;done&quot; : &quot;fail&quot;);
+   int fd = sys_open(&quot;/dir1/subdir1/file2&quot;, O_CREAT|O_RDWR);
+   if (fd != -1) {
+      printf(&quot;/dir1/subdir1/file2 create done!\n&quot;);
+      sys_write(fd, &quot;Catch me if you can!\n&quot;, 21);
+      sys_lseek(fd, 0, SEEK_SET);
+      char buf[32] = {0};
+      sys_read(fd, buf, 21); 
+      printf(&quot;/dir1/subdir1/file2 says:\n%s&quot;, buf);
+      sys_close(fd);
+   }
+</code></pre><p><img src="imgs/file_dir.jpg" alt=""></p>
+<h4 id="&#x76EE;&#x5F55;&#x7684;&#x6253;&#x5F00;&#x5173;&#x95ED;">&#x76EE;&#x5F55;&#x7684;&#x6253;&#x5F00;&#x5173;&#x95ED;</h4>
+<p>&#x5728;&#x6587;&#x4EF6;&#xFF0C;&#x76EE;&#x5F55;&#x521B;&#x5EFA;&#x6210;&#x529F;&#xFF0C;&#x5E76;&#x5199;&#x5165;&#x78C1;&#x76D8;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x6D4B;&#x8BD5;&#x76EE;&#x5F55;&#x7684;&#x6253;&#x5F00;&#x4E0E;&#x5173;&#x95ED;</p>
+<pre class="language-"><code> struct dir* p_dir = sys_opendir(&quot;/dir1/subdir1&quot;);
+   if (p_dir) {
+      printf(&quot;/dir1/subdir1 open done!\n&quot;);
+      if (sys_closedir(p_dir) == 0) {
+     printf(&quot;/dir1/subdir1 close done!\n&quot;);
+      } else {
+     printf(&quot;/dir1/subdir1 close fail!\n&quot;);
+      }
+   } else {
+      printf(&quot;/dir1/subdir1 open fail!\n&quot;);
+   }
+</code></pre><p><img src="imgs/dir_open.jpg" alt=""></p>
+<h4 id="&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x5220;&#x9664;">&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x7684;&#x5220;&#x9664;</h4>
+<pre class="language-"><code>/********  &#x6D4B;&#x8BD5;&#x4EE3;&#x7801;  ********/
+   printf(&quot;/dir1 content before delete /dir1/subdir1:\n&quot;);
+   struct dir* dir = sys_opendir(&quot;/dir1/&quot;);
+   char* type = NULL;
+   struct dir_entry* dir_e = NULL;
+   while((dir_e = sys_readdir(dir))) { 
+      if (dir_e-&gt;f_type == FT_REGULAR) {
+     type = &quot;regular&quot;;
+      } else {
+     type = &quot;directory&quot;;
+      }
+      printf(&quot;      %s   %s\n&quot;, type, dir_e-&gt;filename);
+   }
+   printf(&quot;try to delete nonempty directory /dir1/subdir1\n&quot;);
+   if (sys_rmdir(&quot;/dir1/subdir1&quot;) == -1) {
+      printf(&quot;sys_rmdir: /dir1/subdir1 delete fail!\n&quot;);
+   }
+
+   printf(&quot;try to delete /dir1/subdir1/file2\n&quot;);
+   if (sys_rmdir(&quot;/dir1/subdir1/file2&quot;) == -1) {
+      printf(&quot;sys_rmdir: /dir1/subdir1/file2 delete fail!\n&quot;);
+   } 
+   if (sys_unlink(&quot;/dir1/subdir1/file2&quot;) == 0 ) {
+      printf(&quot;sys_unlink: /dir1/subdir1/file2 delete done\n&quot;);
+   }
+
+   printf(&quot;try to delete directory /dir1/subdir1 again\n&quot;);
+   if (sys_rmdir(&quot;/dir1/subdir1&quot;) == 0) {
+      printf(&quot;/dir1/subdir1 delete done!\n&quot;);
+   }
+
+   printf(&quot;/dir1 content after delete /dir1/subdir1:\n&quot;);
+   sys_rewinddir(dir);
+   while((dir_e = sys_readdir(dir))) { 
+      if (dir_e-&gt;f_type == FT_REGULAR) {
+     type = &quot;regular&quot;;
+      } else {
+     type = &quot;directory&quot;;
+      }
+      printf(&quot;      %s   %s\n&quot;, type, dir_e-&gt;filename);
+   }
+
+/********  &#x6D4B;&#x8BD5;&#x4EE3;&#x7801;  ********/
+</code></pre><p><img src="imgs/dir_del.jpg" alt=""></p>
+<hr>
+<footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
+2020-08-02 09:19:57
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../18_filesystem/" class="navigation navigation-prev " aria-label="Previous page: 18 硬盘到文件系统">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../20_shell/" class="navigation navigation-next " aria-label="Next page: 20 shell简单实现">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"19 inode,文件目录操作","level":"1.20","depth":1,"next":{"title":"20 shell简单实现","level":"1.21","depth":1,"path":"content/20_shell/README.md","ref":"./content/20_shell/README.md","articles":[]},"previous":{"title":"18 硬盘到文件系统","level":"1.19","depth":1,"path":"content/18_filesystem/README.md","ref":"./content/18_filesystem/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/19_fd_inode_dir_file/README.md","mtime":"2020-08-02T01:19:57.631Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

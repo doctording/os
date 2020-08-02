@@ -1,0 +1,789 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>18 硬盘到文件系统 · spring-note</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="doctording">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-codeblock-filename/block.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../19_fd_inode_dir_file/" />
+    
+    
+    <link rel="prev" href="../17_hd_driver/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../01_BIOS_to_MBR/">
+            
+                <a href="../01_BIOS_to_MBR/">
+            
+                    
+                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../02_mbr_hd/">
+            
+                <a href="../02_mbr_hd/">
+            
+                    
+                    2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../03_protected_mode/">
+            
+                <a href="../03_protected_mode/">
+            
+                    
+                    3 实模式到保护模式（GDT，gdtr, 选择子)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../04_page/">
+            
+                <a href="../04_page/">
+            
+                    
+                    4 分页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../05_efi/">
+            
+                <a href="../05_efi/">
+            
+                    
+                    5 ELF文件格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../06_kernel_start/">
+            
+                <a href="../06_kernel_start/">
+            
+                    
+                    6 内核编写
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../07_interrupt/">
+            
+                <a href="../07_interrupt/">
+            
+                    
+                    7 中断基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../08_assert/">
+            
+                <a href="../08_assert/">
+            
+                    
+                    8 内核Assert函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../09_memory_management/">
+            
+                <a href="../09_memory_management/">
+            
+                    
+                    9 内存管理，内存池，地址映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../10_process_thread/">
+            
+                <a href="../10_process_thread/">
+            
+                    
+                    10 内核实现线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../11_thread_schedule/">
+            
+                <a href="../11_thread_schedule/">
+            
+                    
+                    11 多线程调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../12_lock/">
+            
+                <a href="../12_lock/">
+            
+                    
+                    12 锁,信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../13_input/">
+            
+                <a href="../13_input/">
+            
+                    
+                    13 键盘输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../14_input_buffer/">
+            
+                <a href="../14_input_buffer/">
+            
+                    
+                    14 缓冲区
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../15_user_process/">
+            
+                <a href="../15_user_process/">
+            
+                    
+                    15 特权级，用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../16_system_call/">
+            
+                <a href="../16_system_call/">
+            
+                    
+                    16 系统调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../17_hd_driver/">
+            
+                <a href="../17_hd_driver/">
+            
+                    
+                    17 硬件驱动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.19" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    18 硬盘到文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="../19_fd_inode_dir_file/">
+            
+                <a href="../19_fd_inode_dir_file/">
+            
+                    
+                    19 inode,文件目录操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="../20_shell/">
+            
+                <a href="../20_shell/">
+            
+                    
+                    20 shell简单实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >18 硬盘到文件系统</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5206;&#x914D;">&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5206;&#x914D;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x8FDE;&#x7EED;&#x5206;&#x914D;">&#x8FDE;&#x7EED;&#x5206;&#x914D;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</a><i></i></div></li>
+<li><div><a href="#&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;</a><i></i></div></li>
+</ul></li>
+<li><div><a href="#&#x94FE;&#x63A5;&#x5206;&#x914D;">&#x94FE;&#x63A5;&#x5206;&#x914D;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</a><i></i></div></li>
+<li><div><a href="#&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;</a><i></i></div></li>
+</ul></li>
+<li><div><a href="#&#x7D22;&#x5F15;&#x5206;&#x914D;">&#x7D22;&#x5F15;&#x5206;&#x914D;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</a><i></i></div></li>
+<li><div><a href="#&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;</a><i></i></div></li>
+</ul></li>
+</ul></li>
+<li><div><a href="#&#x76EE;&#x5F55;&#xFF0C;&#x8D85;&#x7EA7;&#x5757;">&#x76EE;&#x5F55;&#xFF0C;&#x8D85;&#x7EA7;&#x5757;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x8D85;&#x7EA7;&#x5757;&#x662F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x5143;&#x4FE1;&#x606F;">&#x8D85;&#x7EA7;&#x5757;&#x662F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x5143;&#x4FE1;&#x606F;</a><i></i></div></li>
+</ul></li>
+<li><div><a href="#&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;">&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</a><i></i></div></li>
+</ul>
+</div>
+
+<p>&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x5B9E;&#x73B0;</p>
+<h3 id="&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5206;&#x914D;">&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5206;&#x914D;</h3>
+<p>&#x786C;&#x76D8;&#x662F;&#x4F4E;&#x901F;&#x8BBE;&#x5907;&#xFF0C;&#x5176;&#x8BFB;&#x5199;&#x5355;&#x4F4D;&#x662F;&#x6247;&#x533A;&#xFF0C;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x9891;&#x7E41;&#x8BBF;&#x95EE;&#x786C;&#x76D8;&#xFF0C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E0D;&#x4F1A;&#x6709;&#x4E86;&#x4E00;&#x6247;&#x533A;&#x6570;&#x636E;&#x5C31;&#x53BB;&#x8BFB;&#x5199;&#x4E00;&#x6B21;&#x78C1;&#x76D8;&#xFF0C;&#x5F80;&#x5F80;&#x7B49;&#x6570;&#x636E;&#x79EF;&#x6512;&#x5230;&#x201C;&#x8DB3;&#x591F;&#x5927;&#x5C0F;&#x201D;&#x65F6;&#x624D;&#x4E00;&#x6B21;&#x6027;&#x8BBF;&#x95EE;&#x786C;&#x76D8;&#xFF0C;&#x8FD9;&#x8DB3;&#x591F;&#x5927;&#x5C0F;&#x7684;&#x6570;&#x636E;&#x5C31;&#x662F;<strong>&#x5757;</strong>&#xFF0C;&#x4E00;&#x4E2A;&#x5757;&#x662F;&#x7531;&#x591A;&#x4E2A;&#x6247;&#x533A;&#x7EC4;&#x6210;&#x7684;&#xFF0C;&#x5757;&#x5927;&#x5C0F;&#x662F;&#x6247;&#x533A;&#x5927;&#x5C0F;&#x7684;&#x6574;&#x6570;&#x500D;&#x3002;</p>
+<p>&#x5757;&#x662F;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x8BFB;&#x5199;&#x5355;&#x4F4D;&#xFF0C;&#x56E0;&#x6B64;&#x6587;&#x4EF6;&#x81F3;&#x5C11;&#x8981;&#x5360;&#x636E;&#x4E00;&#x4E2A;&#x5757;&#xFF0C;&#x5F53;&#x6587;&#x4EF6;&#x4F53;&#x79EF;&#x5927;&#x4E8E; l &#x4E2A;&#x5757;&#x65F6;&#xFF0C;&#x6587;&#x4EF6;&#x80AF;&#x5B9A;&#x88AB;&#x62C6;&#x5206;&#x6210;&#x591A;&#x4E2A;&#x5757;&#x6765;&#x5B58;&#x50A8;,&#x591A;&#x4E2A;&#x5757;&#x5982;&#x4F55;&#x7EC4;&#x7EC7;&#x5230;&#x4E00;&#x8D77;--&#x300B;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5206;&#x914D;&#x65B9;&#x6CD5;</p>
+<h4 id="&#x8FDE;&#x7EED;&#x5206;&#x914D;">&#x8FDE;&#x7EED;&#x5206;&#x914D;</h4>
+<p>&#x8FDE;&#x7EED;&#x5206;&#x914D;&#x8981;&#x6C42;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x5728;&#x78C1;&#x76D8;&#x4E0A;&#x5360;&#x6709;&#x4E00;&#x7EC4;&#x8FDE;&#x7EED;&#x7684;&#x5757;&#x3002;&#xFF08;&#x5757;&#x4E0E;&#x5757;&#x5FC5;&#x9700;&#x7D27;&#x6328;&#x7740;&#xFF09;</p>
+<h5 id="&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</h5>
+<ul>
+<li><p>&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x6587;&#x4EF6;</p>
+</li>
+<li><p>&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x96C6;&#x4E2D;&#x5B58;&#x653E;&#x5728;&#x8FDE;&#x7EED;&#x7684;&#x76D8;&#x5757;&#x4E2D;&#xFF0C;&#x8BBF;&#x95EE;&#x65F6;&#x6240;&#x9700;&#x7684;&#x5BFB;&#x9053;&#x6B21;&#x6570;&#x548C;&#x5BFB;&#x9053;&#x65F6;&#x95F4;&#x5C11;&#x3002;</p>
+</li>
+</ul>
+<h5 id="&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;</h5>
+<ul>
+<li>&#x7531;&#x4E8E;&#x63D2;&#x5165;&#x548C;&#x5220;&#x9664;&#x8BB0;&#x5F55;&#x4F1A;&#x5F15;&#x8D77;&#x5176;&#x5B83;&#x8BB0;&#x5F55;&#x7684;&#x79FB;&#x52A8;&#xFF0C;&#x5728;&#x5916;&#x5B58;&#x4E2D;&#x6267;&#x884C;&#x6B64;&#x64CD;&#x4F5C;&#x4F1A;&#x5F15;&#x8D77;&#x78C1;&#x5934;&#x7684;&#x9891;&#x7E41;&#x6765;&#x56DE;&#x79FB;&#x52A8;&#xFF0C;&#x56E0;&#x6B64;&#x8FDE;&#x7EED;&#x7ED3;&#x6784;&#x53EA;&#x80FD;&#x5728;&#x6587;&#x4EF6;&#x7684;&#x672B;&#x5C3E;&#x63D2;&#x5165;&#x8BB0;&#x5F55;&#xFF0C;&#x5220;&#x9664;&#x8BB0;&#x5F55;&#x65F6;&#xFF0C;&#x53EA;&#x4F5C;&#x6807;&#x8BB0;&#x8FDB;&#x884C;&#x903B;&#x8F91;&#x5220;&#x9664;&#xFF0C;&#x53EA;&#x6709;&#x7528;&#x6237;&#x6307;&#x5B9A;&#x7269;&#x7406;&#x5220;&#x9664;&#x65F6;&#x624D;&#x771F;&#x6B63;&#x5220;&#x9664;&#x76F8;&#x5E94;&#x8BB0;&#x5F55;&#xFF0C;&#x8FDB;&#x884C;&#x8BB0;&#x5F55;&#x7684;&#x79FB;&#x52A8;&#xFF1B;</li>
+</ul>
+<ul>
+<li>&#x987A;&#x5E8F;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x8FDE;&#x7EED;&#x7684;&#x76D8;&#x5757;&#x5B58;&#x653E;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x6B64;&#xFF0C;&#x5728;&#x63D2;&#x5165;&#x8BB0;&#x5F55;&#x65F6;&#x5982;&#x679C;&#x539F;&#x6765;&#x5206;&#x914D;&#x7684;&#x76D8;&#x5757;&#x5DF2;&#x6CA1;&#x6709;&#x7A7A;&#x95F2;&#x7A7A;&#x95F4;&#xFF0C;&#x800C;&#x4E0E;&#x5176;&#x90BB;&#x63A5;&#x7684;&#x76D8;&#x5757;&#x4E5F;&#x4E0D;&#x7A7A;&#x95F2;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x5728;&#x5916;&#x5B58;&#x4E2D;&#x67E5;&#x627E;&#x65B0;&#x7684;&#x8F83;&#x5927;&#x7684;&#x7A7A;&#x95F2;&#x7A7A;&#x95F4;&#xFF0C;&#x5E76;&#x5C06;&#x539F;&#x6709;&#x6570;&#x636E;&#x79FB;&#x52A8;&#x5230;&#x65B0;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x624D;&#x80FD;&#x63D2;&#x5165;&#x65B0;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x6B64;&#xFF0C;&#x8FDE;&#x7EED;&#x7ED3;&#x6784;&#x4E0D;&#x6613;&#x52A8;&#x6001;&#x589E;&#x957F;&#xFF0C;&#x800C;&#x4E14;&#x5916;&#x5B58;&#x5BB9;&#x6613;&#x5B58;&#x5728;&#x788E;&#x7247;&#x3002; </li>
+</ul>
+<h4 id="&#x94FE;&#x63A5;&#x5206;&#x914D;">&#x94FE;&#x63A5;&#x5206;&#x914D;</h4>
+<p><img src="imgs/file_1.jpg" alt=""></p>
+<p>&#xFF08;&#x7C7B;&#x4F3C;&#x94FE;&#x8868;&#xFF0C;&#x5757;&#x4E0E;&#x5757;&#x4F4D;&#x7F6E;&#x4EFB;&#x610F;&#x7684;&#xFF0C;&#x6BCF;&#x4E2A;&#x5757;&#x6709;&#x4E2A;&#x94FE;&#x63A5;&#x6307;&#x9488;&#xFF09;</p>
+<h5 id="&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</h5>
+<ul>
+<li><p>&#x63D0;&#x9AD8;&#x4E86;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5229;&#x7528;&#x7387;&#xFF0C;&#x89E3;&#x51B3;&#x4E86;&#x78C1;&#x76D8;&#x788E;&#x7247;&#x95EE;&#x9898;&#xFF1B;</p>
+</li>
+<li><p>&#x4FBF;&#x4E8E;&#x6587;&#x4EF6;&#x7684;&#x63D2;&#x5165;&#x548C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#xFF1B;</p>
+</li>
+<li><p>&#x4FBF;&#x4E8E;&#x6587;&#x4EF6;&#x7684;&#x52A8;&#x6001;&#x589E;&#x957F;&#x3002; </p>
+</li>
+</ul>
+<h5 id="&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;</h5>
+<ul>
+<li><p>&#x53EA;&#x80FD;&#x6709;&#x6548;&#x7684;&#x7528;&#x4E8E;&#x6587;&#x4EF6;&#x7684;&#x987A;&#x5E8F;&#x8BBF;&#x95EE;&#x800C;&#x4E0D;&#x80FD;&#x6709;&#x6548;&#x7684;&#x652F;&#x6301;&#x6587;&#x4EF6;&#x7684;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x3002;&#x8981;&#x627E;&#x5230;&#x6587;&#x4EF6;&#x7684;&#x7B2C;i&#x5757;&#xFF0C;&#x5FC5;&#x987B;&#x4ECE;&#x6587;&#x4EF6;&#x7684;&#x5F00;&#x59CB;&#x8D77;&#xFF0C;&#x8DDF;&#x7740;&#x6307;&#x9488;&#xFF0C;&#x627E;&#x5230;&#x7B2C;i&#x5757;&#x3002;&#x5BF9;&#x6307;&#x9488;&#x7684;&#x6BCF;&#x6B21;&#x8BBF;&#x95EE;&#x90FD;&#x9700;&#x8981;&#x8BFB;&#x78C1;&#x76D8;&#x3002;</p>
+</li>
+<li><p>&#x6307;&#x9488;&#x9700;&#x8981;&#x7A7A;&#x95F4;&#x3002;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x6BD4;&#x539F;&#x6765;&#x66F4;&#x591A;&#x7684;&#x7A7A;&#x95F4;&#x3002;</p>
+</li>
+<li><p>&#x53EF;&#x9760;&#x6027;&#x95EE;&#x9898;&#xFF0C;&#x6587;&#x4EF6;&#x7531;&#x6307;&#x9488;&#x94FE;&#x63A5;&#x7684;&#xFF0C;&#x6307;&#x9488;&#x5206;&#x5E03;&#x4E8E;&#x6574;&#x4E2A;&#x78C1;&#x76D8;&#xFF0C;&#x5982;&#x679C;&#x6307;&#x9488;&#x4E22;&#x5931;&#x6216;&#x635F;&#x574F;&#xFF0C;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x94FE;&#x63A5;&#x7A7A;&#x95F2;&#x7A7A;&#x95F4;&#x6216;&#x53E6;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x3002;</p>
+</li>
+</ul>
+<h4 id="&#x7D22;&#x5F15;&#x5206;&#x914D;">&#x7D22;&#x5F15;&#x5206;&#x914D;</h4>
+<p><img src="imgs/file_2.jpg" alt=""></p>
+<p>&#xFF08;&#x7D22;&#x5F15;&#x8868;&#xFF0C;&#x628A;&#x94FE;&#x63A5;&#x5206;&#x914D;&#x7684;&#x6307;&#x9488;&#x653E;&#x5230;&#x4E00;&#x8D77;&#xFF0C;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x7D22;&#x5F15;&#x5730;&#x5740;&#x6570;&#x7EC4;&#xFF09;</p>
+<p>&#x94FE;&#x63A5;&#x5206;&#x914D;&#x89E3;&#x51B3;&#x4E86;&#x8FDE;&#x7EED;&#x5206;&#x914D;&#x7684;&#x5916;&#x90E8;&#x788E;&#x7247;&#x548C;&#x5927;&#x5C0F;&#x58F0;&#x660E;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x4E0D;&#x7528;FAT&#xFF0C;&#x90A3;&#x4E48;&#x94FE;&#x63A5;&#x5206;&#x914D;&#x4E0D;&#x80FD;&#x6709;&#x6548;&#x7684;&#x652F;&#x6301;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x3002;&#x7D22;&#x5F15;&#x5206;&#x914D;&#x628A;&#x6240;&#x6709;&#x6307;&#x9488;&#x653E;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x5373;&#x901A;&#x8FC7;&#x7D22;&#x5F15;&#x5757;&#x89E3;&#x51B3;&#x4E86;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x5927;&#x6587;&#x4EF6;</p>
+<ul>
+<li>&#x591A;&#x5C42;&#x7D22;&#x5F15;</li>
+<li>&#x7EC4;&#x5408;&#x65B9;&#x6848;&#xFF0C;&#x7ED3;&#x5408;&#x94FE;&#x63A5;&#x7D22;&#x5F15;</li>
+</ul>
+<p>&#x591A;&#x5C42;&#x7D22;&#x5F15;</p>
+<p><img src="imgs/file_3.jpg" alt=""></p>
+<h5 id="&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</h5>
+<ul>
+<li><p>&#x652F;&#x6301;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;</p>
+</li>
+<li><p>&#x89E3;&#x51B3;&#x4E86;&#x78C1;&#x76D8;&#x788E;&#x7247;&#x95EE;&#x9898;</p>
+</li>
+<li><p>&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x65B9;&#x4FBF;&#xFF1A;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x7D22;&#x5F15;&#x8868;&#x7684;&#x64CD;&#x4F5C;</p>
+</li>
+</ul>
+<h5 id="&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;">&#x4E3B;&#x8981;&#x7F3A;&#x70B9;&#xFF1A;</h5>
+<ul>
+<li>&#x7D22;&#x5F15;&#x8868;&#x5360;&#x7528;&#x4E86;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;</li>
+</ul>
+<hr>
+<h3 id="&#x76EE;&#x5F55;&#xFF0C;&#x8D85;&#x7EA7;&#x5757;">&#x76EE;&#x5F55;&#xFF0C;&#x8D85;&#x7EA7;&#x5757;</h3>
+<p>linux inode&#x7ED3;&#x6784;&#xFF1F;</p>
+<p>&#x76EE;&#x5F55;&#x4E5F;&#x662F;&#x6587;&#x4EF6;&#xFF0C;&#x4E5F;&#x6709;inode&#xFF1B; &#x76EE;&#x5F55;&#x662F;&#x5305;&#x542B;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x76EE;&#x5F55;&#x8BB0;&#x5F55;&#x4E86;&#x5176;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;==&#x300B;&#x76EE;&#x5F55;&#x9879;</p>
+<p>&#x7C7B;&#x4F3C;&#x6811;&#x7ED3;&#x6784;&#xFF0C;&#x6700;&#x5F00;&#x59CB;&#x7684;&#x76EE;&#x5F55;&#x662F; &#x5206;&#x533A;&#x7684;&#x201C;&#x6839;&#x76EE;&#x5F55; /&#x201D;</p>
+<p>&#x4F8B;&#xFF1A;</p>
+<p><img src="imgs/dir_1.jpg" alt=""></p>
+<p>&#x6709;&#x4E86;&#x76EE;&#x5F55;&#x9879;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x540D;&#x627E;&#x6587;&#x4EF6;&#x5B9E;&#x4F53;&#x6570;&#x636E;&#x5757;&#x7684;&#x6D41;&#x7A0B;</p>
+<ul>
+<li>1 &#x5728;&#x76EE;&#x5F55;&#x4E2D;&#x627E;&#x5230;&#x6587;&#x4EF6;&#x540D;&#x6240;&#x5728;&#x7684;&#x76EE;&#x5F55;&#x9879; &#x3002;</li>
+<li>2 &#x4ECE;&#x76EE;&#x5F55;&#x9879;&#x4E2D;&#x83B7;&#x53D6; inode &#x7F16;&#x53F7; &#x3002;</li>
+<li>3 &#x7528; inode &#x7F16;&#x53F7;&#x4F5C;&#x4E3A; inode &#x6570;&#x7EC4;&#x7684;&#x7D22;&#x5F15;&#x4E0B;&#x6807;&#xFF0C;&#x627E;&#x5230; inode</li>
+<li>4 &#x4ECE;&#x8BE5; inode &#x4E2D;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5757;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x5757; &#x3002;</li>
+</ul>
+<h4 id="&#x8D85;&#x7EA7;&#x5757;&#x662F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x5143;&#x4FE1;&#x606F;">&#x8D85;&#x7EA7;&#x5757;&#x662F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x5143;&#x4FE1;&#x606F;</h4>
+<p>&#x8D85;&#x7EA7;&#x5757;&#x662F;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x201C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x201D;&#xFF0C;&#x5B83;&#x662F;&#x5728;&#x4E3A;&#x5206;&#x533A;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x65F6;&#x521B;&#x5EFA;&#x7684;&#xFF0C;&#x6240;&#x6709;&#x6709;&#x5173;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x914D;&#x7F6E;&#x90FD;&#x5728;&#x8D85;&#x7EA7;&#x5757;&#x4E2D;&#xFF0C;&#x56E0;&#x6B64;&#x8D85;&#x7EA7;&#x5757;&#x7684;&#x4F4D;&#x7F6E;&#x548C;&#x5927;&#x5C0F;&#x4E0D;&#x80FD;&#x518D;&#x88AB;&#x201C;&#x914D;&#x7F6E;&#x201D;&#x4E86;&#xFF0C;&#x5FC5;&#x987B;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x5B83;&#x88AB;&#x56FA;&#x5B9A;&#x5B58;&#x50A8;&#x5728;&#x5404;&#x5206;&#x533A;&#x7684;&#x7B2C; 2 &#x4E2A;&#x6247;&#x533A;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x5360;&#x7528;&#x4E00;&#x4E2A;&#x6247;&#x533A;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5177;&#x4F53;&#x5927;&#x5C0F;&#x4E0E;&#x5B9E;&#x9645;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7C7B;&#x578B;&#x4E3A;&#x51C6;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x4E00;&#x4E2A; &#x5E38;&#x89C1;&#x7684;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5E03;&#x5C40;</p>
+<p><img src="imgs/filesystem.jpg" alt=""></p>
+<p><img src="imgs/super_block.jpg" alt=""></p>
+<p>&#x9B54;&#x6570;&#x7528;&#x6765;&#x786E;&#x5B9A;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x7C7B;&#x578B;&#x7684;&#x6807;&#x5FD7;&#xFF0C;&#x7528;&#x5B83;&#x6765;&#x533A;&#x522B;&#x4E8E;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x3002;</p>
+<p><strong>&#x6839;&#x76EE;&#x5F55;&#x548C;&#x7A7A;&#x95F2;&#x5757;&#x533A;&#x57DF;</strong>&#x662F;&#x771F;&#x6B63;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x7684;&#x533A;&#x57DF;&#xFF0C;&#x9664;&#x4E86;&#x8FD9;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x5176;&#x4ED6;&#x51E0;&#x4E2A;&#x90E8;&#x5206;&#x5360;&#x7528;&#x7684;&#x6247;&#x533A;&#x6570;&#x53D6;&#x51B3;&#x4E8E;&#x5206;&#x533A;&#x7684;&#x5BB9;&#x91CF;&#x5927;&#x5C0F;&#xFF0C;&#x6216;&#x8005;&#x662F;&#x5728;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x624B;&#x52A8;&#x8BBE;&#x7F6E; &#x3002;</p>
+<p><img src="imgs/inode_dir.jpg" alt=""></p>
+<hr>
+<h3 id="&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;">&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</h3>
+<p>&#x4ECD;&#x7136;&#x662F;&#x7528;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x62BD;&#x8C61; &#x8D85;&#x7EA7;&#x5757;&#xFF0C;inode,&#x76EE;&#x5F55;&#x9879;&#x7B49;</p>
+<p>&#x6570;&#x636E;&#x5757;&#x5927;&#x5C0F;&#x53EF;&#x4EE5;&#x8BBE;&#x5B9A;&#x4E3A;1&#x4E2A;&#x6247;&#x533A;</p>
+<pre class="language-"><code>/* &#x8D85;&#x7EA7;&#x5757; */
+struct super_block {
+   uint32_t magic;            // &#x7528;&#x6765;&#x6807;&#x8BC6;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7C7B;&#x578B;,&#x652F;&#x6301;&#x591A;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x901A;&#x8FC7;&#x6B64;&#x6807;&#x5FD7;&#x6765;&#x8BC6;&#x522B;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7C7B;&#x578B;
+   uint32_t sec_cnt;            // &#x672C;&#x5206;&#x533A;&#x603B;&#x5171;&#x7684;&#x6247;&#x533A;&#x6570;
+   uint32_t inode_cnt;            // &#x672C;&#x5206;&#x533A;&#x4E2D;inode&#x6570;&#x91CF;
+   uint32_t part_lba_base;        // &#x672C;&#x5206;&#x533A;&#x7684;&#x8D77;&#x59CB;lba&#x5730;&#x5740;
+
+   uint32_t block_bitmap_lba;        // &#x5757;&#x4F4D;&#x56FE;&#x672C;&#x8EAB;&#x8D77;&#x59CB;&#x6247;&#x533A;&#x5730;&#x5740;
+   uint32_t block_bitmap_sects;     // &#x6247;&#x533A;&#x4F4D;&#x56FE;&#x672C;&#x8EAB;&#x5360;&#x7528;&#x7684;&#x6247;&#x533A;&#x6570;&#x91CF;
+
+   uint32_t inode_bitmap_lba;        // i&#x7ED3;&#x70B9;&#x4F4D;&#x56FE;&#x8D77;&#x59CB;&#x6247;&#x533A;lba&#x5730;&#x5740;
+   uint32_t inode_bitmap_sects;        // i&#x7ED3;&#x70B9;&#x4F4D;&#x56FE;&#x5360;&#x7528;&#x7684;&#x6247;&#x533A;&#x6570;&#x91CF;
+
+   uint32_t inode_table_lba;        // i&#x7ED3;&#x70B9;&#x8868;&#x8D77;&#x59CB;&#x6247;&#x533A;lba&#x5730;&#x5740;
+   uint32_t inode_table_sects;        // i&#x7ED3;&#x70B9;&#x8868;&#x5360;&#x7528;&#x7684;&#x6247;&#x533A;&#x6570;&#x91CF;
+
+   uint32_t data_start_lba;        // &#x6570;&#x636E;&#x533A;&#x5F00;&#x59CB;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x6247;&#x533A;&#x53F7;
+   uint32_t root_inode_no;        // &#x6839;&#x76EE;&#x5F55;&#x6240;&#x5728;&#x7684;I&#x7ED3;&#x70B9;&#x53F7;
+   uint32_t dir_entry_size;        // &#x76EE;&#x5F55;&#x9879;&#x5927;&#x5C0F;
+
+   uint8_t  pad[460];            // &#x52A0;&#x4E0A;460&#x5B57;&#x8282;,&#x51D1;&#x591F;512&#x5B57;&#x8282;1&#x6247;&#x533A;&#x5927;&#x5C0F;
+} __attribute__ ((packed));
+</code></pre><pre class="language-"><code>/* inode&#x7ED3;&#x6784; */
+struct inode {
+   uint32_t i_no;    // inode&#x7F16;&#x53F7;
+
+/* &#x5F53;&#x6B64;inode&#x662F;&#x6587;&#x4EF6;&#x65F6;,i_size&#x662F;&#x6307;&#x6587;&#x4EF6;&#x5927;&#x5C0F;,
+&#x82E5;&#x6B64;inode&#x662F;&#x76EE;&#x5F55;,i_size&#x662F;&#x6307;&#x8BE5;&#x76EE;&#x5F55;&#x4E0B;&#x6240;&#x6709;&#x76EE;&#x5F55;&#x9879;&#x5927;&#x5C0F;&#x4E4B;&#x548C;*/
+   uint32_t i_size;
+
+   uint32_t i_open_cnts;   // &#x8BB0;&#x5F55;&#x6B64;&#x6587;&#x4EF6;&#x88AB;&#x6253;&#x5F00;&#x7684;&#x6B21;&#x6570;
+   bool write_deny;       // &#x5199;&#x6587;&#x4EF6;&#x4E0D;&#x80FD;&#x5E76;&#x884C;,&#x8FDB;&#x7A0B;&#x5199;&#x6587;&#x4EF6;&#x524D;&#x68C0;&#x67E5;&#x6B64;&#x6807;&#x8BC6;
+
+/* i_sectors[0-11]&#x662F;&#x76F4;&#x63A5;&#x5757;, i_sectors[12]&#x7528;&#x6765;&#x5B58;&#x50A8;&#x4E00;&#x7EA7;&#x95F4;&#x63A5;&#x5757;&#x6307;&#x9488; */
+   uint32_t i_sectors[13];
+   struct list_elem inode_tag;
+};
+</code></pre><pre class="language-"><code>#define MAX_FILE_NAME_LEN  16     // &#x6700;&#x5927;&#x6587;&#x4EF6;&#x540D;&#x957F;&#x5EA6;
+
+/* &#x76EE;&#x5F55;&#x7ED3;&#x6784; */
+struct dir {
+   struct inode* inode;   
+   uint32_t dir_pos;      // &#x8BB0;&#x5F55;&#x5728;&#x76EE;&#x5F55;&#x5185;&#x7684;&#x504F;&#x79FB;
+   uint8_t dir_buf[512];  // &#x76EE;&#x5F55;&#x7684;&#x6570;&#x636E;&#x7F13;&#x5B58;
+};
+
+/* &#x76EE;&#x5F55;&#x9879;&#x7ED3;&#x6784; */
+struct dir_entry {
+   char filename[MAX_FILE_NAME_LEN];  // &#x666E;&#x901A;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x540D;&#x79F0;
+   uint32_t i_no;              // &#x666E;&#x901A;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x5BF9;&#x5E94;&#x7684;inode&#x7F16;&#x53F7;
+   enum file_types f_type;          // &#x6587;&#x4EF6;&#x7C7B;&#x578B;
+};
+</code></pre><p>&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x6240;&#x9700;&#x8981;&#x7684;&#x5143;&#x4FE1;&#x606F;&#xFF0C;&#x8FD9;&#x5305;&#x62EC;&#x8D85;&#x7EA7;&#x5757;&#x4F4D;&#x7F6E;&#x53CA;&#x5927;&#x5C0F;&#x3001; &#x7A7A;&#x95F2;&#x5757;&#x4F4D;&#x56FE;&#x7684;&#x4F4D;&#x7F6E;&#x53CA;&#x5927;&#x5C0F; &#x3001;inode &#x4F4D;&#x56FE;&#x7684;&#x4F4D;&#x7F6E;&#x53CA;&#x5927;&#x5C0F; &#x3001; inode &#x6570;&#x7EC4;&#x7684;&#x4F4D;&#x7F6E;&#x53CA;&#x5927;&#x5C0F;&#x3001; &#x7A7A;&#x95F2;&#x5757;&#x8D77;&#x59CB;&#x5730;&#x5740;&#x3001; &#x6839;&#x76EE;&#x5F55;&#x8D77;&#x59CB;&#x5730;&#x5740; &#x3002;&#x521B;&#x5EFA;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li><p>1 &#x6839;&#x636E;&#x5206;&#x533A; part &#x5927;&#x5C0F;&#xFF0C; &#x8BA1;&#x7B97;&#x5206;&#x533A;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5404;&#x5143;&#x4FE1;&#x606F;&#x9700;&#x8981;&#x7684;&#x6247;&#x533A;&#x6570;&#x53CA;&#x4F4D;&#x7F6E; &#x3002;</p>
+</li>
+<li><p>2 &#x5728; &#x5185; &#x5B58;&#x4E2D; &#x521B;&#x5EFA;&#x8D85;&#x7EA7;&#x5757;&#xFF0C;&#x5C06;&#x4EE5;&#x4E0A;&#x6B65;&#x9AA4;&#x8BA1;&#x7B97;&#x7684;&#x5143;&#x4FE1;&#x606F;&#x5199;&#x5165;&#x8D85;&#x7EA7;&#x5757;&#x3002;</p>
+</li>
+<li><p>3 &#x5C06;&#x8D85;&#x7EA7;&#x5757;&#x5199;&#x5165;&#x78C1;&#x76D8;&#x3002;</p>
+</li>
+<li><p>4 &#x5C06;&#x5143;&#x4FE1;&#x606F;&#x5199;&#x5165;&#x78C1;&#x76D8;&#x4E0A;&#x5404;&#x81EA;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</p>
+</li>
+<li><p>5 &#x5C06;&#x6839;&#x76EE;&#x5F55;&#x5199;&#x5165;&#x78C1;&#x76D8;</p>
+</li>
+</ul>
+<hr>
+<p>&#x6302;&#x8F7D;&#x5206;&#x533A;</p>
+<p>&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x662F;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#xFF0C;&#x8DDF;&#x8E2A;&#x8D44;&#x6E90;&#x7684;&#x72B6;&#x6001;&#x662F;&#x901A;&#x8FC7;&#x4F4D;&#x56FE;&#x6765;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x5404;&#x79CD;&#x8D44;&#x6E90;&#x7684;&#x4F4D;&#x56FE;&#xFF0C;&#x4F4D;&#x56FE;&#x80AF;&#x5B9A;&#x662F;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x5148;&#x521B;&#x5EFA;&#x597D;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x5C06;&#x4F4D;&#x56FE;&#x6301;&#x4E45;&#x5316;&#x5230;&#x786C;&#x76D8;&#xFF0C;&#xFF02;&#x6301;&#x4E45;&#x5316;&#x201D;&#x662F;&#x6307;&#x628A;&#x6570;&#x636E;&#x5199;&#x5230;&#x53EF;&#x4EE5;&#x957F;&#x4E45;&#x4FDD;&#x5B58;&#x4FE1;&#x606F;&#x7684;&#x5B58;&#x50A8;&#x4ECB;&#x8D28;&#x4E0A;&#xFF0C;&#x6C38;&#x8FDC;&#x4FDD;&#x5B58;&#xFF0C;&#x6BD4;&#x5982;&#x78C1;&#x76D8;&#x5C31;&#x662F;&#x4E00;&#x79CD;&#x6301;&#x4E45;&#x5316;&#x5B58;&#x50A8;&#x4ECB;&#x8D28;&#x3002;</p>
+<p>&#x6302;&#x8F7D;&#x5206;&#x533A;&#x524D;&#x5185;&#x5B58;&#x4E2D;&#x53EF;&#x6CA1;&#x6709;&#x4F4D;&#x56FE;&#xFF0C;&#x8FD9;&#x5C31;&#x9700;&#x8981;&#x4E8B;&#x5148;&#x628A;&#x8FD9;&#x4E9B;&#x4F4D;&#x56FE;&#x63D0;&#x524D;&#x6301;&#x4E45;&#x5316;&#x5230;&#x78C1;&#x76D8;&#x4E0A;&#xFF0C;&#x6302;&#x8F7D;&#x5206;&#x533A;&#x65F6;&#x518D;&#x628A;&#x4F4D;&#x56FE;&#x4ECE;&#x786C;&#x76D8;&#x4E0A;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x3002;&#x7531;&#x4E8E;&#x5185;&#x5B58;&#x4E0D;&#x80FD;&#x957F;&#x4E45;&#x4FDD;&#x5B58;&#x6570;&#x636E;&#xFF0C;&#x65AD;&#x7535;&#x4E4B;&#x540E;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x4E00;&#x5207;&#x90FD;&#x4F1A;&#x7070;&#x98DE;&#x70DF;&#x706D;&#xFF0C;&#x6240;&#x4EE5;&#x5373;&#x4F7F;&#x662F;&#x5C06;&#x6765;&#x6302;&#x8F7D;&#x5206;&#x533A;&#x540E;&#xFF0C;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x4F4D;&#x56FE;&#x54EA;&#x6015;&#x53EA;&#x662F;&#x66F4;&#x6539;&#x4E86;&#x4E00;&#x4E2A;&#x4F4D;&#xFF0C;&#x90FD;&#x8981;&#x53CA;&#x65F6;&#x540C;&#x6B65;&#x6301;&#x4E45;&#x5316;&#x5230;&#x78C1;&#x76D8;&#x4E0A;&#x3002;</p>
+<pre class="language-"><code>/* &#x5728;&#x78C1;&#x76D8;&#x4E0A;&#x641C;&#x7D22;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;,&#x82E5;&#x6CA1;&#x6709;&#x5219;&#x683C;&#x5F0F;&#x5316;&#x5206;&#x533A;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; */
+void filesys_init() {
+   uint8_t channel_no = 0, dev_no, part_idx = 0;
+
+   /* sb_buf&#x7528;&#x6765;&#x5B58;&#x50A8;&#x4ECE;&#x786C;&#x76D8;&#x4E0A;&#x8BFB;&#x5165;&#x7684;&#x8D85;&#x7EA7;&#x5757; */
+   struct super_block* sb_buf = (struct super_block*)sys_malloc(SECTOR_SIZE);
+
+   if (sb_buf == NULL) {
+      PANIC(&quot;alloc memory failed!&quot;);
+   }
+   printk(&quot;searching filesystem......\n&quot;);
+   while (channel_no &lt; channel_cnt) {
+      dev_no = 0;
+      while(dev_no &lt; 2) {
+     if (dev_no == 0) {   // &#x8DE8;&#x8FC7;&#x4E3B;&#x76D8;
+        dev_no++;
+        continue;
+     }
+     struct disk* hd = &amp;channels[channel_no].devices[dev_no];
+     struct partition* part = hd-&gt;prim_parts;
+     while(part_idx &lt; 12) {   // 4&#x4E2A;&#x4E3B;&#x5206;&#x533A;+8&#x4E2A;&#x903B;&#x8F91;
+        if (part_idx == 4) {  // &#x5F00;&#x59CB;&#x5904;&#x7406;&#x903B;&#x8F91;&#x5206;&#x533A;
+           part = hd-&gt;logic_parts;
+        }
+
+     /* channels&#x6570;&#x7EC4;&#x662F;&#x5168;&#x5C40;&#x53D8;&#x91CF;,&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;0,disk&#x5C5E;&#x4E8E;&#x5176;&#x5D4C;&#x5957;&#x7ED3;&#x6784;,
+      * partition&#x53C8;&#x4E3A;disk&#x7684;&#x5D4C;&#x5957;&#x7ED3;&#x6784;,&#x56E0;&#x6B64;partition&#x4E2D;&#x7684;&#x6210;&#x5458;&#x9ED8;&#x8BA4;&#x4E5F;&#x4E3A;0.
+      * &#x82E5;partition&#x672A;&#x521D;&#x59CB;&#x5316;,&#x5219;partition&#x4E2D;&#x7684;&#x6210;&#x5458;&#x4ECD;&#x4E3A;0. 
+      * &#x4E0B;&#x9762;&#x5904;&#x7406;&#x5B58;&#x5728;&#x7684;&#x5206;&#x533A;. */
+        if (part-&gt;sec_cnt != 0) {  // &#x5982;&#x679C;&#x5206;&#x533A;&#x5B58;&#x5728;
+           memset(sb_buf, 0, SECTOR_SIZE);
+
+           /* &#x8BFB;&#x51FA;&#x5206;&#x533A;&#x7684;&#x8D85;&#x7EA7;&#x5757;,&#x6839;&#x636E;&#x9B54;&#x6570;&#x662F;&#x5426;&#x6B63;&#x786E;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5B58;&#x5728;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; */
+           ide_read(hd, part-&gt;start_lba + 1, sb_buf, 1);   
+
+           /* &#x53EA;&#x652F;&#x6301;&#x81EA;&#x5DF1;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;.&#x82E5;&#x78C1;&#x76D8;&#x4E0A;&#x5DF2;&#x7ECF;&#x6709;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5C31;&#x4E0D;&#x518D;&#x683C;&#x5F0F;&#x5316;&#x4E86; */
+           if (sb_buf-&gt;magic == 0x19590318) {
+          printk(&quot;%s has filesystem\n&quot;, part-&gt;name);
+           } else {              // &#x5176;&#x5B83;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E0D;&#x652F;&#x6301;,&#x4E00;&#x5F8B;&#x6309;&#x65E0;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5904;&#x7406;
+          printk(&quot;formatting %s`s partition %s......\n&quot;, hd-&gt;name, part-&gt;name);
+          partition_format(part);
+           }
+        }
+        part_idx++;
+        part++;    // &#x4E0B;&#x4E00;&#x5206;&#x533A;
+     }
+     dev_no++;    // &#x4E0B;&#x4E00;&#x78C1;&#x76D8;
+      }
+      channel_no++;    // &#x4E0B;&#x4E00;&#x901A;&#x9053;
+   }
+   sys_free(sb_buf);
+}
+</code></pre><p>&#x904D;&#x5386;&#x78C1;&#x76D8;&#xFF0C;&#x7136;&#x540E;&#x904D;&#x5386;&#x78C1;&#x76D8;&#x4E0A;&#x7684;&#x5206;&#x533A;&#xFF0C;&#x5224;&#x65AD;&#x5206;&#x533A;&#x662F;&#x5426;&#x6709;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF0C;&#x5426;&#x5219;&#x683C;&#x5F0F;&#x5316;&#x6210;&#x81EA;&#x5DF1;&#x8BBE;&#x5B9A;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x3002;</p>
+<hr>
+<p>&#x8FD0;&#x884C;&#x7A0B;&#x5E8F;</p>
+<p>&#x7B2C;&#x4E00;&#x6B21;&#x8FD0;&#x884C;&#x4F1A;&#x683C;&#x5F0F;&#x5316;&#x78C1;&#x76D8;&#xFF0C;&#x521B;&#x5EFA;&#x8D85;&#x7EA7;&#x5757;&#xFF0C;inode&#x7B49;</p>
+<p><img src="imgs/rs.jpg" alt=""></p>
+<p>&#x7B2C;&#x4E8C;&#x6B21;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x7531;&#x4E8E;&#x7B2C;&#x4E00;&#x6B21;&#x5206;&#x533A;&#x5DF2;&#x7ECF;&#x683C;&#x5F0F;&#x5316;&#x6709;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E86;&#xFF0C;&#x5219;&#x4F1A;&#x663E;&#x793A;&#x5206;&#x533A;&#x5DF2;&#x6709;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x4FE1;&#x606F;</p>
+<p><img src="imgs/rs2.jpg" alt=""> </p>
+<footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
+2020-08-02 09:19:57
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../17_hd_driver/" class="navigation navigation-prev " aria-label="Previous page: 17 硬件驱动">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../19_fd_inode_dir_file/" class="navigation navigation-next " aria-label="Next page: 19 inode,文件目录操作">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"18 硬盘到文件系统","level":"1.19","depth":1,"next":{"title":"19 inode,文件目录操作","level":"1.20","depth":1,"path":"content/19_fd_inode_dir_file/README.md","ref":"./content/19_fd_inode_dir_file/README.md","articles":[]},"previous":{"title":"17 硬件驱动","level":"1.18","depth":1,"path":"content/17_hd_driver/README.md","ref":"./content/17_hd_driver/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/18_filesystem/README.md","mtime":"2020-08-02T01:19:57.617Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

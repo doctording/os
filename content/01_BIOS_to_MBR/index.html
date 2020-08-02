@@ -1,0 +1,644 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程 · spring-note</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="doctording">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-codeblock-filename/block.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../02_mbr_hd/" />
+    
+    
+    <link rel="prev" href="../../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../02_mbr_hd/">
+            
+                <a href="../02_mbr_hd/">
+            
+                    
+                    2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../03_protected_mode/">
+            
+                <a href="../03_protected_mode/">
+            
+                    
+                    3 实模式到保护模式（GDT，gdtr, 选择子)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../04_page/">
+            
+                <a href="../04_page/">
+            
+                    
+                    4 分页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../05_efi/">
+            
+                <a href="../05_efi/">
+            
+                    
+                    5 ELF文件格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../06_kernel_start/">
+            
+                <a href="../06_kernel_start/">
+            
+                    
+                    6 内核编写
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../07_interrupt/">
+            
+                <a href="../07_interrupt/">
+            
+                    
+                    7 中断基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../08_assert/">
+            
+                <a href="../08_assert/">
+            
+                    
+                    8 内核Assert函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../09_memory_management/">
+            
+                <a href="../09_memory_management/">
+            
+                    
+                    9 内存管理，内存池，地址映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../10_process_thread/">
+            
+                <a href="../10_process_thread/">
+            
+                    
+                    10 内核实现线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../11_thread_schedule/">
+            
+                <a href="../11_thread_schedule/">
+            
+                    
+                    11 多线程调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../12_lock/">
+            
+                <a href="../12_lock/">
+            
+                    
+                    12 锁,信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../13_input/">
+            
+                <a href="../13_input/">
+            
+                    
+                    13 键盘输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../14_input_buffer/">
+            
+                <a href="../14_input_buffer/">
+            
+                    
+                    14 缓冲区
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../15_user_process/">
+            
+                <a href="../15_user_process/">
+            
+                    
+                    15 特权级，用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../16_system_call/">
+            
+                <a href="../16_system_call/">
+            
+                    
+                    16 系统调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../17_hd_driver/">
+            
+                <a href="../17_hd_driver/">
+            
+                    
+                    17 硬件驱动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="../18_filesystem/">
+            
+                <a href="../18_filesystem/">
+            
+                    
+                    18 硬盘到文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="../19_fd_inode_dir_file/">
+            
+                <a href="../19_fd_inode_dir_file/">
+            
+                    
+                    19 inode,文件目录操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="../20_shell/">
+            
+                <a href="../20_shell/">
+            
+                    
+                    20 shell简单实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#bios&#x5165;&#x95E8;">BIOS&#x5165;&#x95E8;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x7F16;&#x5199;&#x4E3B;&#x5F15;&#x5BFC;&#x7A0B;&#x5E8F;&#xFF0C;&#x8FD0;&#x884C;&#x6700;&#x57FA;&#x7840;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF0C;&#x76F4;&#x63A5;&#x5B9E;&#x8DF5;">&#x7F16;&#x5199;&#x4E3B;&#x5F15;&#x5BFC;&#x7A0B;&#x5E8F;&#xFF0C;&#x8FD0;&#x884C;&#x6700;&#x57FA;&#x7840;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF0C;&#x76F4;&#x63A5;&#x5B9E;&#x8DF5;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#mbrs&#x6587;&#x4EF6;&#x7F16;&#x5199;&#xFF0C;&#x7F16;&#x8BD1;&#x548C;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x521B;&#x5EFA;">mbr.S&#x6587;&#x4EF6;&#x7F16;&#x5199;&#xFF0C;&#x7F16;&#x8BD1;&#x548C;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x521B;&#x5EFA;</a><i></i></div></li>
+<li><div><a href="#windows&#x4E0B;&#x5728;vmware&#x865A;&#x62DF;&#x673A;&#x4E0A;&#x8FD0;&#x884C;os">windows&#x4E0B;&#x5728;VMware&#x865A;&#x62DF;&#x673A;&#x4E0A;&#x8FD0;&#x884C;OS</a><i></i></div></li>
+<li><div><a href="#&#x77E5;&#x8BC6;&#x95EE;&#x9898;&#x603B;&#x7ED3;">&#x77E5;&#x8BC6;&#x95EE;&#x9898;&#x603B;&#x7ED3;</a><i></i></div></li>
+<li><div><a href="#&#x53C2;&#x8003;">&#x53C2;&#x8003;</a><i></i></div></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<h1 id="bios&#x5165;&#x95E8;">BIOS&#x5165;&#x95E8;</h1>
+<h2 id="&#x7F16;&#x5199;&#x4E3B;&#x5F15;&#x5BFC;&#x7A0B;&#x5E8F;&#xFF0C;&#x8FD0;&#x884C;&#x6700;&#x57FA;&#x7840;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF0C;&#x76F4;&#x63A5;&#x5B9E;&#x8DF5;">&#x7F16;&#x5199;&#x4E3B;&#x5F15;&#x5BFC;&#x7A0B;&#x5E8F;&#xFF0C;&#x8FD0;&#x884C;&#x6700;&#x57FA;&#x7840;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF0C;&#x76F4;&#x63A5;&#x5B9E;&#x8DF5;</h2>
+<h3 id="mbrs&#x6587;&#x4EF6;&#x7F16;&#x5199;&#xFF0C;&#x7F16;&#x8BD1;&#x548C;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x521B;&#x5EFA;">mbr.S&#x6587;&#x4EF6;&#x7F16;&#x5199;&#xFF0C;&#x7F16;&#x8BD1;&#x548C;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x521B;&#x5EFA;</h3>
+<p>Linux&#x786E;&#x4FDD;&#x53EF;&#x4EE5;&#x6C47;&#x7F16;&#xFF08;&#x5B89;&#x88C5;nasm&#xFF09;&#xFF0C;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x76EE;&#x5F55;&#xFF0C;&#x5305;&#x542B;mbr.S&#x548C;Makefile
+&#x4EE3;&#x7801;&#x89C1;code/&#x6587;&#x4EF6;&#x5939;</p>
+<pre class="language-"><code class="lang-java">$make build
+$make image
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x955C;&#x50CF;&#x6587;&#x4EF6;(&#x6CE8;&#x610F;&#x89C2;&#x5BDF;&#x6587;&#x4EF6;&#x5927;&#x5C0F;)</p>
+<p><img src="imgs/mk_01.jpg" alt=""></p>
+<p><img src="imgs/mk_02.jpg" alt=""></p>
+<p>&#x67E5;&#x770B;&#x955C;&#x50CF;&#x6587;&#x4EF6;&#x5185;&#x5BB9;</p>
+<p><img src="imgs/xxd.jpg" alt=""></p>
+<h3 id="windows&#x4E0B;&#x5728;vmware&#x865A;&#x62DF;&#x673A;&#x4E0A;&#x8FD0;&#x884C;os">windows&#x4E0B;&#x5728;VMware&#x865A;&#x62DF;&#x673A;&#x4E0A;&#x8FD0;&#x884C;OS</h3>
+<p>&#x9700;&#x8981;&#x4F7F;&#x7528;&#x8F6F;&#x76D8;
+<img src="imgs/vm_01.jpg" alt=""></p>
+<p><img src="imgs/vm_02.jpg" alt=""></p>
+<p><img src="imgs/vm_03.jpg" alt=""></p>
+<p>&#x8FD0;&#x884C;&#x56FE;</p>
+<p><img src="imgs/vm_04.jpg" alt=""></p>
+<h3 id="&#x77E5;&#x8BC6;&#x95EE;&#x9898;&#x603B;&#x7ED3;">&#x77E5;&#x8BC6;&#x95EE;&#x9898;&#x603B;&#x7ED3;</h3>
+<ul>
+<li>&#x57FA;&#x7840;&#x77E5;&#x8BC6;</li>
+</ul>
+<p>&#x6C47;&#x7F16;&#x57FA;&#x7840;</p>
+<p>8086 16&#x4F4D;CPU&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x5730;&#x5740;&#x603B;&#x7EBF;&#xFF08;20&#x6839;&#xFF09;</p>
+<p>&#x5B9E;&#x6A21;&#x5F0F;&#x5185;&#x5B58;&#x5730;&#x5740;&#x8BBF;&#x95EE;&#xFF08;&#x6BB5;&#x5730;&#x5740;&#xFF1A;&#x504F;&#x79FB;&#xFF09;</p>
+<ul>
+<li>&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;1MB&#x5185;&#x5B58;&#x5E03;&#x5C40;</li>
+</ul>
+<p><a href="http://book.51cto.com/art/201604/509566.htm" target="_blank">http://book.51cto.com/art/201604/509566.htm</a></p>
+<p><img src="imgs/mbr_1.jpg" alt=""></p>
+<p><img src="imgs/mbr_2.jpg" alt=""></p>
+<ul>
+<li><p>&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x7684;&#x7406;&#x89E3;</p>
+<ol>
+<li><p>&#x7A0B;&#x5E8F;&#x88AB;&#x52A0;&#x8F7D;&#x5668;&#xFF08;&#x8F6F;&#x4EF6;&#x6216;&#x786C;&#x4EF6;&#xFF09;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x7684;&#x67D0;&#x4E2A;&#x533A;&#x57DF;</p>
+</li>
+<li><p>CPU&#x7684;cs:ip&#x5BC4;&#x5B58;&#x5668;&#x88AB;&#x6307;&#x5411;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;</p>
+</li>
+</ol>
+</li>
+<li><p>&#x5185;&#x5B58;&#x548C;&#x603B;&#x7EBF;</p>
+<ol>
+<li><p>DRAM&#x662F;&#x63D2;&#x5728;&#x4E3B;&#x677F;&#x4E0A;&#x7684;&#x5185;&#x5B58;&#x6761;&#xFF0C;&#x8FD9;&#x79CD;&#x52A8;&#x6001;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x5185;&#x5B58;&#x9700;&#x8981;&#x5B9A;&#x671F;&#x5237;&#x65B0;&#xFF0C;&#x5176;&#x7535;&#x5BB9;&#x5C0F;&#xFF0C;&#x6613;&#x6F0F;&#x7535;&#xFF0C;&#x9700;&#x8981;&#x8865;&#x7535;&#xFF0C;&#x5373;&#x6570;&#x636E;&#x662F;&#x53EF;&#x64E6;&#x9664;&#x7684;&#xFF1B;</p>
+</li>
+<li><p>&#x63D2;&#x5728;&#x4E3B;&#x677F;&#x4E0A;&#x7684;&#x5185;&#x5B58;&#x6761;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x5730;&#x5740;&#x603B;&#x7EBF;&#x8BBF;&#x95EE;&#xFF08;&#x5730;&#x5740;&#x603B;&#x7EBF;&#x6761;&#x6570;&#xFF0C;&#x51B3;&#x5B9A;&#x4E86;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x5927;&#x5C0F;&#xFF09;</p>
+</li>
+<li><p>CPU&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x5730;&#x5740;&#xFF0C;&#x662F;&#x603B;&#x7EBF;&#x6765;&#x505A;&#x6620;&#x5C04;&#x7684;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x7ED9;&#x5730;&#x5740;&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x5355;&#x5143;&#xFF0C;&#x8FD9;&#x4E2A;&#x5B58;&#x50A8;&#x5355;&#x5143;&#x4F1A;&#x843D;&#x5728;&#x67D0;&#x4E2A;rom&#x4E2D;&#xFF0C;&#x67D0;&#x4E2A;&#x5916;&#x8BBE;&#x7684;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6761;&#x4E0A;&#x3002;</p>
+</li>
+</ol>
+</li>
+<li><p>BIOS&#x52A0;&#x8F7D;</p>
+<ol>
+<li><p>BIOS&#x662F;&#x4E00;&#x4E2A;&#x8F6F;&#x4EF6;&#xFF0C;&#x7531;&#x4E00;&#x4E2A;&#x786C;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x8FD9;&#x4E2A;&#x786C;&#x4EF6;&#x662F;&#x4E00;&#x4E2A;&#x53EA;&#x8BFB;&#x5B58;&#x50A8;&#x5668;ROM(&#x53EA;&#x8BFB;&#x5B58;&#x50A8;&#x5668;&#x662F;&#x4E0D;&#x53EF;&#x64E6;&#x9664;&#x7684;&#xFF0C;&#x6570;&#x636E;&#x88AB;&#x5199;&#x5165;&#x540E;&#xFF0C;&#x6389;&#x7535;&#x4E5F;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#x6570;&#x636E;)</p>
+</li>
+<li><p>&#x673A;&#x5668;&#x52A0;&#x7535;&#x65F6;&#xFF0C;&#x5BF9;CPU&#x7684;&#x6307;&#x4EE4;&#x7684;&#x89E3;&#x7801;&#x4E0D;&#x662F;&#x5317;&#x6865;&#xFF0C;CPU&#x53D1;&#x51FA;&#x7684;&#x5730;&#x5740;&#x88AB;&#x4F20;&#x9012;&#x5230;&#x5357;&#x6865;&#x5E76;&#x7531;FHW(Firmware Hub)&#x89E3;&#x7801;&#x5230;BIOS ROM&#x82AF;&#x7247;(Flash)&#x3002;&#x5728;&#x52A0;&#x7535;&#x65F6;&#x4E00;&#x76F4;&#x5230;&#x5F15;&#x5BFC;&#x8FDB;&#x7A0B;&#x521D;&#xFF0C;BIOS&#x7684;E&#x6BB5;(0xE0000~0xEFFFF)&#x548C;F&#x6BB5;(0xF0000~0xFFFFF)&#x548C;4G&#x5185;&#x5B58;&#x9876;&#x7AEF;&#x7684;&#x5BF9;&#x5E94;0xFFFE0000~0xFFFEFFFF&#x548C;0xFFFF0000~0xFFFFFFFF&#x90FD;&#x88AB;FWH&#x89E3;&#x7801;&#x5230;BIOS&#x7684;ROM&#x82AF;&#x7247;&#x7684;&#x4E24;&#x4E2A;64&#x533A;&#x57DF;&#x3002;&#x5373;&#x5728;&#x542F;&#x52A8;&#x9636;&#x6BB5;&#x8BBF;&#x95EE;0xE0000~0xEFFFF&#x548C;0xFFFE0000~0xFFFEFFFF&#x662F;&#x540C;&#x4E00;&#x4E2A;BIOS&#x533A;&#x57DF;&#xFF0C;&#x8BBF;&#x95EE;0xF0000~0xFFFFF&#x548C;0xFFFF0000~0xFFFFFFFF&#x662F;&#x540C;&#x4E00;&#x4E2A;BIOS&#x533A;&#x57DF;&#x3002;</p>
+</li>
+<li><p>&#x673A;&#x5668;&#x52A0;&#x7535;&#x65F6;&#xFF0C;&#x8FDB;&#x5165;&#x7684;&#x5B9E;&#x6A21;&#x5F0F;&#xFF0C;CPU&#x8BBF;&#x95EE;CS*16+EIP&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#xFF0C;CS&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x503C;&#x4E3A;0xF000,EIP&#x503C;&#x4E3A;0x0000FFF0&#xFF0C;&#x6240;&#x4EE5;&#x673A;&#x5668;&#x542F;&#x52A8;&#x65F6;CPU&#x5C06;&#x8BBF;&#x95EE;0xFFFF0(&#x8BE5;&#x5730;&#x5740;&#x4E3A;BIOS&#x5165;&#x53E3;&#x5730;&#x5740;)&#xFF0C;&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;1M&#x5730;&#x5740;&#x4E2D;&#x7684;0xF0000-0xFFFFF&#x8FD9;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x5C31;&#x662F;ROM,&#x5176;&#x5B58;&#x50A8;&#x7684;&#x5C31;&#x662F;BIOS&#x4EE3;&#x7801;&#xFF08;16&#x5B57;&#x8282;&#x5927;&#x5C0F;&#xFF1A;JMP F000:E05B&#xFF09;&#xFF0C;&#x63A5;&#x7740;CPU&#x6267;&#x884C;&#x5730;&#x5740;&#x4E3A;0xFE05B&#x4E2D;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x800C;&#x7CFB;&#x7EDF; BIOS &#x8303;&#x56F4;&#x662F; F0000&#xFF5E;FFFFF&#x5171;640KB&#xFF0C;&#x6B64;&#x5C5E;&#x4E8E;BIOS&#x4EE3;&#x7801;&#xFF0C;&#x4E3A;BIOS&#x7A0B;&#x5E8F;&#x7684;&#x771F;&#x6B63;&#x5185;&#x5BB9;&#x3002;</p>
+</li>
+<li><p>BIOS&#x672C;&#x8EAB;&#x662F;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF0C;&#x5176;&#x6240;&#x4F5C;&#x7684;&#x5DE5;&#x4F5C;&#x4E00;&#x822C;&#x4E5F;&#x662F;&#x4E0D;&#x53D8;&#x7684;&#xFF0C;&#x4E00;&#x822C;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x3002;&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x662F;&#x68C0;&#x6D4B;&#x3001;&#x521D;&#x59CB;&#x5316;&#x786C;&#x4EF6;&#xFF0C;&#x600E;&#x4E48;&#x521D;&#x59CB;&#x5316;&#x7684;&#xFF1F;&#x786C;&#x4EF6;&#x81EA;&#x5DF1;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x521D;&#x59CB;&#x5316;&#x7684;&#x529F;&#x80FD;&#x8C03;&#x7528;&#xFF0C; BIOS &#x76F4;&#x63A5;&#x8C03;&#x7528;&#x5C31;&#x597D;&#x4E86;&#x3002; BIOS &#x8FD8;&#x505A;&#x4E86;&#x4E00;&#x4EF6;&#x4F1F;&#x5927;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x5EFA;&#x7ACB;&#x4E86;&#x4E2D;&#x65AD;&#x5411;&#x91CF;&#x8868;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x201C;&#x4E2D;&#x65AD;&#x53F7;&#x201D;&#x6765;&#x5B9E;&#x73B0;&#x76F8;&#x5173;&#x7684;&#x786C;&#x4EF6;&#x8C03;&#x7528;&#xFF0C;&#x5F53;&#x7136; BIOS &#x5EFA;&#x7ACB;&#x7684;&#x8FD9;&#x4E9B;&#x529F;&#x80FD;&#x5C31;&#x662F;&#x5BF9;&#x786C;&#x4EF6;&#x7684;I/O&#x64CD;&#x4F5C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#xFF0C;&#x4F46;&#x7531;&#x4E8E;&#x5C31; 64KB&#x5927;&#x5C0F;&#x7684;&#x7A7A;&#x95F4;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x628A;&#x6240;&#x6709;&#x786C;&#x4EF6;&#x7684;I/O&#x64CD;&#x4F5C;&#x5B9E;&#x73B0;&#x5F97;&#x9762;&#x9762;&#x4FF1;&#x5230;&#xFF0C;&#x800C;&#x4E14;&#x4E5F;&#x914D;&#x5FC5;&#x8981;&#x5B9E;&#x73B0;&#x90A3;&#x4E48;&#x591A;&#xFF0C;&#x6BD5;&#x7ADF;&#x662F;&#x5728;&#x5B9E;&#x6A21;&#x5F0F;&#x4E4B;&#x4E0B;&#xFF0C;&#x5BF9;&#x786C;&#x4EF6;&#x652F;&#x6301;&#x5F97;&#x518D;&#x4E30;&#x5BCC;&#x4E5F;&#x81EA;&#x642D;&#xFF0C;&#x7CBE;&#x5F69;&#x7684;&#x4E16;&#x754C;&#x662F;&#x5728;&#x8FDB;&#x5165;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4EE5;&#x540E;&#x624D;&#x5F00;&#x59CB;&#xFF0C;&#x6240;&#x4EE5;&#x6311;&#x4E00;&#x4E9B;&#x91CD;&#x8981;&#x7684;&#x3001;&#x4FDD;&#x8BC1;&#x8BA1;&#x7B97;&#x673A;&#x80FD;&#x8FD0;&#x884C;&#x7684;&#x90A3;&#x4E9B;&#x786C;&#x4EF6;&#x7684;&#x57FA;&#x672C;I/O&#x64CD;&#x4F5C;&#xFF0C;&#x5C31;&#x884C;&#x4E86;&#x3002;&#x8FD9;&#x5C31;&#x662F; BIOS &#x79F0;&#x4E3A;&#x57FA;&#x672C;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x7CFB;&#x7EDF;&#x7684;&#x539F;&#x56E0; &#x3002;</p>
+</li>
+<li><p>BIOS&#x6267;&#x884C;&#x5B8C;&#x540E;&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x9879;&#x5DE5;&#x4F5C;&#x6821;&#x9A8C;&#x542F;&#x52A8;&#x76D8;&#x4E2D;&#x4F4D;&#x4E8E;0&#x76D8;0&#x9053;1&#x6247;&#x533A;&#x7684;&#x5185;&#x5BB9;&#xFF08;&#x5373;&#x4E3A;MBR&#xFF09;</p>
+</li>
+</ol>
+</li>
+<li><p>MBR&#x7684;&#x52A0;&#x8F7D;</p>
+<ol>
+<li><p>MBR&#x5927;&#x5C0F;512&#x5B57;&#x8282;&#xFF0C;&#x6700;&#x540E;&#x6709;&#x4E24;&#x5B57;&#x8282;0x55&#xFF0C;0xaa&#xFF0C;&#x8FD9;&#x79F0;&#x4E3A;&#x9B54;&#x6570;</p>
+</li>
+<li><p>MBR&#x7A0B;&#x5E8F;&#x6BB5;&#x5165;&#x53E3;&#x5730;&#x5740;&#x4E3A;0x7c00&#xFF0C;&#xFF08;&#x7531;&#x4E8E;IBM&#x4E2A;&#x4EBA;PC&#x7B49;&#x5386;&#x53F2;&#x539F;&#x56E0;&#x8BBE;&#x7F6E;&#x7684;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x770B;&#x5230;SECTION MBR vstart=0x7c00 &#x7684;&#x8BBE;&#x7F6E;</p>
+</li>
+<li><p>&#x5C06;&#x786C;&#x76D8;&#x7684;0&#x76D8;0&#x9053;1&#x6247;&#x533A;&#x586B;&#x5145;MBR&#x7A0B;&#x5E8F;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x7136;&#x540E;&#x7ED9;&#x8BA1;&#x7B97;&#x673A;&#x914D;&#x7F6E;&#x6B64;&#x786C;&#x76D8;&#x4E3A;&#x542F;&#x52A8;&#x76D8;&#x3002;&#x8FD9;&#x6837;&#x8BA1;&#x7B97;&#x673A;&#x542F;&#x52A8;&#x65F6;&#xFF0C;&#x5C31;&#x80FD;&#x591F;&#x4ECE;BIOS&#x5230;MBR&#x4E86;</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
+<p>&#x56FE;&#x4E66; &#x300A;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x771F;&#x76F8;&#x8FD8;&#x539F;&#x300B;</p>
+<ul>
+<li>Linux&#x4E0B;dd&#x547D;&#x4EE4;&#x7684;&#x4F7F;&#x7528;</li>
+</ul>
+<p><a href="http://www.cnblogs.com/gotopower/articles/4378199.html" target="_blank">http://www.cnblogs.com/gotopower/articles/4378199.html</a></p>
+<ul>
+<li>&#x6C47;&#x7F16;--INT 10H&#x529F;&#x80FD;</li>
+</ul>
+<p><a href="http://www.cnblogs.com/magic-cube/archive/2011/10/19/2217676.html" target="_blank">http://www.cnblogs.com/magic-cube/archive/2011/10/19/2217676.html</a></p>
+<footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
+2020-08-02 09:57:12
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../../" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../02_mbr_hd/" class="navigation navigation-next " aria-label="Next page: 2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程","level":"1.2","depth":1,"next":{"title":"2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）","level":"1.3","depth":1,"path":"content/02_mbr_hd/README.md","ref":"./content/02_mbr_hd/README.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/01_BIOS_to_MBR/README.md","mtime":"2020-08-02T01:57:12.989Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

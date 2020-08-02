@@ -1,0 +1,755 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>11 多线程调度 · spring-note</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="doctording">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-codeblock-filename/block.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../12_lock/" />
+    
+    
+    <link rel="prev" href="../10_process_thread/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../01_BIOS_to_MBR/">
+            
+                <a href="../01_BIOS_to_MBR/">
+            
+                    
+                    1 最简单的OS,主要是实模式CPU下BIOS到MBR的过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../02_mbr_hd/">
+            
+                <a href="../02_mbr_hd/">
+            
+                    
+                    2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../03_protected_mode/">
+            
+                <a href="../03_protected_mode/">
+            
+                    
+                    3 实模式到保护模式（GDT，gdtr, 选择子)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../04_page/">
+            
+                <a href="../04_page/">
+            
+                    
+                    4 分页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../05_efi/">
+            
+                <a href="../05_efi/">
+            
+                    
+                    5 ELF文件格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../06_kernel_start/">
+            
+                <a href="../06_kernel_start/">
+            
+                    
+                    6 内核编写
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../07_interrupt/">
+            
+                <a href="../07_interrupt/">
+            
+                    
+                    7 中断基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../08_assert/">
+            
+                <a href="../08_assert/">
+            
+                    
+                    8 内核Assert函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../09_memory_management/">
+            
+                <a href="../09_memory_management/">
+            
+                    
+                    9 内存管理，内存池，地址映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../10_process_thread/">
+            
+                <a href="../10_process_thread/">
+            
+                    
+                    10 内核实现线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.12" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    11 多线程调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../12_lock/">
+            
+                <a href="../12_lock/">
+            
+                    
+                    12 锁,信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../13_input/">
+            
+                <a href="../13_input/">
+            
+                    
+                    13 键盘输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../14_input_buffer/">
+            
+                <a href="../14_input_buffer/">
+            
+                    
+                    14 缓冲区
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../15_user_process/">
+            
+                <a href="../15_user_process/">
+            
+                    
+                    15 特权级，用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../16_system_call/">
+            
+                <a href="../16_system_call/">
+            
+                    
+                    16 系统调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../17_hd_driver/">
+            
+                <a href="../17_hd_driver/">
+            
+                    
+                    17 硬件驱动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="../18_filesystem/">
+            
+                <a href="../18_filesystem/">
+            
+                    
+                    18 硬盘到文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="../19_fd_inode_dir_file/">
+            
+                <a href="../19_fd_inode_dir_file/">
+            
+                    
+                    19 inode,文件目录操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="../20_shell/">
+            
+                <a href="../20_shell/">
+            
+                    
+                    20 shell简单实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >11 多线程调度</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#&#x7EBF;&#x7A0B;&#x548C;&#x7EBF;&#x7A0B;&#x7BA1;&#x7406;&#x8BBE;&#x8BA1;">&#x7EBF;&#x7A0B;&#x548C;&#x7EBF;&#x7A0B;&#x7BA1;&#x7406;&#x8BBE;&#x8BA1;</a><i></i></div></li>
+<li><div><a href="#&#x7EBF;&#x7A0B;&#x8C03;&#x5EA6;">&#x7EBF;&#x7A0B;&#x8C03;&#x5EA6;</a><i></i></div></li>
+<li><div><a href="#&#x7EBF;&#x7A0B;&#xFF0C;pcb&#x7ED3;&#x6784;&#xFF0C;&#x51FD;&#x6570;">&#x7EBF;&#x7A0B;&#xFF0C;PCB&#x7ED3;&#x6784;&#xFF0C;&#x51FD;&#x6570;</a><i></i></div></li>
+<li><div><a href="#&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#xFF0C;&#x9A8C;&#x8BC1;">&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#xFF0C;&#x9A8C;&#x8BC1;</a><i></i></div></li>
+</ul>
+</div>
+
+
+<ul>
+<li>&#x4E2D;&#x65AD;</li>
+<li>&#x4E0A;&#x4E0B;&#x6587;&#x4FDD;&#x62A4;</li>
+<li>&#x8F6E;&#x8BE2;&#x6CD5;&#x5B9E;&#x73B0;&#x7EBF;&#x7A0B;&#x8C03;&#x5EA6;</li>
+</ul>
+<h3 id="&#x7EBF;&#x7A0B;&#x548C;&#x7EBF;&#x7A0B;&#x7BA1;&#x7406;&#x8BBE;&#x8BA1;">&#x7EBF;&#x7A0B;&#x548C;&#x7EBF;&#x7A0B;&#x7BA1;&#x7406;&#x8BBE;&#x8BA1;</h3>
+<p>&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E3B;&#x8981;&#x662F;&#x5B9E;&#x73B0;<strong>&#x53CC;&#x5411;&#x94FE;&#x8868;</strong>&#x3002;</p>
+<p>&#x591A;&#x7EBF;&#x7A0B;&#x7EF4;&#x6301;&#x4E86;&#x4E24;&#x4E2A;&#x94FE;&#x8868;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x5168;&#x90E8;&#x7EBF;&#x7A0B;&#x94FE;&#x8868;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x5C31;&#x7EEA;&#x7EBF;&#x7A0B;&#x94FE;&#x8868;&#x3002;</p>
+<p><img src="imgs/01.jpg" alt=""></p>
+<pre class="language-"><code>/* &#x8FDB;&#x7A0B;&#x6216;&#x7EBF;&#x7A0B;&#x7684;&#x72B6;&#x6001; */
+enum task_status {
+   TASK_RUNNING,
+   TASK_READY,
+   TASK_BLOCKED,
+   TASK_WAITING,
+   TASK_HANGING,
+   TASK_DIED
+};
+</code></pre><ul>
+<li><p>&#x5C31;&#x7EEA;&#x961F;&#x5217;&#x4E2D;&#x7684;&#x7EBF;&#x7A0B;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;&#x5904;&#x7406;&#x5668;&#x4E0A;&#x8FD0;&#x884C;&#xFF0C;&#x5F53;&#x7EBF;&#x7A0B;&#x5F97;&#x4E0D;&#x5230;CPU&#x6216;&#x8005;&#x88AB;&#x963B;&#x585E;&#x4E86;&#x5C31;&#x9700;&#x8981;&#x4ECE;&#x5C31;&#x7EEA;&#x961F;&#x5217;&#x4E2D;&#x79FB;&#x9664;&#x3002;</p>
+</li>
+<li><p>&#x7EBF;&#x7A0B;&#x88AB;&#x6362;&#x4E0B;: &#x65F6;&#x95F4;&#x7247;&#x5230;&#x4E86;&#xFF1B;&#x65F6;&#x95F4;&#x7247;&#x672A;&#x5230;&#xFF0C;&#x88AB;&#x963B;&#x585E;&#x4E86;&#xFF1B;</p>
+</li>
+<li><p>&#x8C03;&#x5EA6;&#x5668;&#x6309;&#x7167;&#x7EBF;&#x7A0B;&#x961F;&#x5217;&#x5148;&#x8FDB;&#x5148;&#x51FA;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x628A;&#x5C31;&#x7EEA;&#x961F;&#x5217;&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x4F5C;&#x4E3A;&#x4E0B;&#x4E00;&#x4E2A;&#x8981;&#x8FD0;&#x884C;&#x7684;&#x7EBF;&#x7A0B;&#x3002;</p>
+</li>
+</ul>
+<p>&#x91C7;&#x7528;ticks&#xFF08;&#x65F6;&#x95F4;&#x7247;&#xFF09;&#x548C;priority&#xFF08;&#x7EBF;&#x7A0B;&#x4F18;&#x5148;&#x7EA7;&#xFF09;&#x914D;&#x5408;&#x4F7F;&#x7528;&#xFF1B; &#x4F18;&#x5148;&#x7EA7;&#x8D8A;&#x9AD8;&#xFF0C;&#x90A3;&#x4E48;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x5C31;&#x8D8A;&#x957F;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x7684;ticks&#x51CF;&#x5C11;&#x4E3A;0&#x65F6;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x88AB;&#x6362;&#x4E0B;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x88AB;&#x91CD;&#x65B0;&#x8D4B;&#x4E88;priority,&#x4E0B;&#x6B21;&#x518D;&#x88AB;&#x8C03;&#x7528;&#x3002;</p>
+<h3 id="&#x7EBF;&#x7A0B;&#x8C03;&#x5EA6;">&#x7EBF;&#x7A0B;&#x8C03;&#x5EA6;</h3>
+<p>&#x8C03;&#x5EA6;&#x5668;schedule&#x5C31;&#x662F;&#x6839;&#x636E;&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x5C06;&#x5176;&#x4ECE;&#x5904;&#x7406;&#x5668;&#x4E0A;&#x6362;&#x4E0A;&#x6362;&#x4E0B;&#xFF0C;&#x6240;&#x4EE5;&#x4E3B;&#x8981;&#x4EFB;&#x52A1;&#x662F;&#x8BFB;&#x5199;&#x5C31;&#x7EEA;&#x5BF9;&#x5792;&#xFF0C;&#x589E;&#x5220;&#x91CC;&#x9762;&#x7684;&#x7ED3;&#x70B9;&#x3002;</p>
+<p>&#x7EBF;&#x7A0B;&#x5728;&#x5904;&#x7406;&#x5668;&#x4E0A;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x6709;ticks&#x51B3;&#x5B9A;&#xFF0C;&#x800C;&#x5728;&#x521D;&#x59CB;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x8D4B;&#x4E88;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x4F18;&#x5148;&#x7EA7;prioriy&#xFF0C;ticks&#x4E5F;&#x8D4B;&#x503C;&#x6210;&#x4E86;priority,&#x8FD9;&#x6837;&#x4F18;&#x5148;&#x7EA7;&#x8D8A;&#x9AD8;&#xFF0C;&#x7EBF;&#x7A0B;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x5C31;&#x8D8A;&#x957F;&#x3002;&#x7CFB;&#x7EDF;&#x4F1A;&#x6709;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x6BCF;&#x4E00;&#x6B21;&#x4E2D;&#x65AD;ticks&#x51CF;&#x5C11;1&#xFF0C;&#x5F53;ticks&#x51CF;&#x5C11;&#x81F3;0&#x662F;&#xFF0C;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x5C31;&#x8C03;&#x7528;&#x8C03;&#x5EA6;&#x5668;schedule,&#x628A;&#x8BE5;&#x7EBF;&#x7A0B;&#x6362;&#x4E0B;&#xFF0C;&#x9009;&#x62E9;&#x53E6;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x4E0A;CPU</p>
+<p>&#x5B8C;&#x6210;&#x6574;&#x4E2A;&#x8C03;&#x5EA6;&#x9700;&#x8981;&#x5982;&#x4E0B;&#x7684;3&#x90E8;&#x5206;&#xFF1A;</p>
+<ol>
+<li>&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x51FD;&#x6570;</li>
+<li>&#x8C03;&#x5EA6;&#x5668;shedule</li>
+<li>&#x4EFB;&#x52A1;&#x5207;&#x6362;&#x51FD;&#x6570;switch_to</li>
+</ol>
+<p>&#x51FD;&#x6570;&#x5207;&#x6362;&#x6D89;&#x53CA;&#x5230;&#x4EFB;&#x52A1;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x4FDD;&#x62A4;</p>
+<p><img src="imgs/02.jpg" alt=""></p>
+<p>&#x4E2D;&#x65AD;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x5F53;&#x524D;&#x8FD0;&#x884C;&#x7684;&#x4EFB;&#x52A1;&#xFF08;&#x7EBF;&#x7A0B;&#x6216;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x3009;&#x88AB;&#x6253;&#x65AD;&#xFF0C;&#x968F;&#x540E;&#x4F1A;&#x53BB;&#x6267;&#x884C;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#xFF0C;&#x4E0D;&#x7BA1;&#x5F53;&#x524D;&#x4EFB;&#x52A1;&#x5728;&#x4E2D;&#x65AD;&#x524D;&#x7684;&#x7279;&#x6743;&#x7EA7;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x6267;&#x884C;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x65F6;&#x80AF;&#x5B9A;&#x90FD;&#x662F; 0 &#x7279;&#x6743;&#x7EA7;&#x3002;&#x73B0;&#x5728;&#x54B1;&#x4EEC;&#x5DF2;&#x7ECF;&#x8FBE;&#x6210;&#x5171;&#x8BC6;&#xFF0C;&#x4EFB;&#x52A1;&#x7684;&#x4EE3;&#x7801;&#x5305;&#x62EC;&#x7528;&#x6237;&#x4EE3;&#x7801;&#xFF0B;&#x5185;&#x6838;&#x4EE3;&#x7801;&#xFF0C;&#x5373;&#x4F7F;&#x662F;&#x90E8;&#x5206;&#x7528;&#x6237;&#x4EE3;&#x7801;&#xFF0C;&#x56E0;&#x6B64;<strong>&#x8FDB;&#x5165;&#x4E2D;&#x65AD;&#x540E;&#x6240;&#x6267;&#x884C;&#x7684;&#x4E00;&#x5207;&#x5185;&#x6838;&#x4EE3;&#x7801;&#x4E5F;&#x4F9D;&#x7136;&#x5C5E;&#x4E8E;&#x5F53;&#x524D;&#x4EFB;&#x52A1;&#xFF0C;&#x53EA;&#x662F;&#x7531;&#x5185;&#x6838;&#x6765;&#x63D0;&#x4F9B;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x800C;&#x5DF1;</strong>&#x3002;</p>
+<ul>
+<li><p>&#x4E0A;&#x4E0B;&#x6587;&#x4FDD;&#x62A4;&#x7B2C;&#x4E00;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;&#x4FDD;&#x5B58;&#x4EFB;&#x52A1;&#x8FDB;&#x5165;&#x4E2D;&#x65AD;&#x524D;&#x7684;&#x5168;&#x90E8;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x80FD;&#x8BA9;&#x4EFB;&#x52A1;&#x6062;&#x590D;&#x5230;&#x6267;&#x4E2D;&#x65AD;&#x524D;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+</li>
+<li><p>&#x4E0A;&#x4E0B;&#x6587;&#x4FDD;&#x62A4;&#x7B2C;&#x4E8C;&#x90E8;&#x5206;&#xFF1A;&#x4FDD;&#x5B58;API&#x56FA;&#x5B9A;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x4E3B;&#x8981;&#x662F;esi,edi,ebp,esp&#x8FD9;4&#x4E2A;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x8BA9;&#x4EFB;&#x52A1;&#x6062;&#x590D;&#x6267;&#x884C;&#x5728;&#x4EFB;&#x52A1;&#x5207;&#x6362;&#x53D1;&#x751F;&#x65F6;&#x5269;&#x4E0B;&#x5C1A;&#x672A;&#x6267;&#x884C;&#x7684;&#x5185;&#x6838;&#x4EE3;&#x7801;&#xFF0C;&#x4FDD;&#x8BC1;&#x987A;&#x5229;&#x8D70;&#x5230;&#x9000;&#x51FA;&#x4E2D;&#x65AD;&#x7684;&#x51FA;&#x53E3;&#xFF0C;&#x5229;&#x7528;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#x4FDD;&#x62A4;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x73AF;&#x5883;&#x5F7B;&#x5E95;&#x6062;&#x590D;&#x4EFB;&#x52A1;&#x3002;</p>
+</li>
+</ul>
+<p>switch.S</p>
+<pre class="language-"><code>[bits 32]
+section .text
+global switch_to
+switch_to:
+   ;&#x6808;&#x4E2D;&#x6B64;&#x5904;&#x662F;&#x8FD4;&#x56DE;&#x5730;&#x5740;           
+   push esi
+   push edi
+   push ebx
+   push ebp
+
+   mov eax, [esp + 20]         ; &#x5F97;&#x5230;&#x6808;&#x4E2D;&#x7684;&#x53C2;&#x6570;cur, cur = [esp+20]
+   mov [eax], esp                ; &#x4FDD;&#x5B58;&#x6808;&#x9876;&#x6307;&#x9488;esp. task_struct&#x7684;self_kstack&#x5B57;&#x6BB5;,
+                 ; self_kstack&#x5728;task_struct&#x4E2D;&#x7684;&#x504F;&#x79FB;&#x4E3A;0,
+                 ; &#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x5F80;thread&#x5F00;&#x5934;&#x5904;&#x5B58;4&#x5B57;&#x8282;&#x4FBF;&#x53EF;&#x3002;
+;------------------  &#x4EE5;&#x4E0A;&#x662F;&#x5907;&#x4EFD;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x7684;&#x73AF;&#x5883;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x6062;&#x590D;&#x4E0B;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x7684;&#x73AF;&#x5883;  ----------------
+   mov eax, [esp + 24]         ; &#x5F97;&#x5230;&#x6808;&#x4E2D;&#x7684;&#x53C2;&#x6570;next, next = [esp+24]
+   mov esp, [eax]         ; pcb&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x6210;&#x5458;&#x662F;self_kstack&#x6210;&#x5458;,&#x7528;&#x6765;&#x8BB0;&#x5F55;0&#x7EA7;&#x6808;&#x9876;&#x6307;&#x9488;,
+                 ; &#x7528;&#x6765;&#x4E0A;cpu&#x65F6;&#x6062;&#x590D;0&#x7EA7;&#x6808;,0&#x7EA7;&#x6808;&#x4E2D;&#x4FDD;&#x5B58;&#x4E86;&#x8FDB;&#x7A0B;&#x6216;&#x7EBF;&#x7A0B;&#x6240;&#x6709;&#x4FE1;&#x606F;,&#x5305;&#x62EC;3&#x7EA7;&#x6808;&#x6307;&#x9488;
+   pop ebp
+   pop ebx
+   pop edi
+   pop esi
+   ret                 ; &#x8FD4;&#x56DE;&#x5230;&#x4E0A;&#x9762;switch_to&#x4E0B;&#x9762;&#x7684;&#x90A3;&#x53E5;&#x6CE8;&#x91CA;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;,
+                 ; &#x672A;&#x7531;&#x4E2D;&#x65AD;&#x8FDB;&#x5165;,&#x7B2C;&#x4E00;&#x6B21;&#x6267;&#x884C;&#x65F6;&#x4F1A;&#x8FD4;&#x56DE;&#x5230;kernel_thread
+</code></pre><p><img src="imgs/03.jpg" alt=""></p>
+<hr>
+<h3 id="&#x7EBF;&#x7A0B;&#xFF0C;pcb&#x7ED3;&#x6784;&#xFF0C;&#x51FD;&#x6570;">&#x7EBF;&#x7A0B;&#xFF0C;PCB&#x7ED3;&#x6784;&#xFF0C;&#x51FD;&#x6570;</h3>
+<pre class="language-"><code>/* &#x8FDB;&#x7A0B;&#x6216;&#x7EBF;&#x7A0B;&#x7684;pcb,&#x7A0B;&#x5E8F;&#x63A7;&#x5236;&#x5757; */
+struct task_struct {
+   uint32_t* self_kstack;     // &#x5404;&#x5185;&#x6838;&#x7EBF;&#x7A0B;&#x90FD;&#x7528;&#x81EA;&#x5DF1;&#x7684;&#x5185;&#x6838;&#x6808;
+   enum task_status status;
+   char name[16];
+   uint8_t priority;
+   uint8_t ticks;       // &#x6BCF;&#x6B21;&#x5728;&#x5904;&#x7406;&#x5668;&#x4E0A;&#x6267;&#x884C;&#x7684;&#x65F6;&#x95F4;&#x5600;&#x55D2;&#x6570;
+
+/* &#x6B64;&#x4EFB;&#x52A1;&#x81EA;&#x4E0A;cpu&#x8FD0;&#x884C;&#x540E;&#x81F3;&#x4ECA;&#x5360;&#x7528;&#x4E86;&#x591A;&#x5C11;cpu&#x5600;&#x55D2;&#x6570;,
+ * &#x4E5F;&#x5C31;&#x662F;&#x6B64;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x4E86;&#x591A;&#x4E45;*/
+   uint32_t elapsed_ticks;
+
+/* general_tag&#x7684;&#x4F5C;&#x7528;&#x662F;&#x7528;&#x4E8E;&#x7EBF;&#x7A0B;&#x5728;&#x4E00;&#x822C;&#x7684;&#x961F;&#x5217;&#x4E2D;&#x7684;&#x7ED3;&#x70B9; */
+   struct list_elem general_tag;                    
+
+/* all_list_tag&#x7684;&#x4F5C;&#x7528;&#x662F;&#x7528;&#x4E8E;&#x7EBF;&#x7A0B;&#x961F;&#x5217;thread_all_list&#x4E2D;&#x7684;&#x7ED3;&#x70B9; */
+   struct list_elem all_list_tag;
+
+   uint32_t* pgdir;              // &#x8FDB;&#x7A0B;&#x81EA;&#x5DF1;&#x9875;&#x8868;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;
+   uint32_t stack_magic;     // &#x7528;&#x8FD9;&#x4E32;&#x6570;&#x5B57;&#x505A;&#x6808;&#x7684;&#x8FB9;&#x754C;&#x6807;&#x8BB0;,&#x7528;&#x4E8E;&#x68C0;&#x6D4B;&#x6808;&#x7684;&#x6EA2;&#x51FA;
+};
+</code></pre><pre class="language-"><code>/***********  &#x7EBF;&#x7A0B;&#x6808;thread_stack  ***********
+ * &#x7EBF;&#x7A0B;&#x81EA;&#x5DF1;&#x7684;&#x6808;,&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x7EBF;&#x7A0B;&#x4E2D;&#x5F85;&#x6267;&#x884C;&#x7684;&#x51FD;&#x6570;
+ * &#x6B64;&#x7ED3;&#x6784;&#x5728;&#x7EBF;&#x7A0B;&#x81EA;&#x5DF1;&#x7684;&#x5185;&#x6838;&#x6808;&#x4E2D;&#x4F4D;&#x7F6E;&#x4E0D;&#x56FA;&#x5B9A;,
+ * &#x7528;&#x5728;switch_to&#x65F6;&#x4FDD;&#x5B58;&#x7EBF;&#x7A0B;&#x73AF;&#x5883;&#x3002;
+ * &#x5B9E;&#x9645;&#x4F4D;&#x7F6E;&#x53D6;&#x51B3;&#x4E8E;&#x5B9E;&#x9645;&#x8FD0;&#x884C;&#x60C5;&#x51B5;&#x3002;
+ ******************************************/
+struct thread_stack {
+   uint32_t ebp;
+   uint32_t ebx;
+   uint32_t edi;
+   uint32_t esi;
+
+/* &#x7EBF;&#x7A0B;&#x7B2C;&#x4E00;&#x6B21;&#x6267;&#x884C;&#x65F6;,eip&#x6307;&#x5411;&#x5F85;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;kernel_thread 
+&#x5176;&#x5B83;&#x65F6;&#x5019;,eip&#x662F;&#x6307;&#x5411;switch_to&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;*/
+   void (*eip) (thread_func* func, void* func_arg);
+
+/*****   &#x4EE5;&#x4E0B;&#x4EC5;&#x4F9B;&#x7B2C;&#x4E00;&#x6B21;&#x88AB;&#x8C03;&#x5EA6;&#x4E0A;cpu&#x65F6;&#x4F7F;&#x7528;   ****/
+
+/* &#x53C2;&#x6570;unused_ret&#x53EA;&#x4E3A;&#x5360;&#x4F4D;&#x7F6E;&#x5145;&#x6570;&#x4E3A;&#x8FD4;&#x56DE;&#x5730;&#x5740; */
+   void (*unused_retaddr);
+   thread_func* function;   // &#x7531;Kernel_thread&#x6240;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x540D;
+   void* func_arg;    // &#x7531;Kernel_thread&#x6240;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x6240;&#x9700;&#x7684;&#x53C2;&#x6570;
+};
+</code></pre><p>&#x6709;&#x4E2A;&#x4E3B;&#x7EBF;&#x7A0B;&#x95EE;&#x9898;&#xFF0C;&#x5C31;&#x662F; mbr-&gt;loader-&gt;main,&#x8FD9;&#x662F;&#x4E00;&#x76F4;&#x8FD0;&#x884C;&#x7684;&#x4E3B;&#x7A0B;&#x5E8F;&#x7EBF;&#x7A0B;&#xFF0C;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x90FD;&#x53EA;&#x662F;&#x5728;&#x521B;&#x5EFA;&#x8FC7;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x7684;&#x3002;</p>
+<pre class="language-"><code>/* &#x5C06;kernel&#x4E2D;&#x7684;main&#x51FD;&#x6570;&#x5B8C;&#x5584;&#x4E3A;&#x4E3B;&#x7EBF;&#x7A0B; */
+static void make_main_thread(void) {
+/* &#x56E0;&#x4E3A;main&#x7EBF;&#x7A0B;&#x65E9;&#x5DF2;&#x8FD0;&#x884C;,&#x54B1;&#x4EEC;&#x5728;loader.S&#x4E2D;&#x8FDB;&#x5165;&#x5185;&#x6838;&#x65F6;&#x7684;mov esp,0xc009f000,
+&#x5C31;&#x662F;&#x4E3A;&#x5176;&#x9884;&#x7559;&#x4E86;tcb,&#x5730;&#x5740;&#x4E3A;0xc009e000,&#x56E0;&#x6B64;&#x4E0D;&#x9700;&#x8981;&#x901A;&#x8FC7;get_kernel_page&#x53E6;&#x5206;&#x914D;&#x4E00;&#x9875;*/
+   main_thread = running_thread();
+   init_thread(main_thread, &quot;main&quot;, 31);
+
+/* main&#x51FD;&#x6570;&#x662F;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;,&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x4E0D;&#x5728;thread_ready_list&#x4E2D;,
+ * &#x6240;&#x4EE5;&#x53EA;&#x5C06;&#x5176;&#x52A0;&#x5728;thread_all_list&#x4E2D;. */
+   ASSERT(!elem_find(&amp;thread_all_list, &amp;main_thread-&gt;all_list_tag));
+   list_append(&amp;thread_all_list, &amp;main_thread-&gt;all_list_tag);
+}
+</code></pre><p><img src="imgs/mem.jpg" alt=""></p>
+<pre class="language-"><code>/* &#x521B;&#x5EFA;&#x4E00;&#x4F18;&#x5148;&#x7EA7;&#x4E3A;prio&#x7684;&#x7EBF;&#x7A0B;,&#x7EBF;&#x7A0B;&#x540D;&#x4E3A;name,&#x7EBF;&#x7A0B;&#x6240;&#x6267;&#x884C;&#x7684;&#x51FD;&#x6570;&#x662F;function(func_arg) */
+struct task_struct* thread_start(char* name, int prio, thread_func function, void* func_arg) {
+/* pcb&#x90FD;&#x4F4D;&#x4E8E;&#x5185;&#x6838;&#x7A7A;&#x95F4;,&#x5305;&#x62EC;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;pcb&#x4E5F;&#x662F;&#x5728;&#x5185;&#x6838;&#x7A7A;&#x95F4; */
+   struct task_struct* thread = get_kernel_pages(1);
+
+   init_thread(thread, name, prio);
+   thread_create(thread, function, func_arg);
+
+   /* &#x786E;&#x4FDD;&#x4E4B;&#x524D;&#x4E0D;&#x5728;&#x961F;&#x5217;&#x4E2D; */
+   ASSERT(!elem_find(&amp;thread_ready_list, &amp;thread-&gt;general_tag));
+   /* &#x52A0;&#x5165;&#x5C31;&#x7EEA;&#x7EBF;&#x7A0B;&#x961F;&#x5217; */
+   list_append(&amp;thread_ready_list, &amp;thread-&gt;general_tag);
+
+   /* &#x786E;&#x4FDD;&#x4E4B;&#x524D;&#x4E0D;&#x5728;&#x961F;&#x5217;&#x4E2D; */
+   ASSERT(!elem_find(&amp;thread_all_list, &amp;thread-&gt;all_list_tag));
+   /* &#x52A0;&#x5165;&#x5168;&#x90E8;&#x7EBF;&#x7A0B;&#x961F;&#x5217; */
+   list_append(&amp;thread_all_list, &amp;thread-&gt;all_list_tag);
+
+   return thread;
+}
+</code></pre><pre class="language-"><code>/* &#x521D;&#x59CB;&#x5316;&#x7EBF;&#x7A0B;&#x73AF;&#x5883; */
+void thread_init(void) {
+   put_str(&quot;thread_init start\n&quot;);
+   list_init(&amp;thread_ready_list);
+   list_init(&amp;thread_all_list);
+/* &#x5C06;&#x5F53;&#x524D;main&#x51FD;&#x6570;&#x521B;&#x5EFA;&#x4E3A;&#x7EBF;&#x7A0B; */
+   make_main_thread();
+   put_str(&quot;thread_init done\n&quot;);
+}
+</code></pre><h3 id="&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#xFF0C;&#x9A8C;&#x8BC1;">&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#xFF0C;&#x9A8C;&#x8BC1;</h3>
+<pre class="language-"><code>#include &quot;print.h&quot;
+#include &quot;init.h&quot;
+#include &quot;thread.h&quot;
+#include &quot;interrupt.h&quot;
+
+void k_thread_a(void*);
+void k_thread_b(void*);
+int main(void) {
+   put_str(&quot;I am kernel\n&quot;);
+   init_all();
+
+   thread_start(&quot;k_thread_a&quot;, 8, k_thread_a, &quot;arguA &quot;);
+   thread_start(&quot;k_thread_b&quot;, 31, k_thread_b, &quot;arguB &quot;);
+
+   intr_enable();    // &#x6253;&#x5F00;&#x4E2D;&#x65AD;,&#x4F7F;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x8D77;&#x4F5C;&#x7528;
+   while(1) {
+      put_str(&quot;Main &quot;);
+   };
+   return 0;
+}
+
+/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */
+void k_thread_a(void* arg) {     
+/* &#x7528;void*&#x6765;&#x901A;&#x7528;&#x8868;&#x793A;&#x53C2;&#x6570;,&#x88AB;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x77E5;&#x9053;&#x81EA;&#x5DF1;&#x9700;&#x8981;&#x4EC0;&#x4E48;&#x7C7B;&#x578B;&#x7684;&#x53C2;&#x6570;,&#x81EA;&#x5DF1;&#x8F6C;&#x6362;&#x518D;&#x7528; */
+   char* para = arg;
+   while(1) {
+      put_str(para);
+   }
+}
+
+/* &#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x51FD;&#x6570; */
+void k_thread_b(void* arg) {     
+/* &#x7528;void*&#x6765;&#x901A;&#x7528;&#x8868;&#x793A;&#x53C2;&#x6570;,&#x88AB;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x77E5;&#x9053;&#x81EA;&#x5DF1;&#x9700;&#x8981;&#x4EC0;&#x4E48;&#x7C7B;&#x578B;&#x7684;&#x53C2;&#x6570;,&#x81EA;&#x5DF1;&#x8F6C;&#x6362;&#x518D;&#x7528; */
+   char* para = arg;
+   while(1) {
+      put_str(para);
+   }
+}
+</code></pre><p><img src="imgs/06.jpg" alt=""></p>
+<p><img src="imgs/07.png" alt=""></p>
+<hr>
+<p>&#x672C;&#x4F8B;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x6709;GP&#x5F02;&#x5E38;&#xFF0C;&#x8FD9;&#x662F;&#x7531;&#x4E8E;&#x4E34;&#x754C;&#x533A;&#x4EE3;&#x7801;&#x7684;&#x8D44;&#x6E90;&#x7ADE;&#x4E89;&#xFF08;&#x5C4F;&#x5E55;&#x8F93;&#x51FA;&#xFF0C;&#x51E0;&#x4E2A;&#x7EBF;&#x7A0B;&#x7ADE;&#x4E89;&#x8D44;&#x6E90;&#x9020;&#x6210;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x5229;&#x7528;&#x540C;&#x6B65;&#xFF0C;&#x4E92;&#x65A5;&#x7B49;&#x53BB;&#x5904;&#x7406;&#xFF09; </p>
+<footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
+2020-08-02 09:19:57
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../10_process_thread/" class="navigation navigation-prev " aria-label="Previous page: 10 内核实现线程">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../12_lock/" class="navigation navigation-next " aria-label="Next page: 12 锁,信号量">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"11 多线程调度","level":"1.12","depth":1,"next":{"title":"12 锁,信号量","level":"1.13","depth":1,"path":"content/12_lock/README.md","ref":"./content/12_lock/README.md","articles":[]},"previous":{"title":"10 内核实现线程","level":"1.11","depth":1,"path":"content/10_process_thread/README.md","ref":"./content/10_process_thread/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/11_thread_schedule/README.md","mtime":"2020-08-02T01:19:57.492Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T01:57:15.579Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
