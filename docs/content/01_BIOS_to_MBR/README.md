@@ -4,8 +4,7 @@
 
 ### mbr.S文件编写，编译和磁盘文件创建
 
-Linux确保可以汇编（安装nasm），新建一个空目录，包含mbr.S和Makefile
-代码见code/文件夹
+Linux确保可以汇编（安装nasm），新建一个空目录，包含mbr.S和Makefile代码见<a href="https://github.com/doctording/os/tree/master/docs/content/01_BIOS_to_MBR/code" target="_blank">相应的code文件夹</a>
 
 ```java
 $make build
@@ -53,15 +52,15 @@ http://book.51cto.com/art/201604/509566.htm
 
 ![](../01_BIOS_to_MBR/imgs/mbr_2.jpg)
 
-* 载入内存的理解
+* 载入内存的理
 
     1. 程序被加载器（软件或硬件）加载到内存的某个区域
 
-    2. CPU的cs:ip寄存器被指向这个程序的起始地址
+    2. CPU的`cs寄存器:ip寄存器`被指向这个程序的起始地址(CS为代码段寄存器，IP为指令指针寄存器)
 
 * 内存和总线
 
-    1. DRAM是插在主板上的内存条，这种动态随机访问内存需要定期刷新，其电容小，易漏电，需要补电，即数据是可擦除的；
+    1. DRAM是插在主板上的内存条 ，这种动态随机访问内存需要定期刷新，其电容小，易漏电，需要补电，即数据是可擦除的；
 
     2. 插在主板上的内存条需要通过地址总线访问（地址总线条数，决定了可以访问到的物理内存的大小）
 
