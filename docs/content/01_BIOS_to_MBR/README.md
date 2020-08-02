@@ -1,3 +1,5 @@
+# BIOS入门
+
 ## 编写主引导程序，运行最基础的操作系统，直接实践
 
 ### mbr.S文件编写，编译和磁盘文件创建
@@ -5,7 +7,7 @@
 Linux确保可以汇编（安装nasm），新建一个空目录，包含mbr.S和Makefile
 代码见code/文件夹
 
-```
+```java
 $make build
 $make image
 ```
@@ -51,7 +53,6 @@ http://book.51cto.com/art/201604/509566.htm
 
 ![](../01_BIOS_to_MBR/imgs/mbr_2.jpg)
 
-
 * 载入内存的理解
 
     1. 程序被加载器（软件或硬件）加载到内存的某个区域
@@ -65,7 +66,7 @@ http://book.51cto.com/art/201604/509566.htm
     2. 插在主板上的内存条需要通过地址总线访问（地址总线条数，决定了可以访问到的物理内存的大小）
 
     3. CPU访问一个地址，是总线来做映射的，相当于给地址分配一个存储单元，这个存储单元会落在某个rom中，某个外设的内存中，物理内存条上。
-    
+
 * BIOS加载
 
     1. BIOS是一个软件，由一个硬件加载，这个硬件是一个只读存储器ROM(只读存储器是不可擦除的，数据被写入后，掉电也不会丢失数据)
@@ -90,10 +91,10 @@ http://book.51cto.com/art/201604/509566.htm
 
 图书 《操作系统真相还原》
 
-Linux下dd命令的使用
+* Linux下dd命令的使用
+
 http://www.cnblogs.com/gotopower/articles/4378199.html
 
-汇编--INT 10H功能
-http://www.cnblogs.com/magic-cube/archive/2011/10/19/2217676.html
+* 汇编--INT 10H功能
 
----
+http://www.cnblogs.com/magic-cube/archive/2011/10/19/2217676.html
