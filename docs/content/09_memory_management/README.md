@@ -135,7 +135,7 @@ memory.h
 
 /* 用于虚拟地址管理 */
 struct virtual_addr {
-   struct bitmap vaddr_bitmap; // 虚拟地址用到的位图结构 
+   struct bitmap vaddr_bitmap; // 虚拟地址用到的位图结构
    uint32_t vaddr_start;       // 虚拟地址起始地址
 };
 
@@ -197,7 +197,7 @@ static void* vaddr_get(enum pool_flags pf, uint32_t pg_cnt)
 
 
 /* 得到虚拟地址vaddr对应的pte指针*/
-uint32_t* pte_ptr(uint32_t vaddr) 
+uint32_t* pte_ptr(uint32_t vaddr)
 
 
 /* 在m_pool指向的物理内存池中分配1个物理页,
@@ -218,7 +218,8 @@ void* get_kernel_pages(uint32_t pg_cnt)
 ```
 
 我们的总共内存是采用BIOS中断获取的，内存初始函数如下
-```
+
+```cpp
 /* 内存管理部分初始化入口 */
 void mem_init() {
    put_str("mem_init start\n");
