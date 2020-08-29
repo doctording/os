@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>3 实模式到保护模式（GDT,gdtr,选择子) · spring-note</title>
+        <title>3 实模式到保护模式（分段) · spring-note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -134,7 +134,39 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="../01_BIOS_to_MBR/">
+        <li class="chapter " data-level="1.2" data-path="../00_cpu/cpu.html">
+            
+                <a href="../00_cpu/cpu.html">
+            
+                    
+                    0 CPU基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../00_cpu/call_ret.html">
+            
+                <a href="../00_cpu/call_ret.html">
+            
+                    
+                    call和ret指令
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../01_BIOS_to_MBR/">
             
                 <a href="../01_BIOS_to_MBR/">
             
@@ -147,7 +179,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="../02_mbr_hd/">
+        <li class="chapter " data-level="1.4" data-path="../02_mbr_hd/">
             
                 <a href="../02_mbr_hd/">
             
@@ -160,12 +192,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="./">
+        <li class="chapter active" data-level="1.5" data-path="./">
             
                 <a href="./">
             
                     
-                    3 实模式到保护模式（GDT,gdtr,选择子)
+                    3 实模式到保护模式（分段)
             
                 </a>
             
@@ -173,12 +205,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="../04_page/">
+        <li class="chapter " data-level="1.6" data-path="../04_page/">
             
                 <a href="../04_page/">
             
                     
-                    4 分段 & 分页
+                    4 分页
             
                 </a>
             
@@ -186,7 +218,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="../05_efi/">
+        <li class="chapter " data-level="1.7" data-path="../05_efi/">
             
                 <a href="../05_efi/">
             
@@ -199,7 +231,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.7" data-path="../06_kernel_start/">
+        <li class="chapter " data-level="1.8" data-path="../06_kernel_start/">
             
                 <a href="../06_kernel_start/">
             
@@ -212,7 +244,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8" data-path="../07_interrupt/">
+        <li class="chapter " data-level="1.9" data-path="../07_interrupt/">
             
                 <a href="../07_interrupt/">
             
@@ -225,7 +257,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9" data-path="../08_assert/">
+        <li class="chapter " data-level="1.10" data-path="../08_assert/">
             
                 <a href="../08_assert/">
             
@@ -238,7 +270,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.10" data-path="../09_memory_management/">
+        <li class="chapter " data-level="1.11" data-path="../09_memory_management/">
             
                 <a href="../09_memory_management/">
             
@@ -251,7 +283,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.11" data-path="../10_process_thread/">
+        <li class="chapter " data-level="1.12" data-path="../10_process_thread/">
             
                 <a href="../10_process_thread/">
             
@@ -264,7 +296,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.12" data-path="../11_thread_schedule/">
+        <li class="chapter " data-level="1.13" data-path="../11_thread_schedule/">
             
                 <a href="../11_thread_schedule/">
             
@@ -277,7 +309,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.13" data-path="../12_lock/">
+        <li class="chapter " data-level="1.14" data-path="../12_lock/">
             
                 <a href="../12_lock/">
             
@@ -290,7 +322,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.14" data-path="../13_input/">
+        <li class="chapter " data-level="1.15" data-path="../13_input/">
             
                 <a href="../13_input/">
             
@@ -303,7 +335,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.15" data-path="../14_input_buffer/">
+        <li class="chapter " data-level="1.16" data-path="../14_input_buffer/">
             
                 <a href="../14_input_buffer/">
             
@@ -316,7 +348,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.16" data-path="../15_user_process/">
+        <li class="chapter " data-level="1.17" data-path="../15_user_process/">
             
                 <a href="../15_user_process/">
             
@@ -329,7 +361,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.17" data-path="../16_system_call/">
+        <li class="chapter " data-level="1.18" data-path="../16_system_call/">
             
                 <a href="../16_system_call/">
             
@@ -342,7 +374,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.18" data-path="../17_hd_driver/">
+        <li class="chapter " data-level="1.19" data-path="../17_hd_driver/">
             
                 <a href="../17_hd_driver/">
             
@@ -355,7 +387,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.19" data-path="../18_filesystem/">
+        <li class="chapter " data-level="1.20" data-path="../18_filesystem/">
             
                 <a href="../18_filesystem/">
             
@@ -368,7 +400,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.20" data-path="../19_fd_inode_dir_file/">
+        <li class="chapter " data-level="1.21" data-path="../19_fd_inode_dir_file/">
             
                 <a href="../19_fd_inode_dir_file/">
             
@@ -381,7 +413,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.21" data-path="../20_shell/">
+        <li class="chapter " data-level="1.22" data-path="../20_shell/">
             
                 <a href="../20_shell/">
             
@@ -424,7 +456,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >3 实模式到保护模式（GDT,gdtr,选择子)</a>
+        <a href="../.." >3 实模式到保护模式（分段)</a>
     </h1>
 </div>
 
@@ -443,9 +475,17 @@
 <li><div><a href="#&#x8FDB;&#x5165;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;">&#x8FDB;&#x5165;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
 <li><div><a href="#&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;&#xFF1F;">&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;&#xFF1F;</a><i></i></div></li>
-<li><div><a href="#&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x76F8;&#x5173;">&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x76F8;&#x5173;</a><i></i></div></li>
-<li><div><a href="#gdtglobal-descriptor-table&#x4E2D;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x8BE6;&#x89E3;">GDT(Global Descriptor Table)&#x4E2D;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x8BE6;&#x89E3;</a><i></i></div></li>
-<li><div><a href="#&#x672C;&#x6B21;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;">&#x672C;&#x6B21;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;</a><i></i></div></li>
+<li><div><a href="#&#x5206;&#x6BB5;&#x57FA;&#x7840;&#x548C;&#x5982;&#x4F55;&#x5206;&#x6BB5;">&#x5206;&#x6BB5;&#x57FA;&#x7840;&#x548C;&#x5982;&#x4F55;&#x5206;&#x6BB5;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x5206;&#x6BB5;&#x6982;&#x8FF0;">&#x5206;&#x6BB5;&#x6982;&#x8FF0;</a><i></i></div></li>
+<li><div><a href="#&#x5982;&#x4F55;&#x5206;&#x6BB5;">&#x5982;&#x4F55;&#x5206;&#x6BB5;</a><i></i></div></li>
+<li><div><a href="#&#x7269;&#x7406;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x786E;&#x5B9A;">&#x7269;&#x7406;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x786E;&#x5B9A;</a><i></i></div></li>
+</ul></li>
+<li><div><a href="#&#x672C;&#x6B21;&#x5206;&#x6BB5;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;">&#x672C;&#x6B21;&#x5206;&#x6BB5;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#bootinc-&#x5206;&#x6790;">boot.inc &#x5206;&#x6790;</a><i></i></div></li>
+<li><div><a href="#&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;gdt&#x7684;&#x6784;&#x9020;">&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(GDT)&#x7684;&#x6784;&#x9020;</a><i></i></div></li>
+</ul></li>
 <li><div><a href="#&#x5B9E;&#x6A21;&#x5F0F;&#x5230;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x7684;&#x8BBE;&#x7F6E;&#x548C;&#x8DF3;&#x8F6C;">&#x5B9E;&#x6A21;&#x5F0F;&#x5230;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x7684;&#x8BBE;&#x7F6E;&#x548C;&#x8DF3;&#x8F6C;</a><i></i></div></li>
 <li><div><a href="#&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4EE3;&#x7801;&#x6267;&#x884C;">&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4EE3;&#x7801;&#x6267;&#x884C;</a><i></i></div></li>
 </ul></li>
@@ -465,69 +505,108 @@
 </li>
 <li><p>&#x4E00;&#x6B21;&#x53EA;&#x80FD;&#x8FD0;&#x884C;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;</p>
 </li>
-<li><p>&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x91C7;&#x7528;<code>&#x6BB5;&#x57FA;&#x5740;:&#x504F;&#x79FB;</code>&#x8BBF;&#x95EE;&#x5185;&#x5B58;&#xFF0C;x86<code>16</code>&#x4F4D;&#x5BC4;&#x5B58;&#x5668;&#x6700;&#x5927;&#x662F;2^16=64KB&#xFF0C;&#x663E;&#x7136;&#x5F53;&#x8BBF;&#x95EE;&#x7684;&#x5185;&#x5B58;&#x8D85;&#x8FC7;64KB&#x65F6;&#xFF0C;&#x5C31;&#x8981;&#x66F4;&#x6539;&#x6BB5;&#x57FA;&#x5740;</p>
+<li><p>&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x91C7;&#x7528;&#xFF1A;<code>&#x7269;&#x7406;&#x5730;&#x5740; = &#x57FA;&#x7840;&#x5730;&#x5740;(&#x6BB5;&#x57FA;&#x5740;&#x504F;&#x79FB;4&#x4F4D;) + &#x504F;&#x79FB;&#x5730;&#x5740;</code>&#x6765;&#x8BBF;&#x95EE;&#x5185;&#x5B58;&#xFF0C;&#x5BF9;x86<code>16</code>&#x4F4D;&#x5BC4;&#x5B58;&#x5668;&#x6700;&#x5927;&#x662F;2^16=64KB&#xFF0C;&#x5373;&#x5F53;&#x8BBF;&#x95EE;&#x7684;&#x5185;&#x5B58;&#x8D85;&#x8FC7;64KB&#x65F6;&#xFF0C;&#x5C31;&#x8981;&#x66F4;&#x6539;&#x6BB5;&#x57FA;&#x5740;&#x4E86;&#xFF08;&#x5373;&#x5982;&#x679C;&#x4F7F;&#x7528;16bit&#x6BB5;&#x5BC4;&#x5B58;&#x5668;CS&#xFF08;Code Segment&#xFF09;&#xFF0C;DS&#xFF08;Data Segment&#xFF09;&#xFF0C;SS&#xFF08;Stack Segment&#xFF09;&#x6765;&#x6307;&#x5B9A;&#x6BB5;&#xFF0C;CPU&#x5C06;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x7684;&#x6570;&#x503C;&#x5411;&#x5DE6;&#x504F;&#x79FB;4bit&#xFF0C;&#x653E;&#x5230;20bit&#x7684;&#x5730;&#x5740;&#x603B;&#x7EBF;&#x4E0A;&#x5C31;&#x6210;&#x4E3A;20bit&#x7684;Base Address&#xFF0C;&#x5728;&#x52A0;&#x4E0A;&#x504F;&#x79FB;&#x5730;&#x5740;&#x6784;&#x6210;&#x5B9E;&#x9645;&#x5BF9;&#x7269;&#x7406;&#x5730;&#x5740;&#xFF09;</p>
 </li>
 </ol>
-<p>&#x5373;&#x4F7F;&#x7528;16-bit&#x6BB5;&#x5BC4;&#x5B58;&#x5668;CS&#xFF08;Code Segment&#xFF09;&#xFF0C;DS&#xFF08;Data Segment&#xFF09;&#xFF0C;SS&#xFF08;Stack Segment&#xFF09;&#x6765;&#x6307;&#x5B9A;Segment&#xFF0C;CPU&#x5C06;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x7684;&#x6570;&#x503C;&#x5411;&#x5DE6;&#x504F;&#x79FB;4-bit&#xFF0C;&#x653E;&#x5230;20-bit&#x7684;&#x5730;&#x5740;&#x7EBF;&#x4E0A;&#x5C31;&#x6210;&#x4E3A;20-bit&#x7684;Base Address&#x3002;</p>
-<p>&#x6240;&#x4EE5;&#x6709;&#x4E86;&#xFF1A;<strong>&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;</strong>&#xFF0C;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#xFF08;32&#x4F4D;&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x56E0;&#x4E3A;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x4E86;<strong>&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;</strong>&#xFF0C;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x5982;&#x4E0B;&#xFF1A;</p>
 <ol>
-<li>&#x5730;&#x5740;&#x7EBF;32&#x6839;&#xFF0C;&#x6700;&#x5927;&#x5185;&#x5B58;4G</li>
-<li>32&#x4F4D;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x76F4;&#x63A5;&#x662F;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230;4G&#x7684;</li>
+<li>&#x5730;&#x5740;&#x7EBF;32&#x6839;&#xFF0C;&#x6700;&#x5927;&#x5185;&#x5B58;&#x53EF;&#x4EE5;&#x662F;4G</li>
+<li>32&#x4F4D;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x662F;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230;4G&#x5185;&#x5B58;&#x7684;</li>
 </ol>
-<h2 id="&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x76F8;&#x5173;">&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x76F8;&#x5173;</h2>
-<p><img src="imgs/01.png" alt=""></p>
-<p><img src="imgs/02.jpg" alt=""></p>
-<p><img src="imgs/03.jpg" alt=""></p>
+<h2 id="&#x5206;&#x6BB5;&#x57FA;&#x7840;&#x548C;&#x5982;&#x4F55;&#x5206;&#x6BB5;">&#x5206;&#x6BB5;&#x57FA;&#x7840;&#x548C;&#x5982;&#x4F55;&#x5206;&#x6BB5;</h2>
+<h3 id="&#x5206;&#x6BB5;&#x6982;&#x8FF0;">&#x5206;&#x6BB5;&#x6982;&#x8FF0;</h3>
+<p>80386/80486 CPU &#x5171;&#x6709;3 &#x79CD;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#xFF1A;&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(GDT)&#x3001;&#x5C40;&#x90E8;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(LDT)&#x548C;&#x4E2D;&#x65AD;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(IDT)&#x3002;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x7531;&#x63CF;&#x8FF0;&#x7B26;&#x987A;&#x5E8F;&#x6392;&#x5217;&#x7EC4;&#x6210;&#xFF0C;&#x5360;&#x4E00;&#x5B9A;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x7531;&#x7CFB;&#x7EDF;&#x5730;&#x5740;&#x5BC4;&#x5B58;&#x5668;(&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;:GDTR &#x3001;&#x5C40;&#x90E8;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;:LDTR&#x3001;&#x4E2D;&#x65AD;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;:IDTR) &#x6307;&#x793A;&#x5176;&#x5728;&#x7269;&#x7406;&#x5B58;&#x50A8;&#x5668;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;&#x548C;&#x5927;&#x5C0F;.</p>
 <ul>
-<li>&#x5B9E;&#x4F8B;</li>
+<li>&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;GDTR&#xFF0C;48&#x4F4D;&#x5BC4;&#x5B58;&#x5668;</li>
+<li>&#x4E2D;&#x65AD;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;IDTR&#xFF0C;48&#x4F4D;&#x5BC4;&#x5B58;&#x5668;</li>
+<li><p>&#x5C40;&#x90E8;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;LDTR&#xFF0C;16&#x4F4D;&#x5BC4;&#x5B58;&#x5668;</p>
+</li>
+<li><p>GDT&#x662F;&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x8868;&#xFF0C;&#x4E3B;&#x8981;&#x5B58;&#x653E;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x548C;&#x5404;&#x4EFB;&#x52A1;&#x516C;&#x7528;&#x7684;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x5982;&#x516C;&#x7528;&#x7684;&#x6570;&#x636E;&#x548C;&#x4EE3;&#x7801;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x3001;&#x5404;&#x4EFB;&#x52A1;&#x7684;TSS&#x63CF;&#x8FF0;&#x7B26;&#x548C;LDT&#x63CF;&#x8FF0;&#x7B26;&#x3002;&#xFF08;TSS&#x662F;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x6BB5;&#xFF0C;&#x5B58;&#x653E;&#x5404;&#x4E2A;&#x4EFB;&#x52A1;&#x79C1;&#x6709;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x4FE1;&#x606F;&#x63CF;&#x8FF0;&#x7B26;&#xFF09;</p>
+</li>
+<li>LDT&#x662F;&#x5C40;&#x90E8;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#xFF0C;&#x4E3B;&#x8981;&#x5B58;&#x653E;&#x5404;&#x4E2A;&#x4EFB;&#x52A1;&#x7684;&#x79C1;&#x6709;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x5982;&#x672C;&#x4EFB;&#x52A1;&#x7684;&#x4EE3;&#x7801;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x548C;&#x6570;&#x636E;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x7B49;(&#x5728;&#x5206;&#x9875;&#x673A;&#x5236;&#x51FA;&#x73B0;&#x4EE5;&#x524D;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E2D;&#x5E76;&#x6CA1;&#x6709;&#x865A;&#x62DF;&#x5185;&#x5B58;&#xFF08;Virtual Memory&#xFF09;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;;&#x4E3A;&#x4E86;&#x8BA9;&#x4E0D;&#x540C;&#x7A0B;&#x5E8F;&#x7684;&#x6570;&#x636E;&#x5F7C;&#x6B64;&#x4E92;&#x4E0D;&#x5E72;&#x6270;&#xFF0C;x86&#x67B6;&#x6784;&#x5F15;&#x5165;&#x4E86;LDT&#x6982;&#x5FF5;&#xFF0C;&#x671F;&#x671B;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E3A;&#x4E0D;&#x540C;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x8BBE;&#x7F6E;&#x4E0D;&#x540C;&#x7684;LDT&#x800C;&#x9694;&#x79BB;&#x7A0B;&#x5E8F;&#x95F4;&#x7684;&#x6570;&#x636E;&#x3002;)</li>
+</ul>
+<hr>
+<p>&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x6BB5;&#x5BC4;&#x5B58;&#x5668; &#x7531; 16&#x4F4D;&#x7684;&#x9009;&#x62E9;&#x5668; &#x4E0E; 64&#x4F4D;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x5BC4;&#x5B58;&#x5668; &#x6784;&#x6210;</p>
+<p>&#x539F;&#x5148;&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x5404;&#x4E2A;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x4F5C;&#x4E3A;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;&#x6BB5;&#x9009;&#x62E9;&#x5668;&#xFF0C;80486&#x4E2D;&#x6709;6&#x4E2A;(&#x5373;CS,SS,DS,ES,FS,GS)&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x3002;&#x7531;&#x9009;&#x62E9;&#x5668;CS&#x5BF9;&#x5E94;&#x8868;&#x793A;&#x7684;&#x6BB5;&#x4ECD;&#x4E3A;&#x4EE3;&#x7801;&#x6BB5;&#xFF0C;&#x9009;&#x62E9;&#x5668;SS&#x5BF9;&#x5E94;&#x8868;&#x793A;&#x7684;&#x6BB5;&#x4ECD;&#x4E3A;&#x5806;&#x6808;&#x6BB5;&#x3002;</p>
+<ul>
+<li>&#x8FD9;&#x4E9B;16bit&#x7684;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x4E5F;&#x6210;&#x4E3A;<strong>&#x6BB5;&#x9009;&#x62E9;&#x5B50;</strong>&#xFF08;Selector&#xFF09;&#xFF0C;&#x63CF;&#x8FF0;&#x5982;&#x4E0B;</li>
+</ul>
+<p><img src="imgs/segment_reg.png" alt=""></p>
+<ul>
+<li>&#x63CF;&#x8FF0;&#x7B26;&#x7D22;&#x5F15;&#x2014;&#x2014;&#x7528;&#x6765;&#x5728;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x4E2D;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;,2^13=8196&#x4E2A;&#x6BB5;&#xFF08;&#x7CFB;&#x7EDF;&#x4E2D;&#x5C31;&#x662F;8196&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF09;</li>
+<li>&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x6307;&#x793A;&#x5668;&#x2014;&#x2014;TI=0&#x65F6;&#xFF0C;&#x5728;GDT&#x8868;&#x4E2D;&#xFF1B;TI=1&#x65F6;&#xFF0C;&#x5728;LDT&#x8868;&#x4E2D;</li>
+<li>&#x8BF7;&#x6C42;&#x7279;&#x6743;&#x7EA7;&#x522B;&#x2014;&#x2014;4&#x4E2A;&#x7EA7;&#x522B;&#xFF0C;0&#xFF0C;1&#xFF0C;2&#xFF0C;3</li>
+</ul>
+<h3 id="&#x5982;&#x4F55;&#x5206;&#x6BB5;">&#x5982;&#x4F55;&#x5206;&#x6BB5;</h3>
+<ul>
+<li><p>&#x9996;&#x5148;,&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#x4F7F;&#x7528;<code>&#x5206;&#x6BB5;</code>&#x6A21;&#x5F0F;&#xFF0C;&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x4ECD;&#x7136;&#x4F7F;&#x7528;<strong>Segment:Offset</strong>&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0D;&#x8FC7;&#x8981;&#x80FD;&#x652F;&#x6301;&#x8BBF;&#x95EE;&#x5230;32bit&#x7684;&#x5730;&#x5740;&#xFF0C;&#x5373;4GB&#x5185;&#x5B58;</p>
+</li>
+<li><p>&#x5176;&#x6B21;&#xFF0C;&#x6BB5;&#x8BBF;&#x95EE;&#x63D0;&#x4F9B;&#x4E86;&#x4FDD;&#x62A4;&#x673A;&#x5236;&#xFF0C;&#x4E5F;&#x5C31;&#x8BF4;&#x4E00;&#x4E2A;&#x6BB5;&#x7684;&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;&#x9700;&#x8981;&#x89C4;&#x5B9A;&#x5BF9;&#x81EA;&#x8EAB;&#x7684;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#xFF08;Access&#xFF09;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x5728;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x5BF9;&#x4E00;&#x4E2A;&#x6BB5;&#x7684;&#x63CF;&#x8FF0;&#x5219;&#x5305;&#x62EC;3&#x65B9;&#x9762;&#x56E0;&#x7D20;&#xFF1A;<code>[Base Address, Limit, Access]</code>&#xFF0C;&#x5B83;&#x4EEC;&#x52A0;&#x5728;&#x4E00;&#x8D77;&#x88AB;&#x653E;&#x5728;&#x4E00;&#x4E2A;64bit(8&#x5B57;&#x8282;)&#x957F;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#xFF0C;&#x5373;&#x4E3A;<strong>&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;</strong></p>
+</li>
+</ul>
+<p><img src="imgs/segment.png" alt=""></p>
+<ol>
+<li>&#x57FA;&#x5730;&#x5740;Base Address&#x5206;&#x6563;&#x5728;&#x8FD9;64bit&#x4E2D;&#xFF0C;&#x6574;&#x4F53;&#x662F;32bit&#x7684;&#xFF0C;&#x5373;&#x786E;&#x4FDD;&#x4E86;&#x80FD;&#x8BBF;&#x95EE;&#x6574;&#x4E2A;4GB&#x5185;&#x5B58;</li>
+<li>&#x63CF;&#x8FF0;&#x7B26;&#x7C7B;&#x578B;&#x6807;&#x5FD7;S&#xFF0C;&#x53EF;&#x4EE5;&#x63CF;&#x8FF0;&#x6BB5;&#x7C7B;&#x578B;&#xFF1A;&#x7CFB;&#x7EDF;&#x6BB5;&#xFF0C;&#x6570;&#x636E;&#x6BB5;&#xFF0C;&#x4EE3;&#x7801;&#x6BB5;&#x7B49;</li>
+<li>&#x6BB5;&#x9650;&#x957F;Limit&#x5206;&#x6563;&#x5728;&#x8FD9;64bit&#x4E2D;&#xFF0C;&#x6574;&#x4F53;&#x662F;20bit&#x7684;&#xFF0C;&#x5F53;&#x9897;&#x7C92;&#x5EA6;G=0&#x65F6;&#xFF0C;Limit&#x503C;&#x7684;&#x5355;&#x4F4D;&#x662F;B&#xFF0C;&#x5373;Limit&#x7684;&#x8303;&#x56F4;&#x53EF;&#x4EE5;&#x662F;1B&#x5230;1MB&#xFF1B;&#x5F53;G=1&#xFF0C;&#x5219;Limit&#x503C;&#x7684;&#x5355;&#x4F4D;&#x662F;4KB&#xFF0C;&#x5373;Limit&#x7684;&#x8303;&#x56F4;&#x53EF;&#x4EE5;&#x662F;4KB&#x5230;4GB&#xFF0C;&#x5373;&#x786E;&#x4FDD;&#x4E86;&#x80FD;&#x8BBF;&#x95EE;&#x6574;&#x4E2A;4GB&#x5185;&#x5B58;</li>
+<li>GDTR&#x5BC4;&#x5B58;&#x5668;48bit&#xFF0C;32bit&#x63CF;&#x8FF0;&#x4E86;&#x5728;GDT&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;(GDT&#x5B58;&#x653E;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x4EFB;&#x610F;&#x4F4D;&#x7F6E;&#xFF0C;&#x901A;&#x8FC7;GDTR&#x7684;&#x8FD9;32bit&#x5148;&#x5B9A;&#x4F4D;&#x5230;&#x5728;&#x5185;&#x5B58;&#x90A3;&#x91CC;&#xFF0C;&#x7136;&#x540E;&#x624D;&#x80FD;&#x5B9A;&#x4F4D;&#x5230;&#x5177;&#x4F53;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x53F7;)&#xFF1B;16bit&#x9650;&#x957F;&#xFF08;2^16=65536)(8196&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26; <em> &#x6BCF;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x662F;8&#x5B57;&#x8282;&#xFF0C;2^13 </em> 2^3 = 2^16)&#xFF0C;&#x6240;&#x4EE5;<font color="red">16bit&#x9650;&#x957F;&#xFF0C;13bit&#x7D22;&#x5F15;&#xFF0C;8196&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x5927;&#x5C0F;&#x662F;8&#x5B57;&#x8282;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x662F;&#x5B8C;&#x7F8E;&#x7684;&#x8BBE;&#x8BA1;&#x6570;&#x5B57;</font></li>
+</ol>
+<h3 id="&#x7269;&#x7406;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x786E;&#x5B9A;">&#x7269;&#x7406;&#x5185;&#x5B58;&#x5982;&#x4F55;&#x786E;&#x5B9A;</h3>
+<p><img src="imgs/segment_mm.jpg" alt=""></p>
+<p>&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x7684;TI=1&#x7684;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#xFF1A;</p>
+<ol>
+<li>&#x5148;&#x4ECE;&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x5BC4;&#x5B58;&#x5668;(GDTR)&#x5BC4;&#x5B58;&#x5668;(48&#x4F4D;,&#x5176;&#x4E2D;&#x524D;32&#x4F4D;base+16&#x4F4D;&#x957F;&#x5EA6;)&#x4E2D;&#x83B7;&#x5F97;&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(GDT)&#x57FA;&#x5740;</li>
+<li>&#x4ECE;LDTR&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x83B7;&#x53D6;LDT&#x6240;&#x5728;&#x6BB5;&#x7684;&#x4F4D;&#x7F6E;&#x7D22;&#x5F15;(LDTR&#x7684;&#x9AD8;13&#x4F4D;)</li>
+<li>&#x6839;&#x636E;1&#xFF0C;2&#x786E;&#x5B9A;GDT&#x4E2D;&#x5177;&#x4F53;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x5373;&#x5B9A;&#x4F4D;&#x5230;&#x5177;&#x4F53;&#x7684;LDT&#x6BB5;&#x57FA;&#x5740;</li>
+<li>&#x7531;&#x6BB5;&#x9009;&#x62E9;&#x5B50;&#x7684;&#x9AD8;13&#x4F4D;&#x4F4D;&#x7F6E;&#x7D22;&#x5F15;&#x503C;&#x518D;&#x4ECE;LDT&#x6BB5;&#x4E2D;&#x5B9A;&#x4F4D;&#x5230;&#x5177;&#x4F53;LDT&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;</li>
+<li>&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;&#x5305;&#x542B;&#x6BB5;&#x7684;&#x57FA;&#x5740;&#x3001;&#x9650;&#x957F;&#x3001;&#x4F18;&#x5148;&#x7EA7;&#x7B49;&#x5404;&#x79CD;&#x5C5E;&#x6027;&#xFF1B;&#x8FD9;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x6BB5;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;&#xFF08;&#x57FA;&#x5740;&#xFF09;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x504F;&#x79FB;&#x5730;&#x5740;&#xFF0C;&#x5C31;&#x80FD;&#x5F97;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5730;&#x5740;</li>
+</ol>
+<ul>
+<li>&#x4E3E;&#x4F8B;&#x8BF4;&#x660E;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x5B9A;&#x4F4D;</li>
 </ul>
 <p>&#x8BBF;&#x95EE;<code>ds:0x9</code>&#x8FD9;&#x6837;&#x7684;&#x5185;&#x5B58;</p>
-<p>&#x82E5;&#x9009;&#x62E9;&#x5B50;&#xFF08;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x5185;&#x5BB9;&#x662F;:<code>0x8</code>&#xFF09;</p>
+<p>&#x82E5;&#x9009;&#x62E9;&#x5B50;&#xFF08;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#xFF09;&#x7684;&#x5185;&#x5BB9;&#x662F;:<code>0x8</code>&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;</p>
 <pre class="language-"><code class="lang-java"><span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">1000</span>
 
-RPL<span class="token operator">:</span> <span class="token number">00</span>
+&#x63CF;&#x8FF0;&#x7B26;&#x7D22;&#x5F15;&#x503C;&#xFF1A;<span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">1</span>&#xFF0C;<span class="token punctuation">(</span>&#x7ED3;&#x5408;TI<span class="token punctuation">,</span> &#x5219;&#x5BF9;&#x5E94;GDT&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#xFF09;
 TI<span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">(</span>&#x8868;&#x793A;&#x4F7F;&#x7528;&#x4E86;GDT<span class="token punctuation">,</span> &#x800C;&#x975E;LDT<span class="token punctuation">)</span>
-&#x63CF;&#x8FF0;&#x7B26;&#x7D22;&#x5F15;&#x503C;&#xFF1A;<span class="token number">1</span>&#xFF0C;<span class="token punctuation">(</span>&#x7ED3;&#x5408;TI<span class="token punctuation">,</span> &#x5219;&#x5BF9;&#x5E94;GDT&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#xFF09;
+RPL<span class="token operator">:</span> <span class="token number">00</span>
 </code></pre>
-<p>&#x5047;&#x8BBE;&#x7B2C;&#x4E00;&#x4E2A;&#x63CF;&#x8FF0;&#x7B26; 3&#x4E2A;&#x57FA;&#x5740;&#x548C;&#x8D77;&#x6765;&#x540E;&#x7684;&#x5185;&#x5BB9;&#x662F; 0x1234&#xFF0C;&#x5219;&#x6BB5;&#x57FA;&#x5740;&#x5C31;&#x662F; 0x1234</p>
-<p><code>0x1234:0x9</code>&#xFF0C;&#x6700;&#x540E;&#x8BBF;&#x95EE;&#x7684;&#x5185;&#x5B58;&#x5730;&#x5740;&#x662F;0x123d</p>
+<p>&#x5047;&#x8BBE;&#x7B2C;&#x4E00;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x6240;&#x6709;32bit&#x7684;&#x57FA;&#x5740;&#x8D77;&#x6765;&#x540E;&#x7684;&#x5185;&#x5BB9;&#x662F;<code>0x1234</code>&#xFF0C;&#x5219;&#x6BB5;&#x57FA;&#x5740;&#x786E;&#x5B9A;&#x4E3A;:<code>0x1234</code></p>
+<p>&#x6700;&#x540E;&#x8BBF;&#x95EE;&#x7684;&#x5185;&#x5B58;&#x5730;&#x5740;&#x662F;<code>0x1234:0x9</code>&#xFF0C;&#x5373;<code>0x123d</code></p>
 <p>&#x6CE8;&#x610F;&#xFF1A;&#x9009;&#x62E9;&#x5B50;&#x5982;&#x679C;&#x5FD8;&#x8BB0;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x90A3;&#x4E2A;&#x5C06;&#x8BBF;&#x95EE;&#x7B2C;0&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x6240;&#x4EE5;GDT&#x7B2C;0&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#x4E0D;&#x53EF;&#x7528;&#x3002;&#x82E5;&#x9009;&#x62E9;&#x5230;&#x4E86;&#x7B2C;0&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x5219;&#x5904;&#x7406;&#x5668;&#x4F1A;&#x53D1;&#x751F;&#x5F02;&#x5E38;&#x3002;</p>
-<h2 id="gdtglobal-descriptor-table&#x4E2D;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x8BE6;&#x89E3;">GDT(Global Descriptor Table)&#x4E2D;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x8BE6;&#x89E3;</h2>
-<p>&#x53C2;&#x8003;&#x5982;&#x4E0B;&#x7CFB;&#x5217;&#x6587;&#x7AE0;: <a href="http://www.cnblogs.com/longintchar/p/5224405.html" target="_blank">http://www.cnblogs.com/longintchar/p/5224405.html</a></p>
-<h2 id="&#x672C;&#x6B21;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;">&#x672C;&#x6B21;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;</h2>
+<h2 id="&#x672C;&#x6B21;&#x5206;&#x6BB5;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;">&#x672C;&#x6B21;&#x5206;&#x6BB5;&#x4EE3;&#x7801;&#x8BB2;&#x89E3;</h2>
+<p>&#x4EE3;&#x7801;&#x89C1;<a href="https://github.com/doctording/os/tree/master/docs/content/03_protected_mode/code" target="_blank">&#x76F8;&#x5E94;&#x7684;code&#x6587;&#x4EF6;&#x5939;</a></p>
 <p>&#x4E0A;&#x4E00;&#x7AE0;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x82E5;&#x6CA1;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x6B21;<code>mbr.S</code>&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x552F;&#x4E00;&#x7684;&#x4FEE;&#x6539;&#x5C31;&#x662F;&#x8BFB;&#x5165;&#x7684;&#x6247;&#x533A;&#x6570;&#x8981;&#x53D8;&#x5927;&#xFF0C;&#x539F;&#x6765;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x7B2C;2&#x6247;&#x533A;&#xFF0C;&#x73B0;&#x5728;&#x5229;&#x7528;&#x78C1;&#x76D8;&#x8BFB;&#x5199;&#x7B2C;2,3,4,5&#x56DB;&#x4E2A;&#x6247;&#x533A;&#xFF08;&#x8FD9;&#x5F53;&#x7136;&#x662F;&#x53EF;&#x53D8;&#x7684;&#xFF09;&#x3002;</p>
-<p>&#x9700;&#x8981;&#x5F04;&#x6E05;&#x695A;&#x8FD9;4&#x4E2A;&#x6247;&#x533A;&#x7A76;&#x7ADF;&#x5B58;&#x4E86;&#x4E9B;&#x4EC0;&#x4E48;&#x4E1C;&#x897F;&#x3002;</p>
-<p>&#x663E;&#x7136;&#x8981;&#x662F;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x6709;&#xFF1A;GDT&#xFF0C;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x9009;&#x62E9;&#x5B50;&#x7B49;&#xFF0C;&#x5185;&#x5B58;&#x4E0D;&#x518D;&#x662F;&#x76F4;&#x63A5;&#x201C;&#x6BB5;&#x57FA;&#x5740;&#xFF1A;&#x504F;&#x79FB;&#x91CF;&#x201D;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x4E86;&#xFF0C;&#x800C;&#x662F;&#x901A;&#x8FC7;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;</p>
-<ul>
-<li>boot.S &#x5206;&#x6790;</li>
-</ul>
-<pre class="language-"><code class="lang-java"><span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>     loader&#x548C;kernel   <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<p>&#x9700;&#x8981;&#x5F04;&#x6E05;&#x695A;&#x8FD9;4&#x4E2A;&#x6247;&#x533A;&#x7A76;&#x7ADF;&#x5B58;&#x4E86;&#x4E9B;&#x4EC0;&#x4E48;&#x4E1C;&#x897F;&#xFF1B;&#x663E;&#x7136;&#x8981;&#x662F;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x6709;&#xFF1A;GDT&#xFF0C;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x9009;&#x62E9;&#x5B50;&#x7B49;&#xFF0C;&#x5185;&#x5B58;&#x4E0D;&#x518D;&#x662F;&#x76F4;&#x63A5;&#x7684;&#x201C;&#x6BB5;&#x57FA;&#x5740;&#xFF1A;&#x504F;&#x79FB;&#x91CF;&#x201D;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x4E86;&#xFF0C;&#x800C;&#x662F;&#x901A;&#x8FC7;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x5B9A;&#x4F4D;&#x57FA;&#x5740;&#xFF0C;&#x7136;&#x540E;&#x201C;&#x57FA;&#x5740;&#xFF1A;&#x504F;&#x79FB;&#x91CF;&#x201D;&#x8BBF;&#x95EE;</p>
+<h3 id="bootinc-&#x5206;&#x6790;">boot.inc &#x5206;&#x6790;</h3>
+<pre class="language-"><code class="lang-cpp"><span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>  loader&#x548C;kernel   <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
 
 LOADER_BASE_ADDR equ <span class="token number">0x900</span>
 LOADER_START_SECTOR equ <span class="token number">0x2</span>
 
 <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>   gdt&#x63CF;&#x8FF0;&#x7B26;&#x5C5E;&#x6027;  <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
-DESC_G_4K   equ      <span class="token number">1_00000000000000000000000</span>b   
-DESC_D_32   equ       <span class="token number">1_0000000000000000000000</span>b
-DESC_L        equ        <span class="token number">0_000000000000000000000</span>b    <span class="token punctuation">;</span>  <span class="token number">64</span>&#x4F4D;&#x4EE3;&#x7801;&#x6807;&#x8BB0;&#xFF0C;&#x6B64;&#x5904;&#x6807;&#x8BB0;&#x4E3A;<span class="token number">0</span>&#x4FBF;&#x53EF;&#x3002;
-DESC_AVL    equ         <span class="token number">0_00000000000000000000</span>b    <span class="token punctuation">;</span>  cpu&#x4E0D;&#x7528;&#x6B64;&#x4F4D;&#xFF0C;&#x6682;&#x7F6E;&#x4E3A;<span class="token number">0</span>  
-DESC_LIMIT_CODE2  equ <span class="token number">1111_0000000000000000</span>b
+DESC_G_4K   equ      <span class="token number">1</span>_00000000000000000000000b   
+DESC_D_32   equ       <span class="token number">1</span>_0000000000000000000000b
+DESC_L        equ        <span class="token number">0</span>_000000000000000000000b    <span class="token punctuation">;</span>  <span class="token number">64</span>&#x4F4D;&#x4EE3;&#x7801;&#x6807;&#x8BB0;&#xFF0C;&#x6B64;&#x5904;&#x6807;&#x8BB0;&#x4E3A;<span class="token number">0</span>&#x4FBF;&#x53EF;&#x3002;
+DESC_AVL    equ         <span class="token number">0</span>_00000000000000000000b    <span class="token punctuation">;</span>  cpu&#x4E0D;&#x7528;&#x6B64;&#x4F4D;&#xFF0C;&#x6682;&#x7F6E;&#x4E3A;<span class="token number">0</span>  
+DESC_LIMIT_CODE2  equ <span class="token number">1111</span>_0000000000000000b
 DESC_LIMIT_DATA2  equ DESC_LIMIT_CODE2
-DESC_LIMIT_VIDEO2  equ <span class="token number">0000_000000000000000</span>b
-DESC_P        equ          <span class="token number">1_000000000000000</span>b
-DESC_DPL_0  equ           <span class="token number">00_0000000000000</span>b
-DESC_DPL_1  equ           <span class="token number">01_0000000000000</span>b
-DESC_DPL_2  equ           <span class="token number">10_0000000000000</span>b
-DESC_DPL_3  equ           <span class="token number">11_0000000000000</span>b
-DESC_S_CODE equ             <span class="token number">1_000000000000</span>b
+DESC_LIMIT_VIDEO2  equ <span class="token number">0000</span>_000000000000000b
+DESC_P        equ          <span class="token number">1</span>_000000000000000b
+DESC_DPL_0  equ           <span class="token number">00</span>_0000000000000b
+DESC_DPL_1  equ           <span class="token number">01</span>_0000000000000b
+DESC_DPL_2  equ           <span class="token number">10</span>_0000000000000b
+DESC_DPL_3  equ           <span class="token number">11</span>_0000000000000b
+DESC_S_CODE equ             <span class="token number">1</span>_000000000000b
 DESC_S_DATA equ      DESC_S_CODE
-<span class="token class-name">DESC_S_sys</span>  equ             <span class="token number">0_000000000000</span>b
-DESC_TYPE_CODE  equ          <span class="token number">1000_00000000</span>b    <span class="token punctuation">;</span>x<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>r<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>a<span class="token operator">=</span><span class="token number">0</span> &#x4EE3;&#x7801;&#x6BB5;&#x662F;&#x53EF;&#x6267;&#x884C;&#x7684;<span class="token punctuation">,</span>&#x975E;&#x4F9D;&#x4ECE;&#x7684;<span class="token punctuation">,</span>&#x4E0D;&#x53EF;&#x8BFB;&#x7684;<span class="token punctuation">,</span>&#x5DF2;&#x8BBF;&#x95EE;&#x4F4D;a&#x6E05;<span class="token number">0.</span>  
-DESC_TYPE_DATA  equ          <span class="token number">0010_00000000</span>b    <span class="token punctuation">;</span>x<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>e<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>w<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>a<span class="token operator">=</span><span class="token number">0</span> &#x6570;&#x636E;&#x6BB5;&#x662F;&#x4E0D;&#x53EF;&#x6267;&#x884C;&#x7684;<span class="token punctuation">,</span>&#x5411;&#x4E0A;&#x6269;&#x5C55;&#x7684;<span class="token punctuation">,</span>&#x53EF;&#x5199;&#x7684;<span class="token punctuation">,</span>&#x5DF2;&#x8BBF;&#x95EE;&#x4F4D;a&#x6E05;<span class="token number">0.</span>
+DESC_S_sys  equ             <span class="token number">0</span>_000000000000b
+DESC_TYPE_CODE  equ          <span class="token number">1000</span>_00000000b    <span class="token punctuation">;</span>x<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>r<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>a<span class="token operator">=</span><span class="token number">0</span> &#x4EE3;&#x7801;&#x6BB5;&#x662F;&#x53EF;&#x6267;&#x884C;&#x7684;<span class="token punctuation">,</span>&#x975E;&#x4F9D;&#x4ECE;&#x7684;<span class="token punctuation">,</span>&#x4E0D;&#x53EF;&#x8BFB;&#x7684;<span class="token punctuation">,</span>&#x5DF2;&#x8BBF;&#x95EE;&#x4F4D;a&#x6E05;<span class="token number">0.</span>  
+DESC_TYPE_DATA  equ          <span class="token number">0010</span>_00000000b    <span class="token punctuation">;</span>x<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>e<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>w<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>a<span class="token operator">=</span><span class="token number">0</span> &#x6570;&#x636E;&#x6BB5;&#x662F;&#x4E0D;&#x53EF;&#x6267;&#x884C;&#x7684;<span class="token punctuation">,</span>&#x5411;&#x4E0A;&#x6269;&#x5C55;&#x7684;<span class="token punctuation">,</span>&#x53EF;&#x5199;&#x7684;<span class="token punctuation">,</span>&#x5DF2;&#x8BBF;&#x95EE;&#x4F4D;a&#x6E05;<span class="token number">0.</span>
 
-<span class="token class-name">DESC_CODE_HIGH4</span> equ <span class="token punctuation">(</span><span class="token number">0x00</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">+</span> DESC_G_4K <span class="token operator">+</span> DESC_D_32 <span class="token operator">+</span> DESC_L <span class="token operator">+</span> DESC_AVL <span class="token operator">+</span> DESC_LIMIT_CODE2 <span class="token operator">+</span> DESC_P <span class="token operator">+</span> DESC_DPL_0 <span class="token operator">+</span> DESC_S_CODE <span class="token operator">+</span> DESC_TYPE_CODE <span class="token operator">+</span> <span class="token number">0x00</span>
-<span class="token class-name">DESC_DATA_HIGH4</span> equ <span class="token punctuation">(</span><span class="token number">0x00</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">+</span> DESC_G_4K <span class="token operator">+</span> DESC_D_32 <span class="token operator">+</span> DESC_L <span class="token operator">+</span> DESC_AVL <span class="token operator">+</span> DESC_LIMIT_DATA2 <span class="token operator">+</span> DESC_P <span class="token operator">+</span> DESC_DPL_0 <span class="token operator">+</span> DESC_S_DATA <span class="token operator">+</span> DESC_TYPE_DATA <span class="token operator">+</span> <span class="token number">0x00</span>
-<span class="token class-name">DESC_VIDEO_HIGH4</span> equ <span class="token punctuation">(</span><span class="token number">0x00</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">+</span> DESC_G_4K <span class="token operator">+</span> DESC_D_32 <span class="token operator">+</span> DESC_L <span class="token operator">+</span> DESC_AVL <span class="token operator">+</span> DESC_LIMIT_VIDEO2 <span class="token operator">+</span> DESC_P <span class="token operator">+</span> DESC_DPL_0 <span class="token operator">+</span> DESC_S_DATA <span class="token operator">+</span> DESC_TYPE_DATA <span class="token operator">+</span> <span class="token number">0x0b</span>
+DESC_CODE_HIGH4 <span class="token function">equ</span> <span class="token punctuation">(</span><span class="token number">0x00</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">+</span> DESC_G_4K <span class="token operator">+</span> DESC_D_32 <span class="token operator">+</span> DESC_L <span class="token operator">+</span> DESC_AVL <span class="token operator">+</span> DESC_LIMIT_CODE2 <span class="token operator">+</span> DESC_P <span class="token operator">+</span> DESC_DPL_0 <span class="token operator">+</span> DESC_S_CODE <span class="token operator">+</span> DESC_TYPE_CODE <span class="token operator">+</span> <span class="token number">0x00</span>
+DESC_DATA_HIGH4 <span class="token function">equ</span> <span class="token punctuation">(</span><span class="token number">0x00</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">+</span> DESC_G_4K <span class="token operator">+</span> DESC_D_32 <span class="token operator">+</span> DESC_L <span class="token operator">+</span> DESC_AVL <span class="token operator">+</span> DESC_LIMIT_DATA2 <span class="token operator">+</span> DESC_P <span class="token operator">+</span> DESC_DPL_0 <span class="token operator">+</span> DESC_S_DATA <span class="token operator">+</span> DESC_TYPE_DATA <span class="token operator">+</span> <span class="token number">0x00</span>
+DESC_VIDEO_HIGH4 <span class="token function">equ</span> <span class="token punctuation">(</span><span class="token number">0x00</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">+</span> DESC_G_4K <span class="token operator">+</span> DESC_D_32 <span class="token operator">+</span> DESC_L <span class="token operator">+</span> DESC_AVL <span class="token operator">+</span> DESC_LIMIT_VIDEO2 <span class="token operator">+</span> DESC_P <span class="token operator">+</span> DESC_DPL_0 <span class="token operator">+</span> DESC_S_DATA <span class="token operator">+</span> DESC_TYPE_DATA <span class="token operator">+</span> <span class="token number">0x0b</span>
 
 <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>   &#x9009;&#x62E9;&#x5B50;&#x5C5E;&#x6027;  <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
 RPL0  equ   <span class="token number">00</span>b
@@ -537,67 +616,63 @@ RPL3  equ   <span class="token number">11</span>b
 TI_GDT     equ   <span class="token number">000</span>b
 TI_LDT     equ   <span class="token number">100</span>b
 </code></pre>
-<p>&#x5C06;&#x5982;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x5230;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x9AD8;32&#x4F4D;&#x4E2D;&#x7684; 0-23&#x4F4D;</p>
+<p>&#x5C06;&#x5982;&#x4E0B;&#x7684;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x5230;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x9AD8;32&#x4F4D;&#x4E2D;&#x7684;0-23&#x4F4D;</p>
 <ul>
-<li>G&#x4F4D;</li>
+<li>G&#x4F4D;: G=1 &#x4EE3;&#x8868;&#x6BB5;&#x57FA;&#x5740;&#x7684;&#x7C92;&#x5EA6;&#x662F;4KB</li>
 </ul>
 <pre class="language-"><code class="lang-java">DESC_G_4K   equ      <span class="token number">1_00000000000000000000000</span>b
 </code></pre>
-<p>&#x5F97;&#x5230;&#xFF1A;</p>
-<p>G=1 &#x4EE3;&#x8868;&#x6BB5;&#x57FA;&#x5740;&#x7684;&#x7C92;&#x5EA6;&#x662F;4KB&#xFF08;&#x6BB5;&#x754C;&#x9650;&#x5C06;&#x8FBE;&#x5230;4G&#xFF09;</p>
 <ul>
-<li>D&#x4F4D;</li>
+<li>D&#x4F4D;:&#x5206;D&#x548C;B: 1&#x662F;D,&#x4EE3;&#x8868;&#x6570;&#x636E;&#x6BB5;;0&#x662F;B&#xFF0C;&#x4EE3;&#x8868;&#x5806;&#x6808;&#x6BB5;</li>
 </ul>
 <pre class="language-"><code class="lang-java">DESC_D_32   equ       <span class="token number">1_0000000000000000000000</span>b
 </code></pre>
-<p>&#x8FD9;&#x91CC;&#x5206;D&#x548C;B,1&#x662F;D,&#x4EE3;&#x8868;&#x6570;&#x636E;&#x6BB5;&#xFF0C;0&#x662F;B&#xFF0C;&#x4EE3;&#x8868;&#x5806;&#x6808;&#x6BB5;</p>
 <ul>
 <li>type</li>
 </ul>
 <p><img src="imgs/type.jpg" alt=""></p>
 <ul>
-<li>&#x9009;&#x62E9;&#x5B50;&#x5C5E;&#x6027;&#xFF0C;&#x9009;&#x62E9;&#x5B50;&#x6700;&#x7EC8;&#x7684;&#x5B9A;&#x4E49;&#x5728;<code>loader.S</code>&#x4E2D;</li>
+<li>&#x9009;&#x62E9;&#x5B50;&#x5C5E;&#x6027;&#xFF0C;&#x9009;&#x62E9;&#x5B50;&#x5B9A;&#x4E49;&#x5728;<code>loader.S</code>&#x4E2D;&#xFF1A;16&#x4F4D;&#xFF0C;&#x53EF;&#x4EE5;&#x7D22;&#x5F15;&#x5230;&#x5177;&#x4F53;&#x7684;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;</li>
 </ul>
-<p>&#x9009;&#x62E9;&#x5B50;&#xFF0C;16&#x4F4D;&#xFF0C;&#x53EF;&#x4EE5;&#x7D22;&#x5F15;&#x5230;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF08;&#x5FD8;&#x8BB0;&#x4E86;&#xFF0C;&#x5C31;&#x5F80;&#x4E0A;&#x7FFB;&#xFF09;</p>
+<h3 id="&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;gdt&#x7684;&#x6784;&#x9020;">&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(GDT)&#x7684;&#x6784;&#x9020;</h3>
 <ul>
-<li>&#x5168;&#x5C40;&#x63CF;&#x8FF0;&#x7B26;&#x8868;(GDT)&#x7684;&#x6784;&#x9020;</li>
+<li>&#x5B9A;&#x4E49;4&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;</li>
 </ul>
-<pre class="language-"><code class="lang-java"><span class="token punctuation">;</span>&#x6784;&#x5EFA;gdt&#x53CA;&#x5176;&#x5185;&#x90E8;&#x7684;&#x63CF;&#x8FF0;&#x7B26;
-   GDT_BASE<span class="token operator">:</span>   dd    <span class="token number">0x00000000</span> 
+<pre class="language-"><code class="lang-cpp"><span class="token punctuation">;</span>&#x6784;&#x5EFA;gdt&#x53CA;&#x5176;&#x5185;&#x90E8;&#x7684;&#x63CF;&#x8FF0;&#x7B26;
+   GDT_BASE<span class="token operator">:</span>   dd    <span class="token number">0x00000000</span>
            dd    <span class="token number">0x00000000</span>
 
-   CODE_DESC<span class="token operator">:</span>  dd    <span class="token number">0x0000FFFF</span> 
+   CODE_DESC<span class="token operator">:</span>  dd    <span class="token number">0x0000FFFF</span>
            dd    DESC_CODE_HIGH4
 
    DATA_STACK_DESC<span class="token operator">:</span>  dd    <span class="token number">0x0000FFFF</span>
              dd    DESC_DATA_HIGH4
 
-   VIDEO_DESC<span class="token operator">:</span> dd    <span class="token number">0x80000007</span>           <span class="token punctuation">;</span>limit<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0xbffff-</span><span class="token number">0xb8000</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">4</span>k<span class="token operator">=</span><span class="token number">0x7</span>
+   VIDEO_DESC<span class="token operator">:</span> dd    <span class="token number">0x80000007</span>           <span class="token punctuation">;</span>limit<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0xbffff</span><span class="token operator">-</span><span class="token number">0xb8000</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">4</span>k<span class="token operator">=</span><span class="token number">0x7</span>
            dd    DESC_VIDEO_HIGH4  <span class="token punctuation">;</span> &#x6B64;&#x65F6;dpl&#x5DF2;&#x6539;&#x4E3A;<span class="token number">0</span>
 </code></pre>
-<p>GDT&#x7684;&#x4E09;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF1A; &#x4EE3;&#x7801;&#x6BB5;&#xFF0C;&#x5806;&#x6808;&#x6BB5;&#xFF0C;&#x663E;&#x5B58;&#x6BB5;&#xFF1B;GDT&#x7684;&#x7B2C;0&#x4E2A;&#x6BB5;&#x4E0D;&#x53EF;&#x7528;</p>
-<p>&#x6BB5;&#x63CF;&#x8FF0;&#x7B26; 64bit = 8B(dd&#x662F;4&#x5B57;&#x8282;&#xFF0C;&#x6240;&#x4EE5;&#x7528;&#x4E24;&#x4E2A;ddd&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;)</p>
-<p>&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x5185;&#x5B58;&#x5730;&#x5740;<code>0xb8000</code>&#x5230;<code>0xbffff</code>&#x662F;&#x663E;&#x793A;&#x9002;&#x914D;&#x5668;BIOS&#x6240;&#x5728;&#x533A;&#x57DF;&#xFF0C;&#x5F53;&#x6BB5;&#x7C92;&#x5EA6;&#x662F;4k&#x65F6;&#xFF0C;&#x6BB5;&#x754C;&#x9650;&#x5927;&#x5C0F;&#x4E3A;<code>0xbffff-0xb800/4k</code> = 7, &#x6240;&#x4EE5;&#x6BB5;&#x754C;&#x9650;&#x8BBE;&#x4E3A;7&#xFF0C;&#x5C31;&#x8DB3;&#x591F;&#x8868;&#x793A;&#x8FD9;&#x90E8;&#x5206;&#x7684;&#x5185;&#x5B58;&#x533A;&#x57DF;&#x4E86;</p>
+<p>GDT&#x7684;&#x7B2C;0&#x4E2A;&#x6BB5;&#x4E0D;&#x53EF;&#x7528;&#xFF0C;&#x5269;&#x4E0B;&#x4E09;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF1A;&#x4EE3;&#x7801;&#x6BB5;&#xFF0C;&#x5806;&#x6808;&#x6BB5;&#xFF0C;&#x663E;&#x5B58;&#x6BB5;&#xFF1B;&#xFF08;&#x6CE8;&#xFF1A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26; 64bit = 8B(dd&#x662F;4&#x5B57;&#x8282;&#xFF0C;&#x6240;&#x4EE5;&#x7528;&#x4E24;&#x4E2A;dd&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;)</p>
+<p>&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x5185;&#x5B58;&#x5730;&#x5740;<code>0xb8000</code>&#x5230;<code>0xbffff</code>&#x662F;&#x663E;&#x793A;&#x9002;&#x914D;&#x5668;BIOS&#x6240;&#x5728;&#x533A;&#x57DF;&#xFF0C;&#x5F53;&#x6BB5;&#x7C92;&#x5EA6;&#x662F;4k&#x65F6;&#xFF0C;&#x6BB5;&#x754C;&#x9650;&#x5927;&#x5C0F;&#x4E3A;<code>0xbffff-0xb800/4k</code> = 7, &#x6240;&#x4EE5;&#x6BB5;&#x754C;&#x9650;&#x8BBE;&#x4E3A;7&#xFF0C;&#x5C31;&#x8DB3;&#x591F;&#x8868;&#x793A;&#x663E;&#x793A;&#x7684;&#x6574;&#x4E2A;&#x5185;&#x5B58;&#x533A;&#x57DF;&#x4E86;</p>
 <ul>
-<li>&#x6784;&#x9020;&#x9009;&#x62E9;&#x5B50;&#xFF08;16&#x4F4D;&#xFF0C;&#x53EF;&#x4EE5;&#x7D22;&#x5F15;&#x5230;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;13&#x4F4D;&#x7D22;&#x5F15;+1&#x4F4D;TI+2&#x4F4D;RPL&#xFF09;</li>
+<li>&#x6784;&#x9020;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#x5185;&#x5BB9;&#x5373;<strong>&#x9009;&#x62E9;&#x5B50;</strong>&#xFF08;16&#x4F4D;&#xFF0C;&#x53EF;&#x4EE5;&#x7D22;&#x5F15;&#x5230;&#x6BB5;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;13&#x4F4D;&#x7D22;&#x5F15;+1&#x4F4D;TI+2&#x4F4D;RPL&#xFF09;</li>
 </ul>
-<pre class="language-"><code class="lang-java"><span class="token class-name">SELECTOR_CODE</span> equ <span class="token punctuation">(</span><span class="token number">0x0001</span><span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0         <span class="token punctuation">;</span> &#x76F8;&#x5F53;&#x4E8E;<span class="token punctuation">(</span>CODE_DESC <span class="token operator">-</span> GDT_BASE<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">8</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0
+<pre class="language-"><code class="lang-java"><span class="token class-name">SELECTOR_CODE</span> equ <span class="token punctuation">(</span><span class="token number">0x0001</span><span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0  <span class="token punctuation">;</span> &#x76F8;&#x5F53;&#x4E8E;<span class="token punctuation">(</span>CODE_DESC <span class="token operator">-</span> GDT_BASE<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">8</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0
 
-<span class="token class-name">SELECTOR_DATA</span> equ <span class="token punctuation">(</span><span class="token number">0x0002</span><span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0     <span class="token punctuation">;</span> &#x540C;&#x4E0A;
+<span class="token class-name">SELECTOR_DATA</span> equ <span class="token punctuation">(</span><span class="token number">0x0002</span><span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0  <span class="token punctuation">;</span> &#x540C;&#x4E0A;
 
-<span class="token class-name">SELECTOR_VIDEO</span> equ <span class="token punctuation">(</span><span class="token number">0x0003</span><span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0     <span class="token punctuation">;</span> &#x540C;&#x4E0A;
+<span class="token class-name">SELECTOR_VIDEO</span> equ <span class="token punctuation">(</span><span class="token number">0x0003</span><span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> TI_GDT <span class="token operator">+</span> RPL0  <span class="token punctuation">;</span> &#x540C;&#x4E0A;
 </code></pre>
 <p>&#x4E09;&#x4E2A;&#x9009;&#x62E9;&#x5B50;&#x7684;&#x5185;&#x5BB9;&#x5206;&#x522B;&#x662F;&#xFF08;&#x6CE8;&#x610F;&#x7D22;&#x5F15;0&#x662F;&#x6CA1;&#x6709;&#x7528;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x4E09;&#x4E2A;&#x7D22;&#x5F15;1,2,3&#xFF09;&#xFF0C;&#x90FD;&#x8BBF;&#x95EE;GDT&#x800C;&#x975E;LDT, &#x8BF7;&#x6C42;&#x7279;&#x6743;&#x7EA7;&#x90FD;&#x662F;0&#x7EA7;</p>
 <pre class="language-"><code class="lang-java"><span class="token number">0000000000000</span>   <span class="token number">00</span>  <span class="token number">0</span>
 <span class="token number">1</span>   TI_GDT  RPL0
-<span class="token number">2</span>  TI_GDT  RPL0
+<span class="token number">2</span>   TI_GDT  RPL0
 <span class="token number">3</span>   TI_GDT  RPL0
 </code></pre>
 <h2 id="&#x5B9E;&#x6A21;&#x5F0F;&#x5230;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x7684;&#x8BBE;&#x7F6E;&#x548C;&#x8DF3;&#x8F6C;">&#x5B9E;&#x6A21;&#x5F0F;&#x5230;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x7684;&#x8BBE;&#x7F6E;&#x548C;&#x8DF3;&#x8F6C;</h2>
 <p>&#x8FDB;&#x5165;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x63A7;&#x5236;&#x5BC4;&#x5B58;&#x5668;&#x7684;cr0&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x5176;pe&#x4F4D;&#x7F6E;1&#xFF0C;8686&#x8981;&#x6253;&#x5F00;A20&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x5728;&#x5B9E;&#x6A21;&#x5F0F;&#x5B8C;&#x6210;&#xFF0C;&#x5B9E;&#x6A21;&#x5F0F;&#x4E5F;&#x4F1A;&#x8BBE;&#x7F6E;GDT</p>
-<pre class="language-"><code class="lang-java">lgdt <span class="token punctuation">[</span>gdt_ptr<span class="token punctuation">]</span>
+<pre class="language-"><code class="lang-cpp">lgdt <span class="token punctuation">[</span>gdt_ptr<span class="token punctuation">]</span>
 </code></pre>
-<p>GDT&#x7531;gdtr&#x5BC4;&#x5B58;&#x5668;&#x52A0;&#x8F7D;(gdtr 48bit=6B,&#x524D;16bit&#x754C;&#x9650;&#xFF0C;&#x540E;32bit&#x662F;&#x8D77;&#x59CB;&#x5730;&#x5740;)</p>
+<p>GDT&#x7531;<code>gdtr&#x5BC4;&#x5B58;&#x5668;</code>&#x52A0;&#x8F7D;(gdtr&#x5171;48bit=6B,&#x524D;16bit&#x754C;&#x9650;&#xFF0C;&#x540E;32bit&#x662F;&#x8D77;&#x59CB;&#x5730;&#x5740;)</p>
 <pre class="language-"><code class="lang-java">GDT_SIZE   equ   $ <span class="token operator">-</span> GDT_BASE
 GDT_LIMIT   equ   GDT_SIZE <span class="token operator">-</span>    <span class="token number">1</span>
 times <span class="token number">60</span> dq <span class="token number">0</span>                     <span class="token punctuation">;</span> &#x6B64;&#x5904;&#x9884;&#x7559;<span class="token number">60</span>&#x4E2A;&#x63CF;&#x8FF0;&#x7B26;&#x7684;slot
@@ -624,11 +699,11 @@ gdt_ptr  dw  GDT_LIMIT
 
    jmp $
 </code></pre>
-<p>&#x9996;&#x5148;&#x9009;&#x62E9;&#x5B50;&#x5047;&#x52A0;&#x8F7D;&#x5230;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x5176;&#x4E2D;0xb8000-0xbfff&#x8FD9;&#x4E2A;&#x6587;&#x672C;&#x663E;&#x793A;BIOS&#x5185;&#x5B58;&#x533A;&#x57DF;&#x52A0;&#x8F7D;&#x5230;&#x4E86;gs&#xFF0C;&#x90A3;&#x4E48;&#x5F80;gs&#x5199;&#x6570;&#x636E;&#xFF0C;&#x5C31;&#x662F;&#x64CD;&#x4F5C;0xb8000-0xbfff&#x8FD9;&#x5757;&#x5185;&#x5B58;&#xFF0C;&#x6570;&#x636E;&#x4E5F;&#x5C31;&#x80FD;&#x6B63;&#x5E38;&#x663E;&#x793A;&#x4E86;</p>
+<p>&#x9996;&#x5148;&#x9009;&#x62E9;&#x5B50;&#x52A0;&#x8F7D;&#x5230;&#x5404;&#x4E2A;&#x6BB5;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x5176;&#x4E2D;<code>0xb8000-0xbfff</code>&#x8FD9;&#x4E2A;&#x662F;&#x663E;&#x793A;&#x9002;&#x914D;&#x5668;BIOS&#x6240;&#x5728;&#x533A;&#x57DF;&#xFF0C;&#x5C06;<code>SELECTOR_VIDEO</code>&#x6BB5;&#x52A0;&#x8F7D;&#x5230;&#x4E86;gs,&#x4E5F;&#x5373;<code>0xb8000-0xbfff</code>&#x8FD9;&#x5757;&#x5185;&#x5B58;&#x52A0;&#x8F7D;&#x5230;gs&#xFF0C;&#x90A3;&#x4E48;&#x64CD;&#x4F5C;gs&#x5199;&#x5165;&#x6570;&#x636E;&#xFF0C;&#x6587;&#x672C;&#x5C31;&#x80FD;&#x6B63;&#x5E38;&#x663E;&#x793A;&#x5230;&#x5C4F;&#x5E55;&#x4E86;</p>
 <p>&#x6309;&#x7167;&#x4E0A;&#x4E00;&#x8282;&#x64CD;&#x4F5C;&#x8FD0;&#x884C;&#x540E;&#x5F97;&#x5230;&#x7684;&#x622A;&#x56FE;&#xFF0C; &#x5B9E;&#x6A21;&#x5F0F;&#x548C;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x90FD;&#x80FD;&#x663E;&#x793A;&#x6587;&#x672C;</p>
 <p><img src="imgs/ans.jpg" alt=""></p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 18:31:36
+2020-08-29 12:46:57
 </span></footer>
                                 
                                 </section>
@@ -661,7 +736,7 @@ gdt_ptr  dw  GDT_LIMIT
                 </a>
                 
                 
-                <a href="../04_page/" class="navigation navigation-next " aria-label="Next page: 4 分段 & 分页">
+                <a href="../04_page/" class="navigation navigation-next " aria-label="Next page: 4 分页">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -672,7 +747,7 @@ gdt_ptr  dw  GDT_LIMIT
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3 实模式到保护模式（GDT,gdtr,选择子)","level":"1.4","depth":1,"next":{"title":"4 分段 & 分页","level":"1.5","depth":1,"path":"content/04_page/README.md","ref":"./content/04_page/README.md","articles":[]},"previous":{"title":"2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）","level":"1.3","depth":1,"path":"content/02_mbr_hd/README.md","ref":"./content/02_mbr_hd/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/03_protected_mode/README.md","mtime":"2020-08-02T10:31:36.083Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-02T14:34:24.125Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3 实模式到保护模式（分段)","level":"1.5","depth":1,"next":{"title":"4 分页","level":"1.6","depth":1,"path":"content/04_page/README.md","ref":"./content/04_page/README.md","articles":[]},"previous":{"title":"2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）","level":"1.4","depth":1,"path":"content/02_mbr_hd/README.md","ref":"./content/02_mbr_hd/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/03_protected_mode/README.md","mtime":"2020-08-29T04:46:57.950Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-29T05:16:00.780Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

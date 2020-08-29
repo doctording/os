@@ -1,0 +1,728 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>call和ret指令 · spring-note</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="doctording">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-codeblock-filename/block.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../01_BIOS_to_MBR/" />
+    
+    
+    <link rel="prev" href="cpu.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="cpu.html">
+            
+                <a href="cpu.html">
+            
+                    
+                    0 CPU基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="call_ret.html">
+            
+                <a href="call_ret.html">
+            
+                    
+                    call和ret指令
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../01_BIOS_to_MBR/">
+            
+                <a href="../01_BIOS_to_MBR/">
+            
+                    
+                    1 最简单的OS:实模式下BIOS到MBR
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../02_mbr_hd/">
+            
+                <a href="../02_mbr_hd/">
+            
+                    
+                    2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../03_protected_mode/">
+            
+                <a href="../03_protected_mode/">
+            
+                    
+                    3 实模式到保护模式（分段)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../04_page/">
+            
+                <a href="../04_page/">
+            
+                    
+                    4 分页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../05_efi/">
+            
+                <a href="../05_efi/">
+            
+                    
+                    5 ELF文件理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../06_kernel_start/">
+            
+                <a href="../06_kernel_start/">
+            
+                    
+                    6 C语言写内核
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../07_interrupt/">
+            
+                <a href="../07_interrupt/">
+            
+                    
+                    7 中断基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../08_assert/">
+            
+                <a href="../08_assert/">
+            
+                    
+                    8 内核Assert函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../09_memory_management/">
+            
+                <a href="../09_memory_management/">
+            
+                    
+                    9 内存管理，内存池，地址映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../10_process_thread/">
+            
+                <a href="../10_process_thread/">
+            
+                    
+                    10 内核实现线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../11_thread_schedule/">
+            
+                <a href="../11_thread_schedule/">
+            
+                    
+                    11 多线程调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../12_lock/">
+            
+                <a href="../12_lock/">
+            
+                    
+                    12 锁&信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../13_input/">
+            
+                <a href="../13_input/">
+            
+                    
+                    13 键盘输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../14_input_buffer/">
+            
+                <a href="../14_input_buffer/">
+            
+                    
+                    14 缓冲区
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../15_user_process/">
+            
+                <a href="../15_user_process/">
+            
+                    
+                    15 指令特权级，用户进程引入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../16_system_call/">
+            
+                <a href="../16_system_call/">
+            
+                    
+                    16 系统调用实现用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="../17_hd_driver/">
+            
+                <a href="../17_hd_driver/">
+            
+                    
+                    17 硬件驱动认识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="../18_filesystem/">
+            
+                <a href="../18_filesystem/">
+            
+                    
+                    18 硬盘到文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="../19_fd_inode_dir_file/">
+            
+                <a href="../19_fd_inode_dir_file/">
+            
+                    
+                    19 文件描述符操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="../20_shell/">
+            
+                <a href="../20_shell/">
+            
+                    
+                    20 shell简单实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >call和ret指令</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#call-ret&#x6307;&#x4EE4;">call ret&#x6307;&#x4EE4;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;">&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;</a><i></i></div></li>
+<li><div><a href="#&#x5185;&#x5B58;&#x6808;&#x548C;call&#x6307;&#x4EE4;">&#x5185;&#x5B58;&#x6808;&#x548C;call&#x6307;&#x4EE4;</a><i></i></div></li>
+<li><div><a href="#&#x6267;&#x884C;&#x6808;&#x7684;&#x53D8;&#x5316;&#x5206;&#x6790;">&#x6267;&#x884C;&#x6808;&#x7684;&#x53D8;&#x5316;&#x5206;&#x6790;</a><i></i></div></li>
+<li><div><a href="#ret&#x6307;&#x4EE4;">ret&#x6307;&#x4EE4;</a><i></i></div></li>
+</ul></li>
+</ul>
+</div>
+
+<h1 id="call-ret&#x6307;&#x4EE4;">call ret&#x6307;&#x4EE4;</h1>
+<h2 id="&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;">&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;</h2>
+<ul>
+<li>windows&#x5E73;&#x53F0;&#x4E0B;&#x7684;c&#x7A0B;&#x5E8F;</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token keyword">int</span> <span class="token function">fun</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    a <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    b <span class="token operator">*=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>    
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token function">fun</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>    
+<span class="token number">00938270</span>  push        ebp  
+<span class="token number">00938271</span>  mov         ebp<span class="token punctuation">,</span>esp  
+<span class="token number">00938273</span>  sub         esp<span class="token punctuation">,</span><span class="token number">0E4</span>h  
+<span class="token number">00938279</span>  push        ebx  
+<span class="token number">0093827</span>A  push        esi  
+<span class="token number">0093827</span>B  push        edi  
+<span class="token number">0093827</span>C  lea         edi<span class="token punctuation">,</span><span class="token punctuation">[</span>ebp<span class="token operator">-</span><span class="token number">0E4</span>h<span class="token punctuation">]</span>  
+<span class="token number">00938282</span>  mov         ecx<span class="token punctuation">,</span><span class="token number">39</span>h  
+<span class="token number">00938287</span>  mov         eax<span class="token punctuation">,</span><span class="token number">0</span>CCCCCCCCh  
+<span class="token number">0093828</span>C  rep stos    dword ptr es<span class="token operator">:</span><span class="token punctuation">[</span>edi<span class="token punctuation">]</span>  
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token number">0093828</span>E  mov         dword ptr <span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">1</span>  
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token number">00938295</span>  mov         dword ptr <span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2</span>  
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token function">fun</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">0093829</span>C  mov         eax<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>b<span class="token punctuation">]</span>  
+<span class="token number">0093829F</span>  push        eax  
+<span class="token number">009382</span>A0  mov         ecx<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>a<span class="token punctuation">]</span>  
+<span class="token number">009382</span>A3  push        ecx  
+<span class="token number">009382</span>A4  call        <span class="token function">fun</span> <span class="token punctuation">(</span><span class="token number">93710</span>Dh<span class="token punctuation">)</span>  
+<span class="token number">009382</span>A9  add         esp<span class="token punctuation">,</span><span class="token number">8</span>  
+<span class="token number">009382</span>AC  mov         dword ptr <span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span>eax  
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">009382</span>AF  mov         eax<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>c<span class="token punctuation">]</span>  
+<span class="token number">009382</span>B2  push        eax  
+<span class="token number">009382</span>B3  push        offset string <span class="token string">&quot;%d&quot;</span> <span class="token punctuation">(</span><span class="token number">983</span>EE8h<span class="token punctuation">)</span>  
+<span class="token number">009382</span>B8  call        @ILT<span class="token operator">+</span><span class="token number">3880</span><span class="token punctuation">(</span>_printf<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token number">936F</span>2Dh<span class="token punctuation">)</span>  
+<span class="token number">009382</span>BD  add         esp<span class="token punctuation">,</span><span class="token number">8</span>  
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token number">009382</span>C0  <span class="token operator">xor</span>         eax<span class="token punctuation">,</span>eax  
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="&#x5185;&#x5B58;&#x6808;&#x548C;call&#x6307;&#x4EE4;">&#x5185;&#x5B58;&#x6808;&#x548C;call&#x6307;&#x4EE4;</h2>
+<p><img src="imgs/stack.jpeg" alt=""></p>
+<p>&#x6CE8;&#x610F;&#x5230;&#xFF1A;<font color="red">&#x51FD;&#x6570;&#x8C03;&#x7528;&#x4E00;&#x5B9A;&#x662F;call&#x6307;&#x4EE4;</font></p>
+<pre class="language-"><code class="lang-cpp"><span class="token number">009382</span>A4  call        <span class="token function">fun</span> <span class="token punctuation">(</span><span class="token number">93710</span>Dh<span class="token punctuation">)</span>
+</code></pre>
+<p>&#x6CE8;&#x610F;&#x5230;call&#x6307;&#x4EE4;&#x4E4B;&#x524D;&#x7684;&#x4E00;&#x4E9B;&#x6307;&#x4EE4;: &#x662F;&#x53C2;&#x6570;&#x5165;&#x6808;&#xFF0C;&#x800C;&#x4E14;&#x662F;<strong>&#x4ECE;&#x53F3;&#x5230;&#x5DE6;</strong>&#x7684;&#x987A;&#x5E8F;</p>
+<pre class="language-"><code class="lang-cpp"><span class="token number">0093829</span>C  mov         eax<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>b<span class="token punctuation">]</span>  
+<span class="token number">0093829F</span>  push        eax  
+<span class="token number">009382</span>A0  mov         ecx<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>a<span class="token punctuation">]</span>  
+<span class="token number">009382</span>A3  push        ecx
+</code></pre>
+<p>CALL&#x6307;&#x4EE4;&#xFF08;&quot;&#x8C03;&#x7528;&quot;&#x6307;&#x4EE4;&#xFF09;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5C31;&#x662F;&#x4EE5;&#x4E0B;&#x4E24;&#x70B9;&#xFF1A;</p>
+<ol>
+<li>&#x5C06;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x6240;&#x5728;&#x5730;&#x5740;&#xFF08;&#x5373;&#x5F53;&#x524D;&#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;PC&#x7684;&#x5185;&#x5BB9;&#xFF09;&#x5165;&#x6808;&#xFF08;&#x7406;&#x89E3;&#x4E3A;&#x4FDD;&#x62A4;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x6808;&#xFF09;</li>
+<li>&#x5E76;&#x5C06;&#x5B50;&#x7A0B;&#x5E8F;&#x7684;&#x8D77;&#x59CB;&#x5730;&#x5740;&#x9001;&#x5165;PC&#xFF08;&#x4E8E;&#x662F;CPU&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x5C31;&#x4F1A;&#x8F6C;&#x53BB;&#x6267;&#x884C;&#x5B50;&#x7A0B;&#x5E8F;&#xFF09;</li>
+</ol>
+<h2 id="&#x6267;&#x884C;&#x6808;&#x7684;&#x53D8;&#x5316;&#x5206;&#x6790;">&#x6267;&#x884C;&#x6808;&#x7684;&#x53D8;&#x5316;&#x5206;&#x6790;</h2>
+<ol>
+<li>&#x5728;main&#x7EBF;&#x7A0B;&#x6808;&#x4E2D;&#xFF0C;&#x5C06;&#x53C2;&#x6570;&#x538B;&#x5165;&#xFF0C;&#x5E76;&#x5C06;call&#x6307;&#x4EE4;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x6240;&#x5728;&#x5730;&#x5740;&#x4E5F;&#x538B;&#x5165;&#x6808;</li>
+</ol>
+<p><img src="imgs/stack_main.jpeg" alt=""></p>
+<ol>
+<li>call&#x4E4B;&#x540E;&#xFF0C;debug&#x5C31;&#x80FD;&#x8FDB;&#x5165;fun&#x51FD;&#x6570;&#x91CC;&#x9762;&#xFF0C;&#x6B64;&#x65F6;&#x7684;&#x64CD;&#x4F5C;&#x65F6;<code>push ebp</code></li>
+</ol>
+<p>&#x8FD9;&#x662F;&#x4FDD;&#x5B58;&#x4E0A;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x6808;&#x7684;ebp, &#x4E5F;&#x5C31;&#x662F;&#x4FDD;&#x5B58;main&#x51FD;&#x6570;&#x6808;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;main&#x51FD;&#x6570;&#x5F00;&#x5934;&#x4E5F;&#x662F;&#x8FD9;&#x4E00;&#x53E5;&#x3002;&#xFF08;&#x6240;&#x4EE5;&#xFF0C;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x51FD;&#x6570;&#x6808;&#xFF0C;&#x4F46;&#x90FD;&#x662F;&#x5728;&#x6574;&#x4E2A;&#x5185;&#x5B58;&#x6808;&#x4E2D;&#xFF09;</p>
+<ol>
+<li>push&#x6307;&#x4EE4;&#x540E;&#xFF0C;esp&#x662F;&#x81EA;&#x52A8;&#x5F80;&#x4E0B;&#x79FB;&#x52A8;&#x4E86;&#x7684;&#xFF0C;&#x8FD9;&#x4E00;&#x4E2A;&#x662F;&#x628A;&#x5F53;&#x524D;&#x7684;esp&#x8D4B;&#x503C;&#x7ED9;ebp&#xFF08;&#x6240;&#x4EE5;&#xFF0C;main&#x51FD;&#x6570;&#x7684;ebp&#xFF0C;&#x4FDD;&#x5B58;&#x4E86;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;ebp&#x53D8;&#x5316;&#x4E86;&#xFF0C;&#x4E5F;&#x5C31;&#x5F62;&#x6210;&#x4E86;fun&#x51FD;&#x6570;&#x81EA;&#x5DF1;&#x7684;&#x51FD;&#x6570;&#x6808;&#x4E86;&#xFF09;</li>
+</ol>
+<pre class="language-"><code class="lang-cpp">mov         ebp<span class="token punctuation">,</span>esp  
+sub         esp<span class="token punctuation">,</span><span class="token number">0</span>CCh
+</code></pre>
+<p>sub&#x64CD;&#x4F5C;&#x662F;&#x7ED9;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x5206;&#x914D;&#x6808;&#x5927;&#x5C0F;&#x7684;&#x521D;&#x59CB;&#x7A7A;&#x95F4;</p>
+<ol>
+<li>&#x63A5;&#x7740;&#x8FDB;&#x5165;&#x5230;fun&#x51FD;&#x6570;&#x6808;&#x4E86;</li>
+</ol>
+<p><img src="imgs/stack_fun.jpeg" alt=""></p>
+<ol>
+<li>return</li>
+</ol>
+<pre class="language-"><code class="lang-cpp">    <span class="token keyword">return</span> c<span class="token punctuation">;</span>
+<span class="token number">011</span>C8248  mov         eax<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>c<span class="token punctuation">]</span>  
+<span class="token punctuation">}</span>
+<span class="token number">011</span>C824B  pop         edi  
+<span class="token number">011</span>C824C  pop         esi  
+<span class="token number">011</span>C824D  pop         ebx  
+<span class="token number">011</span>C824E  mov         esp<span class="token punctuation">,</span>ebp  
+<span class="token number">011</span>C8250  pop         ebp  
+<span class="token number">011</span>C8251  ret
+</code></pre>
+<p>return&#x8BED;&#x53E5;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6700;&#x540E;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x5B58;&#x5230;&#x4E86;eax&#x4E2D;, fun&#x51FD;&#x6570;&#x7684;&#x6700;&#x540E;3&#x6761;&#x6307;&#x4EE4;</p>
+<pre class="language-"><code class="lang-cpp"><span class="token number">011</span>C824E  mov         esp<span class="token punctuation">,</span>ebp  
+<span class="token number">011</span>C8250  pop         ebp  
+<span class="token number">011</span>C8251  ret
+</code></pre>
+<ul>
+<li><code>mov esp, ebp</code>&#x5C31;&#x662F;&#x6E05;&#x9664;fun&#x7684;&#x51FD;&#x6570;&#x6808;&#xFF0C;&#x73B0;&#x5728;esp&#x6307;&#x5411;&#x4E86;ebp&#xFF08;ebp&#x5C31;&#x662F;&#x539F;&#x6765;fun&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E95;&#x5730;&#x5740;&#xFF09;</li>
+<li><code>pop ebp</code>&#x5C31;&#x662F;&#x5F39;&#x51FA;main&#x51FD;&#x6570;&#x7684;ebp</li>
+</ul>
+<p>&#x5373;&#x5982;&#x4E0B;&#x7684;1,2&#x64CD;&#x4F5C;&#xFF0C;&#x63A5;&#x7740;&#x51FD;&#x6570;&#x6808;&#x53D8;&#x6210;&#x4E86;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x7EA2;&#x8272;&#x6846;&#x91CC;&#x9762;&#x7684;&#x5185;&#x5BB9;&#xFF1A;</p>
+<p><img src="imgs/stack_main2.jpeg" alt=""></p>
+<h2 id="ret&#x6307;&#x4EE4;">ret&#x6307;&#x4EE4;</h2>
+<p>ret&#x6307;&#x4EE4;&#x7528;&#x6808;&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4FEE;&#x6539;IP&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x8FD1;&#x8F6C;&#x79FB;&#xFF1B; CPU&#x6267;&#x884C;ret&#x6307;&#x4EE4;&#x65F6;&#xFF0C;&#x8FDB;&#x884C;&#x4E0B;&#x9762;&#x7684;&#x4E24;&#x6B65;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<ol>
+<li>(IP) = ((ss)*16 +(sp))</li>
+<li>(sp) = (sp)+2</li>
+</ol>
+<p>&#x7ECF;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x6761;&#x8BED;&#x53E5;&#x540E;&#xFF0C;esp&#x6307;&#x5411;&#x4E86; &#x4E0A;&#x56FE;&#x4E2D;[call&#x6307;&#x4EE4;&#x4E0B;&#x4E00;&#x4E2A;&#x6307;&#x4EE4;&#x7684;&#x6240;&#x5728;&#x5730;&#x5740;] &#x90A3;&#x91CC;&#xFF0C; IP&#x521A;&#x597D;&#x53D6;&#x5F97;&#x5730;&#x5740;&#xFF0C;&#x7136;&#x540E;&#x56DE;&#x5230;&#x539F;&#x6765;&#xFF0C;main&#x51FD;&#x6570;&#x7684;&#x5730;&#x65B9;</p>
+<p>&#x63A5;&#x7740; esp &#x589E;&#x52A0;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x51FA;&#x6808;&#xFF0C;&#x6240;&#x4EE5; main&#x51FD;&#x6570;&#x6808;&#x5982;&#x4E0B;</p>
+<p><img src="imgs/stack_main3.jpeg" alt=""></p>
+<p>&#x56DE;&#x5230;main&#x51FD;&#x6570;&#x4E2D;</p>
+<pre class="language-"><code class="lang-cpp"><span class="token number">011</span>C82A4  call        <span class="token function">fun</span> <span class="token punctuation">(</span><span class="token number">11</span>C710Dh<span class="token punctuation">)</span>  
+<span class="token number">011</span>C82A9  add         esp<span class="token punctuation">,</span><span class="token number">8</span>  
+<span class="token number">011</span>C82AC  mov         dword ptr <span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span>eax  
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">011</span>C82AF  mov         eax<span class="token punctuation">,</span>dword ptr <span class="token punctuation">[</span>c<span class="token punctuation">]</span>  
+<span class="token number">011</span>C82B2  push        eax  
+<span class="token number">011</span>C82B3  push        offset string <span class="token string">&quot;%d&quot;</span> <span class="token punctuation">(</span><span class="token number">1213</span>EE8h<span class="token punctuation">)</span>  
+<span class="token number">011</span>C82B8  call        @ILT<span class="token operator">+</span><span class="token number">3880</span><span class="token punctuation">(</span>_printf<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token number">11</span>C6F2Dh<span class="token punctuation">)</span>  
+<span class="token number">011</span>C82BD  add         esp<span class="token punctuation">,</span><span class="token number">8</span>
+</code></pre>
+<p>call&#x6307;&#x4EE4;&#x4E4B;&#x540E;&#x662F;<code>add esp 8</code>&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x6709;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x6240;&#x4EE5;<code>add esp 8</code> &#xFF0C;&#x5F39;&#x51FA;&#x4E24;&#x4E2A;int&#x53C2;&#x6570;</p>
+<p><code>mov dword ptr [c],eax</code>&#x64CD;&#x4F5C;&#x5219;&#x662F;&#x628A;fun&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x5B58;&#x50A8;&#x5230;&#x53D8;&#x91CF;c&#x4E2D;&#xFF0C;&#x5373;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x5B8C;&#x540E;&#xFF0C;&#x4E00;&#x5207;&#x6062;&#x590D;&#x6B63;&#x5E38;&#xFF08;fun&#x51FD;&#x6570;&#x6808;&#x5DF2;&#x7ECF;&#x88AB;&#x6E05;&#x9664;&#x6389;&#x4E86;&#xFF09;&#xFF1B;&#x56DE;&#x5230;main&#x7684;&#x51FD;&#x6570;&#x6808;&#x4E2D;&#xFF0C;&#x5373;&#x5982;&#x4E0B;&#x56FE;</p>
+<p><img src="imgs/stack_main4.jpeg" alt=""></p>
+<footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
+2020-08-28 23:01:04
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="cpu.html" class="navigation navigation-prev " aria-label="Previous page: 0 CPU基础">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../01_BIOS_to_MBR/" class="navigation navigation-next " aria-label="Next page: 1 最简单的OS:实模式下BIOS到MBR">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"call和ret指令","level":"1.2.1","depth":2,"next":{"title":"1 最简单的OS:实模式下BIOS到MBR","level":"1.3","depth":1,"path":"content/01_BIOS_to_MBR/README.md","ref":"./content/01_BIOS_to_MBR/README.md","articles":[]},"previous":{"title":"0 CPU基础","level":"1.2","depth":1,"path":"content/00_cpu/cpu.md","ref":"./content/00_cpu/cpu.md","articles":[{"title":"call和ret指令","level":"1.2.1","depth":2,"path":"content/00_cpu/call_ret.md","ref":"./content/00_cpu/call_ret.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/00_cpu/call_ret.md","mtime":"2020-08-28T15:01:04.721Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-29T05:16:00.780Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
