@@ -6,6 +6,7 @@
 * [2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）](./content/02_mbr_hd/README.md)
 * [3 实模式到保护模式（分段)](./content/03_protected_mode/README.md)
 * [4 分页](./content/04_page/README.md)
+    * [虚拟内存](./content/04_page/vm.md)
 * [5 ELF文件理解](./content/05_efi/README.md)
 * [6 C语言写内核](./content/06_kernel_start/README.md)
 * [7 中断基础](./content/07_interrupt/README.md)
