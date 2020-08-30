@@ -216,6 +216,25 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../04_page/vm.html">
+            
+                <a href="../04_page/vm.html">
+            
+                    
+                    虚拟内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
         <li class="chapter " data-level="1.7" data-path="../05_efi/">
@@ -611,10 +630,15 @@
 <span class="token macro property">#<span class="token directive keyword">endif</span></span>
 </code></pre>
 <p>&#x4EE5;&#x9875;&#x4E3A;&#x5355;&#x4F4D;&#x7BA1;&#x7406;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5206;&#x914D;&#x60C5;&#x51B5;&#xFF1B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E5F;&#x8981;&#x5206;&#x914D;&#x3002;&#x867D;&#x7136;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x62E5;&#x6709;&#x76F8;&#x540C;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x4F46;&#x7A76;&#x5176;&#x539F;&#x56E0;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x7269;&#x7406;&#x5730;&#x5740;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x5185;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5FC5;&#x7136;&#x662F;&#x552F;&#x4E00;&#x7684;&#xFF0C;&#x8FD9;&#x901A;&#x5E38;&#x662F;&#x7531;&#x94FE;&#x63A5;&#x5668;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7684;&#xFF1B;&#x8FDB;&#x7A0B;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x4ECE;&#x5806;&#x4E2D;&#x7533;&#x8BF7;&#x5185;&#x5B58;&#xFF0C;&#x7CFB;&#x7EDF;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E5F;&#x5C5E;&#x4E8E;&#x6B64;&#x8FDB;&#x7A0B;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF0C;&#x4E5F;&#x5FC5;&#x987B;&#x8981;&#x4FDD;&#x8BC1;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x552F;&#x4E00;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x7528;&#x4F4D;&#x56FE;&#x6765;&#x8BB0;&#x5F55;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5206;&#x914D;&#x60C5;&#x51B5;&#x3002;</p>
-<p>&#x91C7;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;&#xFF0C;1&#x4F4D;&#x5BF9;&#x5E94;&#x4E00;&#x9875;&#x5927;&#x5C0F;4KB&#xFF1B;&#x5BF9;&#x4E8E;bochs&#x8BBE;&#x7F6E;&#x7684;32MB&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58; &#xFF0C;&#x9700;&#x8981;<code>1024 * 8 &#x4F4D; = 1024&#x5B57;&#x8282; = 1KB</code>&#xFF0C;&#x5373;&#x4F4D;&#x56FE;&#x5B58;&#x50A8;&#x9700;&#x8981;1/4&#x9875;&#x3002;&#x672C;&#x4F8B;&#x91C7;&#x7528;4&#x9875;&#x6765;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5373;&#x6700;&#x5927;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;512MB(<code>4 * 4 * 32MB</code>)&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</p>
+<p>&#x91C7;&#x7528;&#x4F4D;&#x56FE;&#x7BA1;&#x7406;&#x5185;&#x5B58;&#xFF0C;1&#x4F4D;&#x5BF9;&#x5E94;&#x4E00;&#x9875;&#x5927;&#x5C0F;4KB&#xFF1B;&#x5BF9;&#x4E8E;bochs&#x8BBE;&#x7F6E;&#x7684;32MB&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58; &#xFF0C;&#x9700;&#x8981;<code>32M / 4K = 8K bit = 1K&#x5B57;&#x8282;</code>&#xFF0C;&#x4E5F;&#x5373;&#x4F4D;&#x56FE;&#x5B58;&#x50A8;&#x9700;&#x8981;1/4&#x9875;,&#x5373;1/4&#x9875;&#x5C31;&#x53EF;&#x4EE5;&#x8868;&#x793A;32M&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E86;&#xFF0C;&#x672C;&#x4F8B;&#x91C7;&#x7528;4&#x9875;&#x6765;&#x7BA1;&#x7406;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x90A3;&#x4E48;&#x6700;&#x5927;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;512MB&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</p>
 <h3 id="&#x5185;&#x5B58;&#x5206;&#x5E03;">&#x5185;&#x5B58;&#x5206;&#x5E03;</h3>
 <p>&#x6211;&#x4EEC;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5177;&#x4F53;&#x7684;&#x5185;&#x5B58;&#x60C5;&#x51B5;&#x5982;&#x4E0B;&#x56FE;</p>
 <p><img src="imgs/mem.jpg" alt=""></p>
+<ol>
+<li>&#x7269;&#x7406;&#x5185;&#x5B58;&#x4F4E;1M&#x7528;&#x6765;&#x5B58;&#x50A8;&#x5FC5;&#x8981;&#x7684;&#x4FE1;&#x606F;&#xFF1A;MBR,loader,GDT,&#x4F4D;&#x56FE;&#xFF0C;&#x5185;&#x6838;&#x6808;&#x7B49;&#x7B49;&#x4FE1;&#x606F;</li>
+<li>&#x5206;&#x9875;&#x6240;&#x9700;&#x7684;&#x9875;&#x76EE;&#x5F55;&#x8868;&#xFF0C;&#x9875;&#x8868;&#x7B49;&#x63A5;&#x7740;&#x5B58;&#x50A8;&#x5230;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2D;</li>
+<li>&#x5269;&#x4E0B;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x624D;&#x662F;&#x771F;&#x6B63;&#x53EF;&#x7528;&#x7684;&#xFF0C;&#x8FD9;&#x4E9B;&#x5185;&#x5B58;&#x8981;&#x7ED9;&#x5185;&#x6838;&#x548C;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7528;</li>
+</ol>
 <p><img src="imgs/mem2.jpg" alt=""></p>
 <p>&#x4E3B;&#x8981;&#x6211;&#x4EEC;&#x7684;&#x5185;&#x5B58;&#x90FD;&#x662F;&#x6574;&#x9875;&#x7684;&#xFF0C;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x6D6A;&#x8D39;&#x4E00;&#x4E9B;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5185;&#x5B58;&#x6C60;&#x53D6;&#x5185;&#x5B58;&#x4E5F;&#x662F;&#x6574;&#x9875;&#x6574;&#x9875;&#x7684;&#x5206;&#x914D;&#x7684;&#x3002;</p>
 <p>&#x770B;&#x770B;&#x6570;&#x636E;&#x7ED3;&#x6784;</p>
@@ -768,7 +792,7 @@
 <p><img src="imgs/rs2.jpg" alt=""></p>
 <p>&#x4F4E;&#x4E09;&#x4F4D;&#x662F;1&#xFF0C;&#x8BF4;&#x660E;&#x7533;&#x8BF7;&#x4E86;3&#x4E2A;&#x9875;&#xFF0C;&#x7B26;&#x5408;&#x9884;&#x671F;</p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-29 17:47:09
+2020-08-30 21:56:31
 </span></footer>
                                 
                                 </section>
@@ -812,7 +836,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"9 内存管理，内存池，地址映射","level":"1.11","depth":1,"next":{"title":"10 内核实现线程","level":"1.12","depth":1,"path":"content/10_process_thread/README.md","ref":"./content/10_process_thread/README.md","articles":[]},"previous":{"title":"8 内核Assert函数","level":"1.10","depth":1,"path":"content/08_assert/README.md","ref":"./content/08_assert/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/09_memory_management/README.md","mtime":"2020-08-29T09:47:09.309Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-29T09:54:37.853Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"9 内存管理，内存池，地址映射","level":"1.11","depth":1,"next":{"title":"10 内核实现线程","level":"1.12","depth":1,"path":"content/10_process_thread/README.md","ref":"./content/10_process_thread/README.md","articles":[]},"previous":{"title":"8 内核Assert函数","level":"1.10","depth":1,"path":"content/08_assert/README.md","ref":"./content/08_assert/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/09_memory_management/README.md","mtime":"2020-08-30T13:56:31.167Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-30T14:30:54.566Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
