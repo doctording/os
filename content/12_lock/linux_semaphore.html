@@ -1,0 +1,868 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>linux信号量实践 · spring-note</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="doctording">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-codeblock-filename/block.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../13_input/" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../00_cpu/cpu.html">
+            
+                <a href="../00_cpu/cpu.html">
+            
+                    
+                    0 CPU基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../00_cpu/call_ret.html">
+            
+                <a href="../00_cpu/call_ret.html">
+            
+                    
+                    call和ret指令
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../01_BIOS_to_MBR/">
+            
+                <a href="../01_BIOS_to_MBR/">
+            
+                    
+                    1 最简单的OS:实模式下BIOS到MBR
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../02_mbr_hd/">
+            
+                <a href="../02_mbr_hd/">
+            
+                    
+                    2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../03_protected_mode/">
+            
+                <a href="../03_protected_mode/">
+            
+                    
+                    3 实模式到保护模式（分段)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../04_page/">
+            
+                <a href="../04_page/">
+            
+                    
+                    4 分页
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../04_page/vm.html">
+            
+                <a href="../04_page/vm.html">
+            
+                    
+                    虚拟内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../05_efi/">
+            
+                <a href="../05_efi/">
+            
+                    
+                    5 ELF文件理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../06_kernel_start/">
+            
+                <a href="../06_kernel_start/">
+            
+                    
+                    6 C语言写内核
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../07_interrupt/">
+            
+                <a href="../07_interrupt/">
+            
+                    
+                    7 中断基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../08_assert/">
+            
+                <a href="../08_assert/">
+            
+                    
+                    8 内核Assert函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../09_memory_management/">
+            
+                <a href="../09_memory_management/">
+            
+                    
+                    9 内存管理，内存池，地址映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../10_process_thread/">
+            
+                <a href="../10_process_thread/">
+            
+                    
+                    10 内核实现线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../11_thread_schedule/">
+            
+                <a href="../11_thread_schedule/">
+            
+                    
+                    11 多线程调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    12 锁&信号量
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.14.1" data-path="linux_semaphore.html">
+            
+                <a href="linux_semaphore.html">
+            
+                    
+                    linux信号量实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../13_input/">
+            
+                <a href="../13_input/">
+            
+                    
+                    13 键盘输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../14_input_buffer/">
+            
+                <a href="../14_input_buffer/">
+            
+                    
+                    14 缓冲区
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../15_user_process/">
+            
+                <a href="../15_user_process/">
+            
+                    
+                    15 指令特权级，用户进程引入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../16_system_call/">
+            
+                <a href="../16_system_call/">
+            
+                    
+                    16 系统调用实现用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="../17_hd_driver/">
+            
+                <a href="../17_hd_driver/">
+            
+                    
+                    17 硬件驱动认识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="../18_filesystem/">
+            
+                <a href="../18_filesystem/">
+            
+                    
+                    18 硬盘到文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="../19_fd_inode_dir_file/">
+            
+                <a href="../19_fd_inode_dir_file/">
+            
+                    
+                    19 文件描述符操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="../20_shell/">
+            
+                <a href="../20_shell/">
+            
+                    
+                    20 shell简单实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >linux信号量实践</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#linux-&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x8DF5;">Linux &#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x8DF5;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x73B0;&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;">&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x73B0;&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<ul>
+<li><div><a href="#&#x4F2A;&#x4EE3;&#x7801;">&#x4F2A;&#x4EE3;&#x7801;</a><i></i></div></li>
+<li><div><a href="#linux-c&#x4EE3;&#x7801;&#x5B9E;&#x73B0;">linux c&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</a><i></i></div></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<h1 id="linux-&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x8DF5;">Linux &#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x8DF5;</h1>
+<p><code>linux man semop</code></p>
+<pre class="language-"><code class="lang-cpp">NAME
+       semop<span class="token punctuation">,</span> semtimedop <span class="token operator">-</span> System V semaphore operations
+
+SYNOPSIS
+       <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+       <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h&gt;</span></span>
+       <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/sem.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">semop</span><span class="token punctuation">(</span><span class="token keyword">int</span> semid<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sembuf</span> <span class="token operator">*</span>sops<span class="token punctuation">,</span> size_t nsops<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+       <span class="token keyword">int</span> <span class="token function">semtimedop</span><span class="token punctuation">(</span><span class="token keyword">int</span> semid<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sembuf</span> <span class="token operator">*</span>sops<span class="token punctuation">,</span> size_t nsops<span class="token punctuation">,</span>
+                      <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timespec</span> <span class="token operator">*</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   Feature Test Macro Requirements <span class="token keyword">for</span> <span class="token function">glibc</span> <span class="token punctuation">(</span>see <span class="token function">feature_test_macros</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">:</span>
+
+       <span class="token function">semtimedop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> _GNU_SOURCE
+
+DESCRIPTION
+       Each semaphore in a System V semaphore set has the following associated values<span class="token operator">:</span>
+
+       <span class="token keyword">unsigned</span> <span class="token keyword">short</span>  semval<span class="token punctuation">;</span>   <span class="token comment">/* semaphore value */</span>
+       <span class="token keyword">unsigned</span> <span class="token keyword">short</span>  semzcnt<span class="token punctuation">;</span>  <span class="token comment">/* # waiting for zero */</span>
+       <span class="token keyword">unsigned</span> <span class="token keyword">short</span>  semncnt<span class="token punctuation">;</span>  <span class="token comment">/* # waiting for increase */</span>
+       pid_t           sempid<span class="token punctuation">;</span>   <span class="token comment">/* ID of process that did last op */</span>
+</code></pre>
+<h2 id="&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x73B0;&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;">&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x73B0;&#x751F;&#x4EA7;&#x8005;&#x6D88;&#x8D39;&#x8005;</h2>
+<h3 id="&#x4F2A;&#x4EE3;&#x7801;">&#x4F2A;&#x4EE3;&#x7801;</h3>
+<pre class="language-"><code class="lang-cpp">semaphore mutex<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">//&#x4E34;&#x754C;&#x533A;&#x4E92;&#x65A5;&#x4FE1;&#x53F7;&#x91CF;</span>
+semaphore empty<span class="token operator">=</span>n<span class="token punctuation">;</span>  <span class="token comment">//&#x7A7A;&#x95F2;&#x7F13;&#x51B2;&#x533A;&#xFF0C;&#x521D;&#x59CB;&#x503C;&#x4E3A;buffer&#x7684;&#x5927;&#x5C0F;</span>
+semaphore full<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">//&#x7F13;&#x51B2;&#x533A;&#x521D;&#x59CB;&#x5316;&#x4E3A;&#x7A7A;</span>
+<span class="token function">producer</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//&#x751F;&#x4EA7;&#x8005;&#x8FDB;&#x7A0B;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        produce an item in nextp<span class="token punctuation">;</span>  <span class="token comment">//&#x751F;&#x4EA7;&#x6570;&#x636E;</span>
+        <span class="token function">P</span><span class="token punctuation">(</span>empty<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x83B7;&#x53D6;&#x7A7A;&#x7F13;&#x51B2;&#x533A;&#x5355;&#x5143;</span>
+        <span class="token function">P</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x8FDB;&#x5165;&#x4E34;&#x754C;&#x533A;.</span>
+        add nextp to buffer<span class="token punctuation">;</span>  <span class="token comment">//&#x5C06;&#x6570;&#x636E;&#x653E;&#x5165;&#x7F13;&#x51B2;&#x533A;</span>
+        <span class="token function">V</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x79BB;&#x5F00;&#x4E34;&#x754C;&#x533A;,&#x91CA;&#x653E;&#x4E92;&#x65A5;&#x4FE1;&#x53F7;&#x91CF;</span>
+        <span class="token function">V</span><span class="token punctuation">(</span>full<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x6EE1;&#x7F13;&#x51B2;&#x533A;&#x6570;&#x52A0;1</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">consumer</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">//&#x6D88;&#x8D39;&#x8005;&#x8FDB;&#x7A0B;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">P</span><span class="token punctuation">(</span>full<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x83B7;&#x53D6;&#x6EE1;&#x7F13;&#x51B2;&#x533A;&#x5355;&#x5143;</span>
+        <span class="token function">P</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// &#x8FDB;&#x5165;&#x4E34;&#x754C;&#x533A;</span>
+        remove an item from buffer<span class="token punctuation">;</span>  <span class="token comment">//&#x4ECE;&#x7F13;&#x51B2;&#x533A;&#x4E2D;&#x53D6;&#x51FA;&#x6570;&#x636E;</span>
+        <span class="token function">V</span> <span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x79BB;&#x5F00;&#x4E34;&#x754C;&#x533A;&#xFF0C;&#x91CA;&#x653E;&#x4E92;&#x65A5;&#x4FE1;&#x53F7;&#x91CF;</span>
+        <span class="token function">V</span> <span class="token punctuation">(</span>empty<span class="token punctuation">)</span> <span class="token punctuation">;</span>  <span class="token comment">//&#x7A7A;&#x7F13;&#x51B2;&#x533A;&#x6570;&#x52A0;1</span>
+        consume the item<span class="token punctuation">;</span>  <span class="token comment">//&#x6D88;&#x8D39;&#x6570;&#x636E;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="linux-c&#x4EE3;&#x7801;&#x5B9E;&#x73B0;">linux c&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h3>
+<p>&#x4FE1;&#x53F7;&#x91CF;+&#x4E92;&#x65A5;&#x9501;&#x5B9E;&#x73B0;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x6D88;&#x8D39;&#x8005;&#x95EE;&#x9898;</p>
+<ul>
+<li>test.cpp</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;unistd.h&gt;</span>  </span><span class="token comment">// sleep</span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;pthread.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&quot;semaphore.h&quot;</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> N 5</span>
+
+semaphore <span class="token function">mutex</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// &#x4E34;&#x754C;&#x533A;&#x4E92;&#x65A5;&#x4FE1;&#x53F7;&#x91CF;</span>
+semaphore <span class="token function">empty</span><span class="token punctuation">(</span><span class="token string">&quot;/home&quot;</span><span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// &#x8BB0;&#x5F55;&#x7A7A;&#x7F13;&#x51B2;&#x533A;&#x6570;&#xFF0C;&#x521D;&#x503C;&#x4E3A;N</span>
+semaphore <span class="token function">full</span><span class="token punctuation">(</span><span class="token string">&quot;/home/john&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#x8BB0;&#x5F55;&#x6EE1;&#x7F13;&#x51B2;&#x533A;&#x6570;&#xFF0C;&#x521D;&#x503C;&#x4E3A;0</span>
+<span class="token keyword">int</span> buffer<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>                     <span class="token comment">// &#x7F13;&#x51B2;&#x533A;&#xFF0C;&#x5927;&#x5C0F;&#x4E3A;N</span>
+<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">producer</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    empty<span class="token punctuation">.</span><span class="token function">P</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">// empty&#x51CF;1</span>
+    mutex<span class="token punctuation">.</span><span class="token function">P</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">+</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">90</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Producer %d write Buffer[%d]: %d\n&quot;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>arg<span class="token punctuation">,</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    i <span class="token operator">=</span> <span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> N<span class="token punctuation">;</span>
+
+    mutex<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    full<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// full&#x52A0;1 </span>
+    <span class="token keyword">return</span> arg<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">consumer</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    full<span class="token punctuation">.</span><span class="token function">P</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// full&#x51CF;1</span>
+    mutex<span class="token punctuation">.</span><span class="token function">P</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;                               \033[1;31m&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Consumer %d read Buffer[%d]: %d\n&quot;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>arg<span class="token punctuation">,</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>buffer<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;\033[0m&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    j <span class="token operator">=</span> <span class="token punctuation">(</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> N<span class="token punctuation">;</span>
+
+    mutex<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    empty<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">// empty&#x52A0;1</span>
+    <span class="token keyword">return</span> arg<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    pthread_t id<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// &#x5F00;10&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#x7EBF;&#x7A0B;&#xFF0C;10&#x4E2A;&#x6D88;&#x8D39;&#x8005;&#x7EBF;&#x7A0B;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> k<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>k<span class="token punctuation">)</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>id<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> producer<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> k<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>k<span class="token punctuation">)</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>id<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> consumer<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>semaphore.h</li>
+</ul>
+<p>&#x5B9A;&#x4E49;&#x4FE1;&#x53F7;&#x91CF;&#x7C7B;&#xFF0C;&#x4EE5;&#x53CA;P&#xFF0C;V&#x64CD;&#x4F5C;</p>
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;cstdio&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;cstdlib&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;sys/sem.h&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token comment">// &#x8054;&#x5408;&#x4F53;&#xFF0C;&#x7528;&#x4E8E;semctl&#x521D;&#x59CB;&#x5316;</span>
+<span class="token keyword">union</span> semun <span class="token punctuation">{</span>
+    <span class="token keyword">int</span>              val<span class="token punctuation">;</span> <span class="token comment">/*for SETVAL*/</span>
+    <span class="token keyword">struct</span> <span class="token class-name">semid_ds</span> <span class="token operator">*</span>buf<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">short</span>  <span class="token operator">*</span>array<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">semaphore</span> <span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> sem_id<span class="token punctuation">;</span> <span class="token comment">//&#x4FE1;&#x53F7;&#x91CF;ID&#xFF0C;&#x5185;&#x6838;&#x4E2D;&#x521B;&#x5EFA;</span>
+    <span class="token keyword">int</span> <span class="token function">init_sem</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">semaphore</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/*&#x6784;&#x9020;&#x51FD;&#x6570;*/</span>
+    <span class="token operator">~</span><span class="token function">semaphore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">/*&#x6790;&#x6784;&#x51FD;&#x6570;*/</span>
+    <span class="token keyword">void</span> <span class="token function">P</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">/*P&#x64CD;&#x4F5C;*/</span>
+    <span class="token keyword">void</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">/*V&#x64CD;&#x4F5C;*/</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>semaphore.cpp</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&quot;semaphore.h&quot;</span></span>
+
+semaphore<span class="token operator">::</span><span class="token function">semaphore</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> path<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    key_t key<span class="token punctuation">;</span>
+    <span class="token comment">/*&#x83B7;&#x53D6;key&#x503C;*/</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>key <span class="token operator">=</span> <span class="token function">ftok</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> <span class="token string">&apos;z&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;ftok error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/*&#x521B;&#x5EFA;&#x4FE1;&#x53F7;&#x91CF;&#x96C6;&#xFF0C;&#x4FE1;&#x53F7;&#x91CF;&#x7684;&#x6570;&#x91CF;&#x4E3A;1*/</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sem_id <span class="token operator">=</span> <span class="token function">semget</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> IPC_CREAT<span class="token operator">|</span><span class="token number">0666</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;semget error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">init_sem</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+semaphore<span class="token operator">::</span><span class="token operator">~</span><span class="token function">semaphore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">union</span> semun tmp<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">semctl</span><span class="token punctuation">(</span>sem_id<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> IPC_RMID<span class="token punctuation">,</span> tmp<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;Delete Semaphore Error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// &#x83B7;&#x5F97;&#x4FE1;&#x53F7;&#x91CF; &#x51CF;&#x53BB;1</span>
+<span class="token keyword">void</span> semaphore<span class="token operator">::</span><span class="token function">P</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">sembuf</span> sbuf<span class="token punctuation">;</span>
+    sbuf<span class="token punctuation">.</span>sem_num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">/*&#x5E8F;&#x53F7;*/</span>
+    sbuf<span class="token punctuation">.</span>sem_op <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">/*P&#x64CD;&#x4F5C;*/</span>
+    sbuf<span class="token punctuation">.</span>sem_flg <span class="token operator">=</span> SEM_UNDO<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">semop</span><span class="token punctuation">(</span>sem_id<span class="token punctuation">,</span> <span class="token operator">&amp;</span>sbuf<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;P operation Error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//&#x91CA;&#x653E;&#x4FE1;&#x53F7;&#x91CF; &#x52A0;&#x4E0A;1</span>
+<span class="token keyword">void</span> semaphore<span class="token operator">::</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">sembuf</span> sbuf<span class="token punctuation">;</span>
+    sbuf<span class="token punctuation">.</span>sem_num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">/*&#x5E8F;&#x53F7;*/</span>
+    sbuf<span class="token punctuation">.</span>sem_op <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment">/*V&#x64CD;&#x4F5C;*/</span>
+    sbuf<span class="token punctuation">.</span>sem_flg <span class="token operator">=</span> SEM_UNDO<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">semop</span><span class="token punctuation">(</span>sem_id<span class="token punctuation">,</span> <span class="token operator">&amp;</span>sbuf<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;V operation Error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x4FE1;&#x53F7;&#x91CF;</span>
+<span class="token keyword">int</span> semaphore<span class="token operator">::</span><span class="token function">init_sem</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">union</span> semun tmp<span class="token punctuation">;</span>
+    tmp<span class="token punctuation">.</span>val <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">semctl</span><span class="token punctuation">(</span>sem_id<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> SETVAL<span class="token punctuation">,</span> tmp<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;Init Semaphore Error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>&#x9644;&#xFF1A;Makefile</li>
+</ul>
+<pre class="language-"><code class="lang-cpp"><span class="token punctuation">.</span>PHONY<span class="token operator">:</span> build clean
+
+CC<span class="token operator">=</span>g<span class="token operator">++</span>
+HEADERS<span class="token operator">=</span><span class="token operator">-</span>I<span class="token punctuation">.</span>
+DEBUG<span class="token operator">=</span><span class="token operator">-</span>g <span class="token operator">-</span>ggdb  
+WALL<span class="token operator">=</span><span class="token operator">-</span>Wall <span class="token operator">-</span>W  
+CFLAGS<span class="token operator">=</span>$<span class="token punctuation">(</span>WALL<span class="token punctuation">)</span> $<span class="token punctuation">(</span>DEBUG<span class="token punctuation">)</span>  
+L_CC<span class="token operator">=</span>$<span class="token punctuation">(</span>CC<span class="token punctuation">)</span> $<span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> $<span class="token punctuation">(</span>HEADERS<span class="token punctuation">)</span>
+
+
+test<span class="token operator">:</span>test<span class="token punctuation">.</span>o semaphore<span class="token punctuation">.</span>o
+    $<span class="token punctuation">(</span>L_CC<span class="token punctuation">)</span> $<span class="token operator">^</span> <span class="token operator">-</span>o $@ <span class="token operator">-</span>lpthread
+
+<span class="token operator">%</span><span class="token punctuation">.</span>o<span class="token operator">:</span><span class="token operator">%</span><span class="token punctuation">.</span>cpp
+    $<span class="token punctuation">(</span>L_CC<span class="token punctuation">)</span> <span class="token operator">-</span>c $<span class="token operator">&lt;</span>
+
+clean<span class="token operator">:</span>
+    @<span class="token operator">-</span>rm <span class="token operator">*</span><span class="token punctuation">.</span>o
+    @<span class="token operator">-</span>rm test
+</code></pre>
+<footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
+2020-09-05 17:23:45
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 12 锁&信号量">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../13_input/" class="navigation navigation-next " aria-label="Next page: 13 键盘输入">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"linux信号量实践","level":"1.14.1","depth":2,"next":{"title":"13 键盘输入","level":"1.15","depth":1,"path":"content/13_input/README.md","ref":"./content/13_input/README.md","articles":[]},"previous":{"title":"12 锁&信号量","level":"1.14","depth":1,"path":"content/12_lock/README.md","ref":"./content/12_lock/README.md","articles":[{"title":"linux信号量实践","level":"1.14.1","depth":2,"path":"content/12_lock/linux_semaphore.md","ref":"./content/12_lock/linux_semaphore.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/12_lock/linux_semaphore.md","mtime":"2020-09-05T09:23:45.978Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-05T13:10:01.456Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

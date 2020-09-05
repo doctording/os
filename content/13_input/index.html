@@ -92,7 +92,7 @@
     <link rel="next" href="../14_input_buffer/" />
     
     
-    <link rel="prev" href="../12_lock/" />
+    <link rel="prev" href="../12_lock/linux_semaphore.html" />
     
 
     </head>
@@ -339,6 +339,25 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../12_lock/linux_semaphore.html">
+            
+                <a href="../12_lock/linux_semaphore.html">
+            
+                    
+                    linux信号量实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
         <li class="chapter active" data-level="1.15" data-path="./">
@@ -521,8 +540,8 @@
 <span class="token comment">/*&#x8D1F;&#x8D23;&#x521D;&#x59CB;&#x5316;&#x6240;&#x6709;&#x6A21;&#x5757; */</span>
 <span class="token keyword">void</span> <span class="token function">init_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
    <span class="token function">put_str</span><span class="token punctuation">(</span><span class="token string">&quot;init_all\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token function">idt_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x4E2D;&#x65AD;</span>
-   <span class="token function">mem_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x5185;&#x5B58;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;</span>
+   <span class="token function">idt_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x4E2D;&#x65AD;</span>
+   <span class="token function">mem_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x5185;&#x5B58;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;</span>
    <span class="token function">thread_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x7EBF;&#x7A0B;&#x76F8;&#x5173;&#x7ED3;&#x6784;</span>
    <span class="token function">timer_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// &#x521D;&#x59CB;&#x5316;PIT</span>
    <span class="token function">console_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//&#x63A7;&#x5236;&#x53F0;&#x521D;&#x59CB;&#x5316;&#x6700;&#x597D;&#x653E;&#x5728;&#x5F00;&#x4E2D;&#x65AD;&#x4E4B;&#x524D;</span>
@@ -533,7 +552,7 @@
 <p><img src="imgs/rs.jpg" alt=""></p>
 <p><img src="imgs/rs2.jpg" alt=""></p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 17:09:16
+2020-09-05 17:24:19
 </span></footer>
                                 
                                 </section>
@@ -561,7 +580,7 @@
 
             
                 
-                <a href="../12_lock/" class="navigation navigation-prev " aria-label="Previous page: 12 锁&信号量">
+                <a href="../12_lock/linux_semaphore.html" class="navigation navigation-prev " aria-label="Previous page: linux信号量实践">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -577,7 +596,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"13 键盘输入","level":"1.15","depth":1,"next":{"title":"14 缓冲区","level":"1.16","depth":1,"path":"content/14_input_buffer/README.md","ref":"./content/14_input_buffer/README.md","articles":[]},"previous":{"title":"12 锁&信号量","level":"1.14","depth":1,"path":"content/12_lock/README.md","ref":"./content/12_lock/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/13_input/README.md","mtime":"2020-08-02T09:09:16.159Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-30T14:30:54.566Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"13 键盘输入","level":"1.15","depth":1,"next":{"title":"14 缓冲区","level":"1.16","depth":1,"path":"content/14_input_buffer/README.md","ref":"./content/14_input_buffer/README.md","articles":[]},"previous":{"title":"linux信号量实践","level":"1.14.1","depth":2,"path":"content/12_lock/linux_semaphore.md","ref":"./content/12_lock/linux_semaphore.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/13_input/README.md","mtime":"2020-09-05T09:24:19.661Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-05T13:10:01.456Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
