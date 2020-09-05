@@ -15,6 +15,7 @@
 * [10 内核实现线程](./content/10_process_thread/README.md)
 * [11 多线程调度](./content/11_thread_schedule/README.md)
 * [12 锁&信号量](./content/12_lock/README.md)
+    * [linux信号量实践](./content/12_lock/linux_semaphore.md)
 * [13 键盘输入](./content/13_input/README.md)
 * [14 缓冲区](./content/14_input_buffer/README.md)
 * [15 指令特权级，用户进程引入](./content/15_user_process/README.md)
