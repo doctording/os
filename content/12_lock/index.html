@@ -89,7 +89,7 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="linux_semaphore.html" />
+    <link rel="next" href="linux_mutex.html" />
     
     
     <link rel="prev" href="../11_thread_schedule/" />
@@ -342,7 +342,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.14.1" data-path="linux_semaphore.html">
+        <li class="chapter " data-level="1.14.1" data-path="linux_mutex.html">
+            
+                <a href="linux_mutex.html">
+            
+                    
+                    pthread_mutex_t
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="linux_semaphore.html">
             
                 <a href="linux_semaphore.html">
             
@@ -849,7 +862,7 @@
                 </a>
                 
                 
-                <a href="linux_semaphore.html" class="navigation navigation-next " aria-label="Next page: linux信号量实践">
+                <a href="linux_mutex.html" class="navigation navigation-next " aria-label="Next page: pthread_mutex_t">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -860,7 +873,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"12 锁&信号量","level":"1.14","depth":1,"next":{"title":"linux信号量实践","level":"1.14.1","depth":2,"path":"content/12_lock/linux_semaphore.md","ref":"./content/12_lock/linux_semaphore.md","articles":[]},"previous":{"title":"11 多线程调度","level":"1.13","depth":1,"path":"content/11_thread_schedule/README.md","ref":"./content/11_thread_schedule/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/12_lock/README.md","mtime":"2020-09-05T10:48:24.060Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-05T13:10:01.456Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"12 锁&信号量","level":"1.14","depth":1,"next":{"title":"pthread_mutex_t","level":"1.14.1","depth":2,"path":"content/12_lock/linux_mutex.md","ref":"./content/12_lock/linux_mutex.md","articles":[]},"previous":{"title":"11 多线程调度","level":"1.13","depth":1,"path":"content/11_thread_schedule/README.md","ref":"./content/11_thread_schedule/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/12_lock/README.md","mtime":"2020-09-05T10:48:24.060Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-07T00:51:51.357Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
