@@ -10,6 +10,7 @@
 * [5 ELF文件理解](./content/05_efi/README.md)
 * [6 C语言写内核](./content/06_kernel_start/README.md)
 * [7 中断基础](./content/07_interrupt/README.md)
+    * [系统调用](./content/07_interrupt/system_call.md)
 * [8 内核Assert函数](./content/08_assert/README.md)
 * [9 内存管理，内存池，地址映射](./content/09_memory_management/README.md)
 * [10 内核实现线程](./content/10_process_thread/README.md)
