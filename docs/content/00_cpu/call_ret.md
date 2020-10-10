@@ -14,7 +14,7 @@ int fun(int a, int b)
 }
 
 int main()
-{	
+{
 	int a = 1;
 	int b = 2;
 	int c = fun(a, b);
@@ -27,7 +27,7 @@ int main()
 
 ```cpp
 int main()
-{	
+{
 00938270  push        ebp  
 00938271  mov         ebp,esp  
 00938273  sub         esp,0E4h  

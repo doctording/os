@@ -2,6 +2,7 @@
 
 * [0 CPU基础](./content/00_cpu/cpu.md)
     * [call和ret指令](./content/00_cpu/call_ret.md)
+    * [CPU周期指令](./content/00_cpu/cpu_time.md)
 * [1 最简单的OS:实模式下BIOS到MBR](./content/01_BIOS_to_MBR/README.md)
 * [2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）](./content/02_mbr_hd/README.md)
 * [3 实模式到保护模式（分段)](./content/03_protected_mode/README.md)
