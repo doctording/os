@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存） · spring-note</title>
+        <title>CPU周期指令 · spring-note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -89,10 +89,10 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../03_protected_mode/" />
+    <link rel="next" href="../01_BIOS_to_MBR/" />
     
     
-    <link rel="prev" href="../01_BIOS_to_MBR/" />
+    <link rel="prev" href="call_ret.html" />
     
 
     </head>
@@ -134,9 +134,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="../00_cpu/cpu.html">
+        <li class="chapter " data-level="1.2" data-path="cpu.html">
             
-                <a href="../00_cpu/cpu.html">
+                <a href="cpu.html">
             
                     
                     0 CPU基础
@@ -148,9 +148,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="../00_cpu/call_ret.html">
+        <li class="chapter " data-level="1.2.1" data-path="call_ret.html">
             
-                <a href="../00_cpu/call_ret.html">
+                <a href="call_ret.html">
             
                     
                     call和ret指令
@@ -161,9 +161,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="../00_cpu/cpu_time.html">
+        <li class="chapter active" data-level="1.2.2" data-path="cpu_time.html">
             
-                <a href="../00_cpu/cpu_time.html">
+                <a href="cpu_time.html">
             
                     
                     CPU周期指令
@@ -192,9 +192,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="./">
+        <li class="chapter " data-level="1.4" data-path="../02_mbr_hd/">
             
-                <a href="./">
+                <a href="../02_mbr_hd/">
             
                     
                     2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）
@@ -539,7 +539,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）</a>
+        <a href="../.." >CPU周期指令</a>
     </h1>
 </div>
 
@@ -555,89 +555,55 @@
                                 <section class="normal markdown-section">
                                 
                                 <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
-<li><div><a href="#&#x8BA9;mbr&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x786C;&#x76D8;&#xFF0C;&#x5BF9;&#x786C;&#x76D8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;">&#x8BA9;MBR&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x786C;&#x76D8;&#xFF0C;&#x5BF9;&#x786C;&#x76D8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;</a><i></i></div></li>
-<li><div><a href="#&#x73AF;&#x5883;">&#x73AF;&#x5883;</a><i></i></div></li>
-<li><div><a href="#&#x4EE3;&#x7801;&#x7F16;&#x5199;">&#x4EE3;&#x7801;&#x7F16;&#x5199;</a><i></i></div></li>
-<li><div><a href="#&#x8FD0;&#x884C;&#x865A;&#x62DF;&#x673A;">&#x8FD0;&#x884C;&#x865A;&#x62DF;&#x673A;</a><i></i></div></li>
-<li><div><a href="#&#x5206;&#x6790;">&#x5206;&#x6790;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+<li><div><a href="#cpu&#x6307;&#x4EE4;&#x76F8;&#x5173;">CPU&#x6307;&#x4EE4;&#x76F8;&#x5173;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
 <ul>
-<li><div><a href="#&#x9996;&#x5148;&#x786C;&#x76D8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;">&#x9996;&#x5148;&#x786C;&#x76D8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;</a><i></i></div></li>
-<li><div><a href="#&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;1mb&#x5185;&#x5B58;&#x5E03;&#x5C40;">&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;1MB&#x5185;&#x5B58;&#x5E03;&#x5C40;</a><i></i></div></li>
-</ul></li>
-<li><div><a href="#&#x53C2;&#x8003;">&#x53C2;&#x8003;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
-<ul>
-<li><div><a href="#x86-&#x663E;&#x793A;&#x76F8;&#x5173;">x86 &#x663E;&#x793A;&#x76F8;&#x5173;</a><i></i></div></li>
+<li><div><a href="#&#x6307;&#x4EE4;&#x5468;&#x671F;">&#x6307;&#x4EE4;&#x5468;&#x671F;</a><i></i></div></li>
+<li><div><a href="#cp&#xFF55;&#x5468;&#x671F;">CP&#xFF35;&#x5468;&#x671F;</a><i></i></div></li>
+<li><div><a href="#&#x65F6;&#x949F;&#x5468;&#x671F;">&#x65F6;&#x949F;&#x5468;&#x671F;</a><i></i></div></li>
+<li><div><a href="#&#x5468;&#x671F;&#x5173;&#x7CFB;">&#x5468;&#x671F;&#x5173;&#x7CFB;</a><i></i></div></li>
+<li><div><a href="#&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;">&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;</a><i></i></div></li>
+<li><div><a href="#&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;">&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;</a><i></i></div></li>
 </ul></li>
 </ul>
 </div>
 
-
-<h1 id="&#x8BA9;mbr&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x786C;&#x76D8;&#xFF0C;&#x5BF9;&#x786C;&#x76D8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;">&#x8BA9;MBR&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x786C;&#x76D8;&#xFF0C;&#x5BF9;&#x786C;&#x76D8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;</h1>
+<h1 id="cpu&#x6307;&#x4EE4;&#x76F8;&#x5173;">CPU&#x6307;&#x4EE4;&#x76F8;&#x5173;</h1>
+<h2 id="&#x6307;&#x4EE4;&#x5468;&#x671F;">&#x6307;&#x4EE4;&#x5468;&#x671F;</h2>
+<p>&#x6307;&#x4EE4;&#x5468;&#x671F;&#xFF1A;&#x662F;&#x6307;&#x8BA1;&#x7B97;&#x673A;<strong>&#x4ECE;&#x53D6;&#x6307;&#x5230;&#x6307;&#x4EE4;&#x6267;&#x884C;&#x5B8C;&#x6BD5;</strong>&#x7684;&#x65F6;&#x95F4;</p>
+<p>&#x8BA1;&#x7B97;&#x673A;&#x6267;&#x884C;&#x6307;&#x4EE4;&#x7684;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<ol>
+<li>Fetch&#xFF08;&#x53D6;&#x6307;&#xFF09;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4ECE; PC &#x5BC4;&#x5B58;&#x5668;&#x91CC;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x6307;&#x4EE4;&#x5730;&#x5740;&#xFF0C;&#x6839;&#x636E;&#x6307;&#x4EE4;&#x5730;&#x5740;&#x4ECE;&#x5185;&#x5B58;&#x91CC;&#x628A;&#x5177;&#x4F53;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x52A0;&#x8F7D;&#x5230;&#x6307;&#x4EE4;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x628A; PC &#x5BC4;&#x5B58;&#x5668;&#x81EA;&#x589E;&#xFF0C;&#x597D;&#x5728;&#x672A;&#x6765;&#x6267;&#x884C;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x3002;</li>
+<li>Decode&#xFF08;&#x8BD1;&#x7801;&#xFF09;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6839;&#x636E;&#x6307;&#x4EE4;&#x5BC4;&#x5B58;&#x5668;&#x91CC;&#x9762;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x89E3;&#x6790;&#x6210;&#x8981;&#x8FDB;&#x884C;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x662F; R&#x3001;I&#x3001;J &#x4E2D;&#x7684;&#x54EA;&#x4E00;&#x79CD;&#x6307;&#x4EE4;&#xFF0C;&#x5177;&#x4F53;&#x8981;&#x64CD;&#x4F5C;&#x54EA;&#x4E9B;&#x5BC4;&#x5B58;&#x5668;&#x3001;&#x6570;&#x636E;&#x6216;&#x8005;&#x5185;&#x5B58;&#x5730;&#x5740;&#x3002;</li>
+<li>Execute&#xFF08;&#x6267;&#x884C;&#x6307;&#x4EE4;&#xFF09;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5B9E;&#x9645;&#x8FD0;&#x884C;&#x5BF9;&#x5E94;&#x7684; R&#x3001;I&#x3001;J &#x8FD9;&#x4E9B;&#x7279;&#x5B9A;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x8FDB;&#x884C;&#x7B97;&#x672F;&#x903B;&#x8F91;&#x64CD;&#x4F5C;&#x3001;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x6216;&#x8005;&#x76F4;&#x63A5;&#x7684;&#x5730;&#x5740;&#x8DF3;&#x8F6C;&#x3002;</li>
+</ol>
+<h2 id="cp&#xFF55;&#x5468;&#x671F;">CP&#xFF35;&#x5468;&#x671F;</h2>
+<p>CPU&#x5468;&#x671F;&#x4EA6;&#x79F0;&#x673A;&#x5668;&#x5468;&#x671F;&#xFF0C;&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x4E2D;&#xFF0C;&#x4E3A;&#x4E86;&#x4FBF;&#x4E8E;&#x7BA1;&#x7406;&#xFF0C;&#x5E38;&#x628A;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x5212;&#x5206;&#x4E3A;&#x82E5;&#x5E72;&#x4E2A;&#x9636;&#x6BB5;&#xFF0C;&#x6BCF;&#x4E00;&#x9636;&#x6BB5;&#x5B8C;&#x6210;&#x4E00;&#x9879;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF0C;&#x53D6;&#x6307;&#x4EE4;&#x3001;&#x5B58;&#x50A8;&#x5668;&#x8BFB;&#x3001;&#x5B58;&#x50A8;&#x5668;&#x5199;&#x7B49;&#xFF0C;&#x8FD9;&#x6BCF;&#x4E00;&#x9879;&#x5DE5;&#x4F5C;&#x79F0;&#x4E3A;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#xFF08;&#x6CE8;&#x610F;&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x90FD;&#x662F;&#x7531;&#x82E5;&#x5E72;CPU&#x6700;&#x57FA;&#x672C;&#x7684;&#x52A8;&#x4F5C;&#x7EC4;&#x6210;&#xFF09;&#x3002;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x6240;&#x9700;&#x8981;&#x7684;&#x65F6;&#x95F4;&#x79F0;&#x4E3A;&#x673A;&#x5668;&#x5468;&#x671F;&#x3002;&#x901A;&#x5E38;&#x7528;&#x5185;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x6307;&#x4EE4;&#x5B57;&#x7684;&#x6700;&#x77ED;&#x65F6;&#x95F4;&#x6765;&#x89C4;&#x5B9A;CPU&#x5468;&#x671F;&#x3002;</p>
+<h2 id="&#x65F6;&#x949F;&#x5468;&#x671F;">&#x65F6;&#x949F;&#x5468;&#x671F;</h2>
+<p>&#x65F6;&#x949F;&#x5468;&#x671F;&#x4E5F;&#x79F0;&#x4E3A;&#x632F;&#x8361;&#x5468;&#x671F;&#xFF0C;&#x5B9A;&#x4E49;&#x4E3A;&#x65F6;&#x949F;&#x9891;&#x7387;&#x7684;&#x5012;&#x6570;&#x3002;&#x65F6;&#x949F;&#x5468;&#x671F;&#x662F;&#x8BA1;&#x7B97;&#x673A;&#x4E2D;&#x6700;&#x57FA;&#x672C;&#x7684;&#x3001;&#x6700;&#x5C0F;&#x7684;&#x65F6;&#x95F4;&#x5355;&#x4F4D;&#x3002;&#x5728;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x5185;&#xFF0C;CPU&#x4EC5;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;&#x6700;&#x57FA;&#x672C;&#x7684;&#x52A8;&#x4F5C;&#x3002;</p>
+<h2 id="&#x5468;&#x671F;&#x5173;&#x7CFB;">&#x5468;&#x671F;&#x5173;&#x7CFB;</h2>
+<p><img src="imgs/cpu_time.png" alt=""></p>
+<h2 id="&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;">&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;</h2>
+<p>&#x56E0;&#x4E3A;&#x79FB;&#x4F4D;&#x6307;&#x4EE4;(&#x5355;&#x5468;&#x671F;&#x6307;&#x4EE4;)&#x5360;2&#x4E2A;&#x673A;&#x5668;&#x5468;&#x671F;&#xFF0C;&#x800C;&#x4E58;&#x9664;&#x6CD5;&#x6307;&#x4EE4;&#x5360;4&#x4E2A;&#x673A;&#x5668;&#x5468;&#x671F;&#x3002;&#x4ECE;&#x786C;&#x4EF6;&#x4E0A;&#x770B;&#xFF0C;&#x79FB;&#x4F4D;&#x5BF9;&#x786C;&#x4EF6;&#x66F4;&#x5BB9;&#x6613;&#x5B9E;&#x73B0;&#xFF1B;&#x6240;&#x4EE5;&#x4ECE;&#x6548;&#x7387;&#x4E0A;&#x770B;&#xFF0C;&#x4F7F;&#x7528;&#x79FB;&#x4F4D;&#x6307;&#x4EE4;&#x6709;&#x66F4;&#x9AD8;&#x7684;&#x6548;&#x7387;&#x3002;</p>
+<h2 id="&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;">&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;</h2>
 <ul>
-<li>&#x4E0A;&#x4E00;&#x6B65;&#x6210;&#x529F;&#x8FDB;&#x5165;MBR&#x4E86;&#xFF0C;&#x8FD9;&#x6837;MBR&#x7684;&#x529F;&#x80FD;&#x5C31;&#x80FD;&#x4E30;&#x5BCC;&#x4E0B;&#x53BB;</li>
-<li>&#x786C;&#x76D8;&#x6982;&#x5FF5;&#xFF1A;&#x67F1;&#x9762;&#xFF0C;&#x78C1;&#x9053;&#xFF0C;&#x6247;&#x533A;</li>
+<li>&#x6307;&#x4EE4;&#x7684;&#x4E8C;&#x7EA7;&#x6D41;&#x6C34;</li>
 </ul>
-<h1 id="&#x73AF;&#x5883;">&#x73AF;&#x5883;</h1>
+<p><img src="imgs/cpu2.png" alt=""></p>
 <ul>
-<li>ubuntu14-32bit</li>
-<li>bochs-2.4.5</li>
-</ul>
-<p>&#x6CE8;&#xFF1A;ubuntu&#x5B89;&#x88C5;bochs&#x5982;&#x679C;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x53EF;&#x81EA;&#x884C;&#x641C;&#x7D22;&#x89E3;&#x51B3;</p>
-<h1 id="&#x4EE3;&#x7801;&#x7F16;&#x5199;">&#x4EE3;&#x7801;&#x7F16;&#x5199;</h1>
-<p>&#x4EE3;&#x7801;&#x76EE;&#x5F55;<a href="https://github.com/doctording/os/tree/master/docs/content/02_mbr_hd/code" target="_blank">&#x76F8;&#x5E94;&#x7684;code&#x6587;&#x4EF6;&#x5939;</a></p>
-<p>&#x9700;&#x8981;&#x81EA;&#x5DF1;&#x4FEE;&#x6539;Makefile,&#x751F;&#x6210;&#x7684;&#x76EE;&#x5F55;&#x53EF;&#x81EA;&#x884C;&#x8BBE;&#x5B9A;</p>
-<p><img src="imgs/code_directory.jpg" alt=""></p>
-<ul>
-<li>&#x901A;&#x8FC7;<code>bximage</code>&#x6765;&#x5236;&#x4F5C;&#x786C;&#x76D8;</li>
-</ul>
-<p><img src="imgs/bximage.jpg" alt=""></p>
-<ul>
-<li><p>&#x5728;&#x914D;&#x7F6E;bochs&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x914D;&#x7F6E;&#xFF0C;&#x5177;&#x4F53;&#x89C1;code/bochsrc.dist&#x6587;&#x4EF6;</p>
+<li><p>&#x6307;&#x4EE4;&#x7684;6&#x7EA7;&#x6D41;&#x6C34;</p>
 </li>
-<li><font color="red">bochs&#x6A21;&#x62DF;&#x4E86;&#x786C;&#x4EF6;</font>
+<li><p>&#x53D6;&#x6307;FI:&#x4ECE;&#x5B58;&#x50A8;&#x5668;&#x53D6;&#x51FA;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x653E;&#x5165;&#x6307;&#x4EE4;&#x90E8;&#x4EF6;&#x7F13;&#x51B2;&#x533A;</p>
 </li>
-<li><p>&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4ECE;&#x786C;&#x76D8;&#x542F;&#x52A8;&#x7684;&#xFF0C;&#x786C;&#x76D8;&#x4FE1;&#x606F;</p>
-</li>
+<li>&#x6307;&#x4EE4;&#x8BD1;&#x7801;DI:&#x786E;&#x5B9A;&#x64CD;&#x4F5C;&#x6027;&#x8D28;&#x548C;&#x64CD;&#x4F5C;&#x6570;&#x5730;&#x5740;&#x5F62;&#x6210;&#x65B9;&#x5F0F;</li>
+<li>&#x8BA1;&#x7B97;&#x64CD;&#x4F5C;&#x6570;&#x5730;&#x5740;CO:&#x8BA1;&#x7B97;&#x64CD;&#x4F5C;&#x6709;&#x6548;&#x5730;&#x5740;</li>
+<li>&#x53D6;&#x64CD;&#x4F5C;&#x6570;FO:&#x4ECE;&#x5B58;&#x50A8;&#x5668;&#x4E2D;&#x53D6;&#x51FA;&#x64CD;&#x4F5C;&#x6570;</li>
+<li>&#x6267;&#x884C;&#x6307;&#x4EE4;EI:&#x6267;&#x884C;&#x6307;&#x4EE4;&#xFF0C;&#x5C06;&#x7ED3;&#x679C;&#x5B58;&#x5165;&#x76EE;&#x7684;&#x4F4D;&#x7F6E;</li>
+<li>&#x5199;&#x64CD;&#x4F5C;&#x4E66;WO:&#x5C06;&#x7ED3;&#x679C;&#x5B58;&#x5165;&#x5BC4;&#x5B58;&#x5668;</li>
 </ul>
-<pre class="language-"><code class="lang-java">ata0<span class="token operator">-</span>master<span class="token operator">:</span> type<span class="token operator">=</span>disk<span class="token punctuation">,</span> mode<span class="token operator">=</span>flat<span class="token punctuation">,</span> path<span class="token operator">=</span><span class="token string">&quot;/home/john/os/hd30M.img&quot;</span><span class="token punctuation">,</span> cylinders<span class="token operator">=</span><span class="token number">60</span><span class="token punctuation">,</span> heads<span class="token operator">=</span><span class="token number">16</span><span class="token punctuation">,</span> spt<span class="token operator">=</span><span class="token number">63</span>
-</code></pre>
-<h1 id="&#x8FD0;&#x884C;&#x865A;&#x62DF;&#x673A;">&#x8FD0;&#x884C;&#x865A;&#x62DF;&#x673A;</h1>
-<ul>
-<li>&#x5236;&#x5B9A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8FD0;&#x884C;</li>
-</ul>
-<pre class="language-"><code class="lang-java">$bochs <span class="token operator">-</span>f bochsrc<span class="token punctuation">.</span>dist
-</code></pre>
-<p><img src="imgs/start.jpg" alt=""></p>
-<ul>
-<li>&#x6309;6&#x5F00;&#x59CB;&#x6A21;&#x62DF;</li>
-</ul>
-<p><img src="imgs/start2.jpg" alt=""></p>
-<ul>
-<li>&#x518D;&#x6309;c&#x8FD0;&#x884C;&#x8D77;&#x6765;</li>
-</ul>
-<p><img src="imgs/os.jpg" alt=""></p>
-<ul>
-<li>&#x9047;&#x5230;&#x6A21;&#x62DF;&#x5668;&#x5361;&#x6B7B;&#x60C5;&#x51B5;&#xFF0C;kill&#x6740;&#x6B7B;</li>
-</ul>
-<p><img src="imgs/kill.jpg" alt=""></p>
-<h1 id="&#x5206;&#x6790;">&#x5206;&#x6790;</h1>
-<h2 id="&#x9996;&#x5148;&#x786C;&#x76D8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;">&#x9996;&#x5148;&#x786C;&#x76D8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;</h2>
-<p><img src="imgs/xx.jpg" alt=""></p>
-<h2 id="&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;1mb&#x5185;&#x5B58;&#x5E03;&#x5C40;">&#x5B9E;&#x6A21;&#x5F0F;&#x4E0B;&#x7684;1MB&#x5185;&#x5B58;&#x5E03;&#x5C40;</h2>
-<p><a href="http://book.51cto.com/art/201604/509566.htm" target="_blank">http://book.51cto.com/art/201604/509566.htm</a></p>
-<p>&#x786C;&#x76D8;&#x5F53;&#x6210;&#x4E00;&#x4E2A;IO&#x8BBE;&#x5907;&#xFF0C;&#x5176;&#x6709;&#x786C;&#x76D8;&#x63A7;&#x5236;&#x5668;&#xFF08;I/O&#x63A5;&#x53E3;&#xFF09;,&#x5C31;&#x50CF;&#x663E;&#x793A;&#x5668;&#x4E00;&#x6837;&#xFF0C;&#x5176;&#x6709;&#x663E;&#x5361;&#xFF08;&#x4E5F;&#x79F0;&#x4E3A;&#x663E;&#x793A;&#x9002;&#x914D;&#x5668;&#xFF09;&#xFF0C;&#x663E;&#x5B58;</p>
-<p>&#x6211;&#x4EEC;&#x64CD;&#x4F5C;&#x4E86; &#x7528;&#x4E8E;&#x6587;&#x672C;&#x6A21;&#x5F0F;&#x663E;&#x793A;&#x9002;&#x914D;&#x5668; &#xFF0C;&#x5176;&#x5728;1M&#x7269;&#x7406;&#x5730;&#x5740;&#x4E0B;&#x7684;&#x5F00;&#x59CB;&#x5730;&#x5740;&#x662F; 0xB8000&#xFF08;&#x6709;32KB&#x5927;&#x5C0F;&#xFF09;&#x3002;</p>
-<ul>
-<li>&#x9996;&#x5148;&#x9700;&#x8981;&#x660E;&#x786E;&#xFF1A;&#x5BF9;<code>0xb8000</code>&#x8FD9;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x5199;&#x5165;&#x5185;&#x5BB9;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#x8F93;&#x51FA;&#x6587;&#x672C;;</li>
-<li>&#x672C;&#x4F8B;&#x6211;&#x4EEC;&#x4F7F;&#x7528;gs&#x5BC4;&#x5B58;&#x5668;&#x5B58;&#x50A8;&#x4E86;<code>0xb8000</code>&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#xFF0C;loader&#x5219;&#x5B58;&#x5230;&#x78C1;&#x76D8;&#x7684;&#x7B2C;2&#x6247;&#x533A;&#xFF0C;&#x5176;&#x64CD;&#x4F5C;&#x4E86;gs&#x5BC4;&#x5B58;&#x5668;;</li>
-<li>mbr&#x64CD;&#x4F5C;&#x78C1;&#x76D8;&#x7B2C;&#x4E8C;&#x6247;&#x533A;&#xFF08;&#x5373;loader&#xFF09;&#xFF0C;&#x8BFB;&#x53D6;&#x7684;&#x5185;&#x5BB9;&#x5B58;&#x5230;<code>0x900</code>&#x8FD9;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x4E2D;;</li>
-<li>&#x6B64;&#x540E;&#xFF0C;&#x5F53;mbr jmp&#x5230;<code>0x900</code>&#x8FD9;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x6267;&#x884C;0x900&#x8FD9;&#x5757;&#x5185;&#x5B58;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x662F;loader&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x64CD;&#x4F5C;<code>0xb8000</code>&#x8FD9;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#xFF0C;&#x4E5F;&#x5373;&#x5411;&#x5C4F;&#x5E55;&#x4E2D;&#x663E;&#x793A;&#x6587;&#x672C;&#x3002;</li>
-</ul>
-<h1 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h1>
-<h2 id="x86-&#x663E;&#x793A;&#x76F8;&#x5173;">x86 &#x663E;&#x793A;&#x76F8;&#x5173;</h2>
-<p><a href="http://blog.csdn.net/longintchar/article/details/70183677" target="_blank">http://blog.csdn.net/longintchar/article/details/70183677</a></p>
+<p><img src="imgs/cpu3.png" alt=""></p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-08-02 12:46:25
+2020-10-10 23:29:46
 </span></footer>
                                 
                                 </section>
@@ -665,12 +631,12 @@
 
             
                 
-                <a href="../01_BIOS_to_MBR/" class="navigation navigation-prev " aria-label="Previous page: 1 最简单的OS:实模式下BIOS到MBR">
+                <a href="call_ret.html" class="navigation navigation-prev " aria-label="Previous page: call和ret指令">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../03_protected_mode/" class="navigation navigation-next " aria-label="Next page: 3 实模式到保护模式（分段)">
+                <a href="../01_BIOS_to_MBR/" class="navigation navigation-next " aria-label="Next page: 1 最简单的OS:实模式下BIOS到MBR">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -681,7 +647,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2 让MBR操作硬盘，在内存中操作数据显示（显示不再是BIOS中断，而是直接操作1M的显示文本内存）","level":"1.4","depth":1,"next":{"title":"3 实模式到保护模式（分段)","level":"1.5","depth":1,"path":"content/03_protected_mode/README.md","ref":"./content/03_protected_mode/README.md","articles":[]},"previous":{"title":"1 最简单的OS:实模式下BIOS到MBR","level":"1.3","depth":1,"path":"content/01_BIOS_to_MBR/README.md","ref":"./content/01_BIOS_to_MBR/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/02_mbr_hd/README.md","mtime":"2020-08-02T04:46:25.241Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-10-10T15:29:59.576Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"CPU周期指令","level":"1.2.2","depth":2,"next":{"title":"1 最简单的OS:实模式下BIOS到MBR","level":"1.3","depth":1,"path":"content/01_BIOS_to_MBR/README.md","ref":"./content/01_BIOS_to_MBR/README.md","articles":[]},"previous":{"title":"call和ret指令","level":"1.2.1","depth":2,"path":"content/00_cpu/call_ret.md","ref":"./content/00_cpu/call_ret.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/00_cpu/cpu_time.md","mtime":"2020-10-10T15:29:46.792Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-10-10T15:29:59.576Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
