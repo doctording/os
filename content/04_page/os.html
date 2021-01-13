@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>CPU周期指令 · spring-note</title>
+        <title>再谈操作系统 · spring-note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -89,10 +89,10 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../01_BIOS_to_MBR/" />
+    <link rel="next" href="../05_efi/" />
     
     
-    <link rel="prev" href="call_ret.html" />
+    <link rel="prev" href="vm.html" />
     
 
     </head>
@@ -134,9 +134,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="cpu.html">
+        <li class="chapter " data-level="1.2" data-path="../00_cpu/cpu.html">
             
-                <a href="cpu.html">
+                <a href="../00_cpu/cpu.html">
             
                     
                     0 CPU基础
@@ -148,9 +148,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="call_ret.html">
+        <li class="chapter " data-level="1.2.1" data-path="../00_cpu/call_ret.html">
             
-                <a href="call_ret.html">
+                <a href="../00_cpu/call_ret.html">
             
                     
                     call和ret指令
@@ -161,9 +161,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.2" data-path="cpu_time.html">
+        <li class="chapter " data-level="1.2.2" data-path="../00_cpu/cpu_time.html">
             
-                <a href="cpu_time.html">
+                <a href="../00_cpu/cpu_time.html">
             
                     
                     CPU周期指令
@@ -218,9 +218,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="../04_page/">
+        <li class="chapter " data-level="1.6" data-path="./">
             
-                <a href="../04_page/">
+                <a href="./">
             
                     
                     4 分页
@@ -232,9 +232,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.6.1" data-path="../04_page/vm.html">
+        <li class="chapter " data-level="1.6.1" data-path="vm.html">
             
-                <a href="../04_page/vm.html">
+                <a href="vm.html">
             
                     
                     虚拟内存
@@ -245,9 +245,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.2" data-path="../04_page/os.html">
+        <li class="chapter active" data-level="1.6.2" data-path="os.html">
             
-                <a href="../04_page/os.html">
+                <a href="os.html">
             
                     
                     再谈操作系统
@@ -552,7 +552,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >CPU周期指令</a>
+        <a href="../.." >再谈操作系统</a>
     </h1>
 </div>
 
@@ -567,56 +567,15 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright @doctording all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
-<li><div><a href="#cpu&#x6307;&#x4EE4;&#x76F8;&#x5173;">CPU&#x6307;&#x4EE4;&#x76F8;&#x5173;</a><i class="level__parent level__item level__parent--opened" state="opened" onclick="var curState = this.getAttribute(&apos;state&apos;);var nextState = curState === &apos;opened&apos; ? &apos;hidden&apos; : &apos;opened&apos;;this.setAttribute(&apos;state&apos;, nextState);this.className = this.className.split(curState).join(nextState);var list = this.parentNode.nextElementSibling;if (nextState === &apos;hidden&apos;) {    list.style.display = &apos;none&apos;;} else {    list.style.display = &apos;block&apos;;}"></i></div>
+                                <h1 id="&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x662F;&#x4EC0;&#x4E48;">&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x662F;&#x4EC0;&#x4E48;</h1>
 <ul>
-<li><div><a href="#&#x6307;&#x4EE4;&#x5468;&#x671F;">&#x6307;&#x4EE4;&#x5468;&#x671F;</a><i></i></div></li>
-<li><div><a href="#cp&#xFF55;&#x5468;&#x671F;">CP&#xFF35;&#x5468;&#x671F;</a><i></i></div></li>
-<li><div><a href="#&#x65F6;&#x949F;&#x5468;&#x671F;">&#x65F6;&#x949F;&#x5468;&#x671F;</a><i></i></div></li>
-<li><div><a href="#&#x5468;&#x671F;&#x5173;&#x7CFB;">&#x5468;&#x671F;&#x5173;&#x7CFB;</a><i></i></div></li>
-<li><div><a href="#&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;">&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;</a><i></i></div></li>
-<li><div><a href="#&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;">&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;</a><i></i></div></li>
-</ul></li>
+<li>&#x63A7;&#x5236;&#x8BA1;&#x7B97;&#x673A;&#x7684;&#x5404;&#x79CD;&#x786C;&#x4EF6;&#x8D44;&#x6E90;&#xFF1A;&#x786C;&#x76D8;&#xFF0C;&#x7F51;&#x5361;&#xFF0C;cpu</li>
+<li>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x3001;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3001;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</li>
+<li>&#x5185;&#x5B58;&#x7BA1;&#x7406;&#xFF1A;&#x865A;&#x62DF;&#x5185;&#x5B58;&#xFF0C;&#x8FDB;&#x7A0B;&#x8C03;&#x5EA6;</li>
+<li>&#x3002;&#x3002;&#x3002;</li>
 </ul>
-</div>
-
-<h1 id="cpu&#x6307;&#x4EE4;&#x76F8;&#x5173;">CPU&#x6307;&#x4EE4;&#x76F8;&#x5173;</h1>
-<h2 id="&#x6307;&#x4EE4;&#x5468;&#x671F;">&#x6307;&#x4EE4;&#x5468;&#x671F;</h2>
-<p>&#x6307;&#x4EE4;&#x5468;&#x671F;&#xFF1A;&#x662F;&#x6307;&#x8BA1;&#x7B97;&#x673A;<strong>&#x4ECE;&#x53D6;&#x6307;&#x5230;&#x6307;&#x4EE4;&#x6267;&#x884C;&#x5B8C;&#x6BD5;</strong>&#x7684;&#x65F6;&#x95F4;</p>
-<p>&#x8BA1;&#x7B97;&#x673A;&#x6267;&#x884C;&#x6307;&#x4EE4;&#x7684;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;</p>
-<ol>
-<li>Fetch&#xFF08;&#x53D6;&#x6307;&#xFF09;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4ECE; PC &#x5BC4;&#x5B58;&#x5668;&#x91CC;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x6307;&#x4EE4;&#x5730;&#x5740;&#xFF0C;&#x6839;&#x636E;&#x6307;&#x4EE4;&#x5730;&#x5740;&#x4ECE;&#x5185;&#x5B58;&#x91CC;&#x628A;&#x5177;&#x4F53;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x52A0;&#x8F7D;&#x5230;&#x6307;&#x4EE4;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x628A; PC &#x5BC4;&#x5B58;&#x5668;&#x81EA;&#x589E;&#xFF0C;&#x597D;&#x5728;&#x672A;&#x6765;&#x6267;&#x884C;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x3002;</li>
-<li>Decode&#xFF08;&#x8BD1;&#x7801;&#xFF09;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6839;&#x636E;&#x6307;&#x4EE4;&#x5BC4;&#x5B58;&#x5668;&#x91CC;&#x9762;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x89E3;&#x6790;&#x6210;&#x8981;&#x8FDB;&#x884C;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x662F; R&#x3001;I&#x3001;J &#x4E2D;&#x7684;&#x54EA;&#x4E00;&#x79CD;&#x6307;&#x4EE4;&#xFF0C;&#x5177;&#x4F53;&#x8981;&#x64CD;&#x4F5C;&#x54EA;&#x4E9B;&#x5BC4;&#x5B58;&#x5668;&#x3001;&#x6570;&#x636E;&#x6216;&#x8005;&#x5185;&#x5B58;&#x5730;&#x5740;&#x3002;</li>
-<li>Execute&#xFF08;&#x6267;&#x884C;&#x6307;&#x4EE4;&#xFF09;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5B9E;&#x9645;&#x8FD0;&#x884C;&#x5BF9;&#x5E94;&#x7684; R&#x3001;I&#x3001;J &#x8FD9;&#x4E9B;&#x7279;&#x5B9A;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x8FDB;&#x884C;&#x7B97;&#x672F;&#x903B;&#x8F91;&#x64CD;&#x4F5C;&#x3001;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x6216;&#x8005;&#x76F4;&#x63A5;&#x7684;&#x5730;&#x5740;&#x8DF3;&#x8F6C;&#x3002;</li>
-</ol>
-<h2 id="cp&#xFF55;&#x5468;&#x671F;">CP&#xFF35;&#x5468;&#x671F;</h2>
-<p>CPU&#x5468;&#x671F;&#x4EA6;&#x79F0;&#x673A;&#x5668;&#x5468;&#x671F;&#xFF0C;&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x4E2D;&#xFF0C;&#x4E3A;&#x4E86;&#x4FBF;&#x4E8E;&#x7BA1;&#x7406;&#xFF0C;&#x5E38;&#x628A;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x5212;&#x5206;&#x4E3A;&#x82E5;&#x5E72;&#x4E2A;&#x9636;&#x6BB5;&#xFF0C;&#x6BCF;&#x4E00;&#x9636;&#x6BB5;&#x5B8C;&#x6210;&#x4E00;&#x9879;&#x5DE5;&#x4F5C;&#x3002;</p>
-<p>&#x4F8B;&#x5982;&#xFF0C;&#x53D6;&#x6307;&#x4EE4;&#x3001;&#x5B58;&#x50A8;&#x5668;&#x8BFB;&#x3001;&#x5B58;&#x50A8;&#x5668;&#x5199;&#x7B49;&#xFF0C;&#x8FD9;&#x6BCF;&#x4E00;&#x9879;&#x5DE5;&#x4F5C;&#x79F0;&#x4E3A;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#xFF08;&#x6CE8;&#x610F;&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x90FD;&#x662F;&#x7531;&#x82E5;&#x5E72;CPU&#x6700;&#x57FA;&#x672C;&#x7684;&#x52A8;&#x4F5C;&#x7EC4;&#x6210;&#xFF09;&#x3002;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x6240;&#x9700;&#x8981;&#x7684;&#x65F6;&#x95F4;&#x79F0;&#x4E3A;&#x673A;&#x5668;&#x5468;&#x671F;&#x3002;&#x901A;&#x5E38;&#x7528;&#x5185;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x6307;&#x4EE4;&#x5B57;&#x7684;&#x6700;&#x77ED;&#x65F6;&#x95F4;&#x6765;&#x89C4;&#x5B9A;CPU&#x5468;&#x671F;&#x3002;</p>
-<h2 id="&#x65F6;&#x949F;&#x5468;&#x671F;">&#x65F6;&#x949F;&#x5468;&#x671F;</h2>
-<p>&#x65F6;&#x949F;&#x5468;&#x671F;&#x4E5F;&#x79F0;&#x4E3A;&#x632F;&#x8361;&#x5468;&#x671F;&#xFF0C;&#x5B9A;&#x4E49;&#x4E3A;&#x65F6;&#x949F;&#x9891;&#x7387;&#x7684;&#x5012;&#x6570;&#x3002;&#x65F6;&#x949F;&#x5468;&#x671F;&#x662F;&#x8BA1;&#x7B97;&#x673A;&#x4E2D;&#x6700;&#x57FA;&#x672C;&#x7684;&#x3001;&#x6700;&#x5C0F;&#x7684;&#x65F6;&#x95F4;&#x5355;&#x4F4D;&#x3002;&#x5728;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x5185;&#xFF0C;CPU&#x4EC5;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;&#x6700;&#x57FA;&#x672C;&#x7684;&#x52A8;&#x4F5C;&#x3002;</p>
-<h2 id="&#x5468;&#x671F;&#x5173;&#x7CFB;">&#x5468;&#x671F;&#x5173;&#x7CFB;</h2>
-<p><img src="imgs/cpu_time.png" alt=""></p>
-<h2 id="&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;">&#x5E38;&#x89C1;&#x95EE;&#x9898;&#xFF1A;&#x79FB;&#x4F4D;&#x8FD0;&#x7B97;&#x4E3A;&#x4EC0;&#x4E48;&#x6BD4;&#x4E58;&#x6CD5;&#x9664;&#x6CD5;&#x5FEB;&#xFF1F;</h2>
-<p>&#x56E0;&#x4E3A;&#x79FB;&#x4F4D;&#x6307;&#x4EE4;(&#x5355;&#x5468;&#x671F;&#x6307;&#x4EE4;)&#x5360;2&#x4E2A;&#x673A;&#x5668;&#x5468;&#x671F;&#xFF0C;&#x800C;&#x4E58;&#x9664;&#x6CD5;&#x6307;&#x4EE4;&#x5360;4&#x4E2A;&#x673A;&#x5668;&#x5468;&#x671F;&#x3002;&#x4ECE;&#x786C;&#x4EF6;&#x4E0A;&#x770B;&#xFF0C;&#x79FB;&#x4F4D;&#x5BF9;&#x786C;&#x4EF6;&#x66F4;&#x5BB9;&#x6613;&#x5B9E;&#x73B0;&#xFF1B;&#x6240;&#x4EE5;&#x4ECE;&#x6548;&#x7387;&#x4E0A;&#x770B;&#xFF0C;&#x4F7F;&#x7528;&#x79FB;&#x4F4D;&#x6307;&#x4EE4;&#x6709;&#x66F4;&#x9AD8;&#x7684;&#x6548;&#x7387;&#x3002;</p>
-<h2 id="&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;">&#x6307;&#x4EE4;&#x6D41;&#x6C34;&#x7EBF;</h2>
-<ul>
-<li>&#x6307;&#x4EE4;&#x7684;&#x4E8C;&#x7EA7;&#x6D41;&#x6C34;</li>
-</ul>
-<p><img src="imgs/cpu2.png" alt=""></p>
-<ul>
-<li><p>&#x6307;&#x4EE4;&#x7684;6&#x7EA7;&#x6D41;&#x6C34;</p>
-</li>
-<li><p>&#x53D6;&#x6307;FI:&#x4ECE;&#x5B58;&#x50A8;&#x5668;&#x53D6;&#x51FA;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x653E;&#x5165;&#x6307;&#x4EE4;&#x90E8;&#x4EF6;&#x7F13;&#x51B2;&#x533A;</p>
-</li>
-<li>&#x6307;&#x4EE4;&#x8BD1;&#x7801;DI:&#x786E;&#x5B9A;&#x64CD;&#x4F5C;&#x6027;&#x8D28;&#x548C;&#x64CD;&#x4F5C;&#x6570;&#x5730;&#x5740;&#x5F62;&#x6210;&#x65B9;&#x5F0F;</li>
-<li>&#x8BA1;&#x7B97;&#x64CD;&#x4F5C;&#x6570;&#x5730;&#x5740;CO:&#x8BA1;&#x7B97;&#x64CD;&#x4F5C;&#x6709;&#x6548;&#x5730;&#x5740;</li>
-<li>&#x53D6;&#x64CD;&#x4F5C;&#x6570;FO:&#x4ECE;&#x5B58;&#x50A8;&#x5668;&#x4E2D;&#x53D6;&#x51FA;&#x64CD;&#x4F5C;&#x6570;</li>
-<li>&#x6267;&#x884C;&#x6307;&#x4EE4;EI:&#x6267;&#x884C;&#x6307;&#x4EE4;&#xFF0C;&#x5C06;&#x7ED3;&#x679C;&#x5B58;&#x5165;&#x76EE;&#x7684;&#x4F4D;&#x7F6E;</li>
-<li>&#x5199;&#x64CD;&#x4F5C;&#x4E66;WO:&#x5C06;&#x7ED3;&#x679C;&#x5B58;&#x5165;&#x5BC4;&#x5B58;&#x5668;</li>
-</ul>
-<p><img src="imgs/cpu3.png" alt=""></p>
 <footer class="page-footer"><span class="copyright">Copyright @doctording all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">update at:
-2020-10-11 09:54:38
+2020-12-22 12:58:08
 </span></footer>
                                 
                                 </section>
@@ -644,12 +603,12 @@
 
             
                 
-                <a href="call_ret.html" class="navigation navigation-prev " aria-label="Previous page: call和ret指令">
+                <a href="vm.html" class="navigation navigation-prev " aria-label="Previous page: 虚拟内存">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../01_BIOS_to_MBR/" class="navigation navigation-next " aria-label="Next page: 1 最简单的OS:实模式下BIOS到MBR">
+                <a href="../05_efi/" class="navigation navigation-next " aria-label="Next page: 5 ELF文件理解">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -660,7 +619,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"CPU周期指令","level":"1.2.2","depth":2,"next":{"title":"1 最简单的OS:实模式下BIOS到MBR","level":"1.3","depth":1,"path":"content/01_BIOS_to_MBR/README.md","ref":"./content/01_BIOS_to_MBR/README.md","articles":[]},"previous":{"title":"call和ret指令","level":"1.2.1","depth":2,"path":"content/00_cpu/call_ret.md","ref":"./content/00_cpu/call_ret.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/00_cpu/cpu_time.md","mtime":"2020-10-11T01:54:38.478Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-01-13T01:23:06.590Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"再谈操作系统","level":"1.6.2","depth":2,"next":{"title":"5 ELF文件理解","level":"1.7","depth":1,"path":"content/05_efi/README.md","ref":"./content/05_efi/README.md","articles":[]},"previous":{"title":"虚拟内存","level":"1.6.1","depth":2,"path":"content/04_page/vm.md","ref":"./content/04_page/vm.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","-lunr","-search","-sharing","ace","codeblock-filename","search-plus","sectionx","splitter","tbfed-pagefooter","expandable-chapters","back-to-top-button","code","uml","page-treeview"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @doctording","modify_label":"update at:","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"collapsed":false,"copyright":"Copyright @doctording","minHeaderCount":"2","minHeaderDeep":"2"},"prism":{},"ace":{},"splitter":{},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"sectionx":{},"uml":{"format":"svg"},"codeblock-filename":{},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"doctording","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"spring-note","language":"zh-hans","gitbook":"*","description":"os"},"file":{"path":"content/04_page/os.md","mtime":"2020-12-22T04:58:08.777Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-01-13T01:23:06.590Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
